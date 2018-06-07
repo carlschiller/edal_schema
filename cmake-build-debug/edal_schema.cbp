@@ -82,6 +82,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/carlschiller/Documents/Github/edal_schema/core.cpp">
+			<Option target="edal_schema"/>
+		</Unit>
+		<Unit filename="/Users/carlschiller/Documents/Github/edal_schema/core.h">
+			<Option target="edal_schema"/>
+		</Unit>
 		<Unit filename="/Users/carlschiller/Documents/Github/edal_schema/main.cpp">
 			<Option target="edal_schema"/>
 		</Unit>

@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/edal_schema.dir/main.cpp.o"
+  "CMakeFiles/edal_schema.dir/core.cpp.o"
   "edal_schema.pdb"
   "edal_schema"
 )

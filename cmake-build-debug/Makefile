@@ -123,6 +123,33 @@ edal_schema/fast:
 	$(MAKE) -f CMakeFiles/edal_schema.dir/build.make CMakeFiles/edal_schema.dir/build
 .PHONY : edal_schema/fast
 
+core.o: core.cpp.o
+
+.PHONY : core.o
+
+# target to build an object file
+core.cpp.o:
+	$(MAKE) -f CMakeFiles/edal_schema.dir/build.make CMakeFiles/edal_schema.dir/core.cpp.o
+.PHONY : core.cpp.o
+
+core.i: core.cpp.i
+
+.PHONY : core.i
+
+# target to preprocess a source file
+core.cpp.i:
+	$(MAKE) -f CMakeFiles/edal_schema.dir/build.make CMakeFiles/edal_schema.dir/core.cpp.i
+.PHONY : core.cpp.i
+
+core.s: core.cpp.s
+
+.PHONY : core.s
+
+# target to generate assembly for a file
+core.cpp.s:
+	$(MAKE) -f CMakeFiles/edal_schema.dir/build.make CMakeFiles/edal_schema.dir/core.cpp.s
+.PHONY : core.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -159,6 +186,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... edal_schema"
+	@echo "... core.o"
+	@echo "... core.i"
+	@echo "... core.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
