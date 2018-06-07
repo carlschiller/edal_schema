@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/carlschiller/Documents/Github/edal_schema/core.cpp
+string
+-
+core.h
+/Users/carlschiller/Documents/Github/edal_schema/core.h
+
+/Users/carlschiller/Documents/Github/edal_schema/core.h
+
+/Users/carlschiller/Documents/Github/edal_schema/main.cpp
+iostream
+-
+core.h
+/Users/carlschiller/Documents/Github/edal_schema/core.h
+
