@@ -5,6 +5,8 @@
 #ifndef EDAL_SCHEMA_CORE_H
 #define EDAL_SCHEMA_CORE_H
 
+#include <vector>
+
 // Available genders.
 enum class Genders{
     SEX_TYPE_MALE,
@@ -41,6 +43,18 @@ public:
     void change_gender(Genders);
     void change_position(Positions);
     void change_personal_number(long);
+};
+
+// Work day class, contains all necessary information about the workday.
+class Work_day{
+private:
+    std::vector<Worker> m_worker_list;
+public:
+    Work_day();
+
+    void add_worker(Worker new_worker);
+    void remove_worker(const std::string &worker_name);
+    Worker find_worker(const std::string &worker_name);
 };
 
 

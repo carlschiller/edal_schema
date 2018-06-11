@@ -4,6 +4,7 @@
 
 #include <string>
 #include "core.h"
+#include <vector>
 
 Worker::Worker(std::string worker_name, Genders worker_sex, Positions position, long personal_number){
     m_worker_name = std::move(worker_name);
@@ -34,4 +35,39 @@ void Worker::change_position(Positions position){
 
 void Worker::change_personal_number(long personal_number){
     m_personal_number = personal_number;
+}
+
+Work_day::Work_day() = default;
+
+void Work_day::add_worker(Worker new_worker) {
+    for(Worker worker: m_worker_list){
+        if(worker.get_name() == new_worker.get_name()){
+            throw std::invalid_argument("Worker already exists");
+        }
+    }
+    m_worker_list.push_back(new_worker);
+}
+
+void Work_day::remove_worker(const std::string &worker_name) {
+    int position = 0;
+    bool worker_found = false;
+    for(Worker worker : m_worker_list){
+        if(worker.get_name() == worker_name){
+            m_worker_list.erase(m_worker_list.begin()+position);
+            worker_found = true;
+        }
+        position++;
+    }
+    if(!worker_found){
+        throw std::invalid_argument("Name not found in list of workers for the day");
+    }
+}
+
+Worker Work_day::find_worker(const std::string &worker_name) {
+    for(Worker worker : m_worker_list){
+        if(worker.get_name() == worker_name){
+            return worker;
+        }
+    }
+    throw std::invalid_argument("Name not found in list of workers for the day");
 }
