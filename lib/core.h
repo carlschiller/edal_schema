@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <ctime>
+#include <map>
 
 // Available genders.
 enum class Genders{
@@ -27,7 +28,7 @@ enum class Positions{
     NUM_OF_POSITIONS
 };
 
-// Hard coded for now.
+/*
 enum class Tasks{
     NOT_AVAILABLE,
     AT_WORK,
@@ -59,6 +60,19 @@ enum class Tasks{
     SPOL_AEVENTYRGANG,
     SPOL_HOPPET,
     NUM_OF_TASKS
+};
+*/
+
+class Tasks{
+private:
+    std::map<std::string,int> m_task_map;
+    std::vector<std::string> m_task_list;
+public:
+    Tasks();
+    std::vector<std::string> get_all_task_names();
+    int get_value(std::string);
+    static int not_at_work();
+    void add_task(std::string);
 };
 
 // Worker class, each object type of Worker will contain all neccessary information about a person.

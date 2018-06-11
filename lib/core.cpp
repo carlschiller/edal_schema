@@ -4,6 +4,55 @@
 
 #include <string>
 #include "core.h"
+#include <fstream>
+#include <sstream>
+
+
+Tasks::Tasks(){
+    const std::string filename = "tasks.txt";
+    std::ifstream file;
+    file.exceptions(std::ifstream::failbit);
+    try{
+        file.open(filename);
+        if(file.is_open()){
+            int value = 1;
+            std::string key;
+            while(file >> key){
+                m_task_list.push_back(key);
+                m_task_map[key] = value;
+                value++;
+                key = "";
+            }
+        }
+    }
+    catch(const std::exception& e){
+        std::ostringstream msg;
+        msg << "Opening file " << filename << " failed, probably doesn't exist.";
+        throw std::runtime_error(msg.str());
+    }
+};
+
+static int Tasks::not_at_work() {
+    return 0;
+}
+
+int Tasks::get_value(const std::string key) {
+    return m_task_map[key];
+}
+
+void Tasks::add_task(std::string new_key) {
+    for(std::string task : m_task_list){
+        if(new_key == task){
+            throw std::invalid_argument("Task already exists.");
+        }
+    }
+    m_task_list.push_back(new_key);
+    m_task_map[new_key] = (int)m_task_list.size()+1;
+}
+
+std::vector<std::string> Tasks::get_all_task_names() {
+    return m_task_list;
+}
 
 /**
  * Methods for Worker class
@@ -90,7 +139,7 @@ Work_day::Work_day(time_t date_of_workday,int resolution, std::vector<Worker> wo
         id_assignment++;
     }
     // resizing list of tasks for workers to match length of worker list, each worker receives a list of size resolution with empty tasks.
-    std::vector<Tasks> init_tasks((unsigned long)m_resolution,Tasks::NOT_AVAILABLE);
+    std::vector<Tasks> init_tasks((unsigned long)m_resolution,Tasks::not_at_work());
     m_work_day_tasks.resize(m_worker_list.size(),init_tasks);
 }
 
