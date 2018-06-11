@@ -4,7 +4,22 @@
 
 #include <string>
 #include "core.h"
-#include <vector>
+
+/**
+ * Methods for Worker class
+ * -----------------
+ * constructor : creates a new worker.
+ * .get_name : returns name of worker.
+ * .get_gender : gets gender of worker.
+ * .get_position : gets position of worker.
+ * .get_personal_number: gets personal number of worker.
+ * .change_name: change name of worker.
+ * .change_gender: changes (!) gender of worker.
+ * .change_position: change position of worker.
+ * .change_personal_number : change personal number of worker.
+ * -----------------
+ * All methods are O(1).
+ */
 
 Worker::Worker(std::string worker_name, Genders worker_sex, Positions position, long personal_number){
     m_worker_name = std::move(worker_name);
@@ -37,7 +52,28 @@ void Worker::change_personal_number(long personal_number){
     m_personal_number = personal_number;
 }
 
-Work_day::Work_day() = default;
+
+/**
+ * Methods for Work_day class
+ * -----------------
+ *  constructor: creates a new work day with a time stamp.
+ * .add_worker : adds a new Worker class to the vector of workers currently available. O(1).
+ * .remove_worker: removes a worker, searched by name. O(n).
+ * .find_worker: finds and returns a worker, searched by name. O(n).
+ * -----------------
+ */
+
+// default constructor.
+Work_day::Work_day(){
+    m_work_day_date = time(nullptr);
+    m_worker_list = nullptr;
+}
+
+// constructor for workday with timestamp and worker list.
+Work_day::Work_day(time_t date_of_workday, std::vector<Worker> worker_list){
+    m_worker_list = std::move(worker_list);
+    m_work_day_date = date_of_workday;
+}
 
 void Work_day::add_worker(Worker new_worker) {
     for(Worker worker: m_worker_list){
