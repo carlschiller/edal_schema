@@ -12,7 +12,8 @@
 enum class Genders{
     MALE,
     FEMALE,
-    APPACHE_ATTACK_HELICOPTER
+    APPACHE_ATTACK_HELICOPTER,
+    NUM_OF_GENDERS
 };
 
 // Types of available work positions.
@@ -22,7 +23,8 @@ enum class Positions{
     TEMPORARY_POSITION,
     PARENT_LEAVE,
     WEEKEND_WORKER,
-    EXTRA_WORKER
+    EXTRA_WORKER,
+    NUM_OF_POSITIONS
 };
 
 // Hard coded for now.
@@ -55,7 +57,8 @@ enum class Tasks{
     SPOL_50,
     SPOL_AEVENTYR,
     SPOL_AEVENTYRGANG,
-    SPOL_HOPPET
+    SPOL_HOPPET,
+    NUM_OF_TASKS
 };
 
 // Worker class, each object type of Worker will contain all neccessary information about a person.
@@ -94,6 +97,7 @@ public:
     Work_day(time_t, int, std::vector<Worker>);
 
     void add_worker(Worker new_worker);
+    void change_resolution(int);
     void remove_worker(const std::string &worker_name);
     Worker find_worker(const std::string &worker_name);
 

@@ -344,6 +344,12 @@
 		<Unit filename="/Users/carlschiller/Documents/Github/edal_schema/lib/googletest/googletest/src/gtest_main.cc">
 			<Option target="gtest_main"/>
 		</Unit>
+		<Unit filename="/Users/carlschiller/Documents/Github/edal_schema/lib/menu.cpp">
+			<Option target="edal_schema"/>
+		</Unit>
+		<Unit filename="/Users/carlschiller/Documents/Github/edal_schema/lib/menu.h">
+			<Option target="edal_schema"/>
+		</Unit>
 		<Unit filename="/Users/carlschiller/Documents/Github/edal_schema/main.cpp">
 			<Option target="edal_schema"/>
 		</Unit>

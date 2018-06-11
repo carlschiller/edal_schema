@@ -8,6 +8,6 @@ include_directories(lib/googletest/googletest/include)
 include_directories(lib/googletest/googlemock/include)
 
 
-set(SOURCE_FILES main.cpp lib/core.h lib/core.cpp tests/ClassName.h tests/test.cpp)
-add_executable(edal_schema ${SOURCE_FILES} tests/ClassName.h tests/test.cpp)
+set(SOURCE_FILES main.cpp lib/core.h lib/core.cpp tests/ClassName.h tests/test.cpp lib/menu.cpp lib/menu.h)
+add_executable(edal_schema ${SOURCE_FILES} tests/ClassName.h tests/test.cpp lib/menu.cpp lib/menu.h)
 target_link_libraries(edal_schema gtest gtest_main)

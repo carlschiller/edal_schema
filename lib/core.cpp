@@ -84,7 +84,7 @@ Work_day::Work_day(time_t date_of_workday,int resolution, std::vector<Worker> wo
     m_worker_list = std::move(worker_list);
     m_work_day_date = date_of_workday;
 
-    int id_assignment = 1;
+    int id_assignment = 0;
     for(Worker worker : m_worker_list){
         worker.change_id(id_assignment);
         id_assignment++;
@@ -142,4 +142,8 @@ Worker Work_day::find_worker(const std::string &worker_name) {
         }
     }
     throw std::invalid_argument("Name not found in list of workers for the day");
+}
+
+void Work_day::change_resolution(int new_resolution) {
+    m_resolution = new_resolution;
 }

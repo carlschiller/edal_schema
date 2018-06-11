@@ -248,6 +248,33 @@ lib/core.cpp.s:
 	$(MAKE) -f CMakeFiles/edal_schema.dir/build.make CMakeFiles/edal_schema.dir/lib/core.cpp.s
 .PHONY : lib/core.cpp.s
 
+lib/menu.o: lib/menu.cpp.o
+
+.PHONY : lib/menu.o
+
+# target to build an object file
+lib/menu.cpp.o:
+	$(MAKE) -f CMakeFiles/edal_schema.dir/build.make CMakeFiles/edal_schema.dir/lib/menu.cpp.o
+.PHONY : lib/menu.cpp.o
+
+lib/menu.i: lib/menu.cpp.i
+
+.PHONY : lib/menu.i
+
+# target to preprocess a source file
+lib/menu.cpp.i:
+	$(MAKE) -f CMakeFiles/edal_schema.dir/build.make CMakeFiles/edal_schema.dir/lib/menu.cpp.i
+.PHONY : lib/menu.cpp.i
+
+lib/menu.s: lib/menu.cpp.s
+
+.PHONY : lib/menu.s
+
+# target to generate assembly for a file
+lib/menu.cpp.s:
+	$(MAKE) -f CMakeFiles/edal_schema.dir/build.make CMakeFiles/edal_schema.dir/lib/menu.cpp.s
+.PHONY : lib/menu.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -322,6 +349,9 @@ help:
 	@echo "... lib/core.o"
 	@echo "... lib/core.i"
 	@echo "... lib/core.s"
+	@echo "... lib/menu.o"
+	@echo "... lib/menu.i"
+	@echo "... lib/menu.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

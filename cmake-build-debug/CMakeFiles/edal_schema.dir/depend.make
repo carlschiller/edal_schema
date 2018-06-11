@@ -4,6 +4,10 @@
 CMakeFiles/edal_schema.dir/lib/core.cpp.o: ../lib/core.cpp
 CMakeFiles/edal_schema.dir/lib/core.cpp.o: ../lib/core.h
 
+CMakeFiles/edal_schema.dir/lib/menu.cpp.o: ../lib/core.h
+CMakeFiles/edal_schema.dir/lib/menu.cpp.o: ../lib/menu.cpp
+CMakeFiles/edal_schema.dir/lib/menu.cpp.o: ../lib/menu.h
+
 CMakeFiles/edal_schema.dir/main.cpp.o: ../lib/googletest/googlemock/include/gmock/gmock-actions.h
 CMakeFiles/edal_schema.dir/main.cpp.o: ../lib/googletest/googlemock/include/gmock/gmock-cardinalities.h
 CMakeFiles/edal_schema.dir/main.cpp.o: ../lib/googletest/googlemock/include/gmock/gmock-generated-actions.h
@@ -44,6 +48,7 @@ CMakeFiles/edal_schema.dir/main.cpp.o: ../lib/googletest/googletest/include/gtes
 CMakeFiles/edal_schema.dir/main.cpp.o: ../lib/googletest/googletest/include/gtest/internal/gtest-tuple.h
 CMakeFiles/edal_schema.dir/main.cpp.o: ../lib/googletest/googletest/include/gtest/internal/gtest-type-util.h
 CMakeFiles/edal_schema.dir/main.cpp.o: ../lib/core.h
+CMakeFiles/edal_schema.dir/main.cpp.o: ../lib/menu.h
 CMakeFiles/edal_schema.dir/main.cpp.o: ../main.cpp
 
 CMakeFiles/edal_schema.dir/tests/test.cpp.o: ../lib/googletest/googlemock/include/gmock/gmock-actions.h
