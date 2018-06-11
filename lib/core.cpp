@@ -135,10 +135,10 @@ void Work_day::remove_worker(const std::string &worker_name) {
     }
 }
 
-Worker Work_day::find_worker(const std::string &worker_name) {
+int Work_day::find_worker_id(const std::string &worker_name) {
     for(Worker worker : m_worker_list){
         if(worker.get_name() == worker_name){
-            return worker;
+            return worker.get_id();
         }
     }
     throw std::invalid_argument("Name not found in list of workers for the day");
@@ -146,4 +146,20 @@ Worker Work_day::find_worker(const std::string &worker_name) {
 
 void Work_day::change_resolution(int new_resolution) {
     m_resolution = new_resolution;
+}
+
+std::vector<Tasks> Work_day::view_worker_tasks(const std::string &worker_name) {
+    return m_work_day_tasks[find_worker_id(worker_name)];
+}
+
+std::vector<std::vector<Tasks>> Work_day::view_all_worker_tasks() {
+    return m_work_day_tasks;
+}
+
+std::vector<Worker> Work_day::get_all_workers() {
+    return m_worker_list;
+}
+
+int Work_day::get_resolution() {
+    return m_resolution;
 }

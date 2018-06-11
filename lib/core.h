@@ -99,7 +99,11 @@ public:
     void add_worker(Worker new_worker);
     void change_resolution(int);
     void remove_worker(const std::string &worker_name);
-    Worker find_worker(const std::string &worker_name);
+    int find_worker_id(const std::string &worker_name);
+    std::vector<Tasks> view_worker_tasks(const std::string &worker_name);
+    std::vector<std::vector<Tasks>> view_all_worker_tasks();
+    std::vector<Worker> get_all_workers();
+    int get_resolution();
 
 };
 
