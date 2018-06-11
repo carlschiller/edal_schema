@@ -221,32 +221,32 @@ gtest/fast:
 	$(MAKE) -f lib/googletest/googlemock/gtest/CMakeFiles/gtest.dir/build.make lib/googletest/googlemock/gtest/CMakeFiles/gtest.dir/build
 .PHONY : gtest/fast
 
-core.o: core.cpp.o
+lib/core.o: lib/core.cpp.o
 
-.PHONY : core.o
+.PHONY : lib/core.o
 
 # target to build an object file
-core.cpp.o:
-	$(MAKE) -f CMakeFiles/edal_schema.dir/build.make CMakeFiles/edal_schema.dir/core.cpp.o
-.PHONY : core.cpp.o
+lib/core.cpp.o:
+	$(MAKE) -f CMakeFiles/edal_schema.dir/build.make CMakeFiles/edal_schema.dir/lib/core.cpp.o
+.PHONY : lib/core.cpp.o
 
-core.i: core.cpp.i
+lib/core.i: lib/core.cpp.i
 
-.PHONY : core.i
+.PHONY : lib/core.i
 
 # target to preprocess a source file
-core.cpp.i:
-	$(MAKE) -f CMakeFiles/edal_schema.dir/build.make CMakeFiles/edal_schema.dir/core.cpp.i
-.PHONY : core.cpp.i
+lib/core.cpp.i:
+	$(MAKE) -f CMakeFiles/edal_schema.dir/build.make CMakeFiles/edal_schema.dir/lib/core.cpp.i
+.PHONY : lib/core.cpp.i
 
-core.s: core.cpp.s
+lib/core.s: lib/core.cpp.s
 
-.PHONY : core.s
+.PHONY : lib/core.s
 
 # target to generate assembly for a file
-core.cpp.s:
-	$(MAKE) -f CMakeFiles/edal_schema.dir/build.make CMakeFiles/edal_schema.dir/core.cpp.s
-.PHONY : core.cpp.s
+lib/core.cpp.s:
+	$(MAKE) -f CMakeFiles/edal_schema.dir/build.make CMakeFiles/edal_schema.dir/lib/core.cpp.s
+.PHONY : lib/core.cpp.s
 
 main.o: main.cpp.o
 
@@ -319,9 +319,9 @@ help:
 	@echo "... gmock_main"
 	@echo "... gtest_main"
 	@echo "... gtest"
-	@echo "... core.o"
-	@echo "... core.i"
-	@echo "... core.s"
+	@echo "... lib/core.o"
+	@echo "... lib/core.i"
+	@echo "... lib/core.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

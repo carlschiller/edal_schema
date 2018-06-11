@@ -5,7 +5,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include "ClassName.h"
-#include "../core.h"
+#include "../lib/core.h"
 
 using testing::Eq;
 

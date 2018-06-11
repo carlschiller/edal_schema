@@ -81,28 +81,28 @@ CMakeFiles/edal_schema.dir/main.cpp.o.provides: CMakeFiles/edal_schema.dir/main.
 CMakeFiles/edal_schema.dir/main.cpp.o.provides.build: CMakeFiles/edal_schema.dir/main.cpp.o
 
 
-CMakeFiles/edal_schema.dir/core.cpp.o: CMakeFiles/edal_schema.dir/flags.make
-CMakeFiles/edal_schema.dir/core.cpp.o: ../core.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/carlschiller/Documents/Github/edal_schema/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/edal_schema.dir/core.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/edal_schema.dir/core.cpp.o -c /Users/carlschiller/Documents/Github/edal_schema/core.cpp
+CMakeFiles/edal_schema.dir/lib/core.cpp.o: CMakeFiles/edal_schema.dir/flags.make
+CMakeFiles/edal_schema.dir/lib/core.cpp.o: ../lib/core.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/carlschiller/Documents/Github/edal_schema/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/edal_schema.dir/lib/core.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/edal_schema.dir/lib/core.cpp.o -c /Users/carlschiller/Documents/Github/edal_schema/lib/core.cpp
 
-CMakeFiles/edal_schema.dir/core.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/edal_schema.dir/core.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/carlschiller/Documents/Github/edal_schema/core.cpp > CMakeFiles/edal_schema.dir/core.cpp.i
+CMakeFiles/edal_schema.dir/lib/core.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/edal_schema.dir/lib/core.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/carlschiller/Documents/Github/edal_schema/lib/core.cpp > CMakeFiles/edal_schema.dir/lib/core.cpp.i
 
-CMakeFiles/edal_schema.dir/core.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/edal_schema.dir/core.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/carlschiller/Documents/Github/edal_schema/core.cpp -o CMakeFiles/edal_schema.dir/core.cpp.s
+CMakeFiles/edal_schema.dir/lib/core.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/edal_schema.dir/lib/core.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/carlschiller/Documents/Github/edal_schema/lib/core.cpp -o CMakeFiles/edal_schema.dir/lib/core.cpp.s
 
-CMakeFiles/edal_schema.dir/core.cpp.o.requires:
+CMakeFiles/edal_schema.dir/lib/core.cpp.o.requires:
 
-.PHONY : CMakeFiles/edal_schema.dir/core.cpp.o.requires
+.PHONY : CMakeFiles/edal_schema.dir/lib/core.cpp.o.requires
 
-CMakeFiles/edal_schema.dir/core.cpp.o.provides: CMakeFiles/edal_schema.dir/core.cpp.o.requires
-	$(MAKE) -f CMakeFiles/edal_schema.dir/build.make CMakeFiles/edal_schema.dir/core.cpp.o.provides.build
-.PHONY : CMakeFiles/edal_schema.dir/core.cpp.o.provides
+CMakeFiles/edal_schema.dir/lib/core.cpp.o.provides: CMakeFiles/edal_schema.dir/lib/core.cpp.o.requires
+	$(MAKE) -f CMakeFiles/edal_schema.dir/build.make CMakeFiles/edal_schema.dir/lib/core.cpp.o.provides.build
+.PHONY : CMakeFiles/edal_schema.dir/lib/core.cpp.o.provides
 
-CMakeFiles/edal_schema.dir/core.cpp.o.provides.build: CMakeFiles/edal_schema.dir/core.cpp.o
+CMakeFiles/edal_schema.dir/lib/core.cpp.o.provides.build: CMakeFiles/edal_schema.dir/lib/core.cpp.o
 
 
 CMakeFiles/edal_schema.dir/tests/test.cpp.o: CMakeFiles/edal_schema.dir/flags.make
@@ -132,14 +132,14 @@ CMakeFiles/edal_schema.dir/tests/test.cpp.o.provides.build: CMakeFiles/edal_sche
 # Object files for target edal_schema
 edal_schema_OBJECTS = \
 "CMakeFiles/edal_schema.dir/main.cpp.o" \
-"CMakeFiles/edal_schema.dir/core.cpp.o" \
+"CMakeFiles/edal_schema.dir/lib/core.cpp.o" \
 "CMakeFiles/edal_schema.dir/tests/test.cpp.o"
 
 # External object files for target edal_schema
 edal_schema_EXTERNAL_OBJECTS =
 
 edal_schema: CMakeFiles/edal_schema.dir/main.cpp.o
-edal_schema: CMakeFiles/edal_schema.dir/core.cpp.o
+edal_schema: CMakeFiles/edal_schema.dir/lib/core.cpp.o
 edal_schema: CMakeFiles/edal_schema.dir/tests/test.cpp.o
 edal_schema: CMakeFiles/edal_schema.dir/build.make
 edal_schema: lib/googletest/googlemock/gtest/libgtestd.a
@@ -155,7 +155,7 @@ CMakeFiles/edal_schema.dir/build: edal_schema
 .PHONY : CMakeFiles/edal_schema.dir/build
 
 CMakeFiles/edal_schema.dir/requires: CMakeFiles/edal_schema.dir/main.cpp.o.requires
-CMakeFiles/edal_schema.dir/requires: CMakeFiles/edal_schema.dir/core.cpp.o.requires
+CMakeFiles/edal_schema.dir/requires: CMakeFiles/edal_schema.dir/lib/core.cpp.o.requires
 CMakeFiles/edal_schema.dir/requires: CMakeFiles/edal_schema.dir/tests/test.cpp.o.requires
 
 .PHONY : CMakeFiles/edal_schema.dir/requires

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "core.h"
+#include "lib/core.h"
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 

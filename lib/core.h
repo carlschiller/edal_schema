@@ -65,6 +65,7 @@ private:
     Genders m_worker_sex;
     Positions m_position;
     long m_personal_number;
+    int m_date_id;
 public:
     Worker(std::string, Genders, Positions, long);
 
@@ -72,11 +73,13 @@ public:
     Genders get_gender();
     Positions get_position();
     long get_personal_number();
+    int get_id();
 
     void change_name(std::string);
     void change_gender(Genders);
     void change_position(Positions);
     void change_personal_number(long);
+    void change_id(int);
 };
 
 // Work day class, contains all necessary information about the workday.
@@ -84,10 +87,11 @@ class Work_day{
 private:
     std::vector<Worker> m_worker_list;
     time_t m_work_day_date;
-    std::vector<Tasks[48]> work_day_tasks; // vector of tasks.
+    std::vector<std::vector<Tasks>> m_work_day_tasks; // vector of tasks.
+    int m_resolution; // how many chunks a day should be divided into.
 public:
     Work_day();
-    Work_day(time_t, std::vector<Worker>);
+    Work_day(time_t, int, std::vector<Worker>);
 
     void add_worker(Worker new_worker);
     void remove_worker(const std::string &worker_name);

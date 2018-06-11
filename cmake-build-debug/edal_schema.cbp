@@ -326,10 +326,10 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/carlschiller/Documents/Github/edal_schema/core.cpp">
+		<Unit filename="/Users/carlschiller/Documents/Github/edal_schema/lib/core.cpp">
 			<Option target="edal_schema"/>
 		</Unit>
-		<Unit filename="/Users/carlschiller/Documents/Github/edal_schema/core.h">
+		<Unit filename="/Users/carlschiller/Documents/Github/edal_schema/lib/core.h">
 			<Option target="edal_schema"/>
 		</Unit>
 		<Unit filename="/Users/carlschiller/Documents/Github/edal_schema/lib/googletest/googlemock/src/gmock-all.cc">
