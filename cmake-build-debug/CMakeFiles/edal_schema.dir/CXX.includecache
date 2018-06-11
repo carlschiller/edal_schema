@@ -497,4 +497,6 @@ gmock/gmock.h
 -
 ClassName.h
 /Users/carlschiller/Documents/Github/edal_schema/tests/ClassName.h
+../core.h
+/Users/carlschiller/Documents/Github/edal_schema/core.h
 

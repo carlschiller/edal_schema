@@ -86,5 +86,6 @@ CMakeFiles/edal_schema.dir/tests/test.cpp.o
  ../lib/googletest/googletest/include/gtest/internal/gtest-string.h
  ../lib/googletest/googletest/include/gtest/internal/gtest-tuple.h
  ../lib/googletest/googletest/include/gtest/internal/gtest-type-util.h
+ /Users/carlschiller/Documents/Github/edal_schema/core.h
  /Users/carlschiller/Documents/Github/edal_schema/tests/ClassName.h
  /Users/carlschiller/Documents/Github/edal_schema/tests/test.cpp

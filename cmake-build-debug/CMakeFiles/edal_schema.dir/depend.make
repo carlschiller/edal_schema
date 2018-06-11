@@ -85,6 +85,7 @@ CMakeFiles/edal_schema.dir/tests/test.cpp.o: ../lib/googletest/googletest/includ
 CMakeFiles/edal_schema.dir/tests/test.cpp.o: ../lib/googletest/googletest/include/gtest/internal/gtest-string.h
 CMakeFiles/edal_schema.dir/tests/test.cpp.o: ../lib/googletest/googletest/include/gtest/internal/gtest-tuple.h
 CMakeFiles/edal_schema.dir/tests/test.cpp.o: ../lib/googletest/googletest/include/gtest/internal/gtest-type-util.h
+CMakeFiles/edal_schema.dir/tests/test.cpp.o: ../core.h
 CMakeFiles/edal_schema.dir/tests/test.cpp.o: ../tests/ClassName.h
 CMakeFiles/edal_schema.dir/tests/test.cpp.o: ../tests/test.cpp
 
