@@ -7,20 +7,73 @@
 #include <fstream>
 #include <sstream>
 
+/**
+ * Methods for Tasks class
+ * --------------
+ * constructor: loads tasks from txt file.
+ * .not_at_work(): returns default not at work task.
+ * .get_task_values(string key): returns task number for given string key.
+ * .get_task_name(int index): return string name of task for given int index.
+ * .add_task(string new_key): appends a new task to the list at last position.
+ * .get_all_task_names(): returns whole list of tasks.
+ * .load_tasks_from_file(): method for loading Tasks class from separate txt file.
+ * --------------
+ * All methods are O(1) except get_task_value, add_task, load_tasks_from_file which are O(n).
+ */
 
 Tasks::Tasks(){
+    load_tasks_from_file();
+};
+
+static int Tasks::not_at_work() {
+    return 0;
+}
+
+int Tasks::get_task_value(const std::string &key) {
+    int counter = 0;
+    for(const std::string &task_name : m_task_list){
+        if(task_name == key){
+            return counter;
+        }
+        counter++;
+    }
+    throw std::invalid_argument("Name of task not found.");
+}
+
+std::string Tasks::get_task_name(int index){
+    if(index > m_task_list.size()-1 || index < 0){
+        throw std::invalid_argument("Index out of range");
+    }
+    else{
+        return m_task_list[index];
+    }
+}
+
+// adds a new task in the list.
+void Tasks::add_task(std::string new_key) {
+    for(const std::string &task : m_task_list){
+        if(new_key == task){
+            throw std::invalid_argument("Task already exists.");
+        }
+    }
+    m_task_list.push_back(new_key);
+}
+
+std::vector<std::string> Tasks::get_all_task_names() {
+    return m_task_list;
+}
+
+// method below loads enum names from separate txt file into a private vector.
+void Tasks::load_tasks_from_file(){
     const std::string filename = "tasks.txt";
     std::ifstream file;
     file.exceptions(std::ifstream::failbit);
     try{
         file.open(filename);
         if(file.is_open()){
-            int value = 1;
             std::string key;
             while(file >> key){
                 m_task_list.push_back(key);
-                m_task_map[key] = value;
-                value++;
                 key = "";
             }
         }
@@ -30,28 +83,6 @@ Tasks::Tasks(){
         msg << "Opening file " << filename << " failed, probably doesn't exist.";
         throw std::runtime_error(msg.str());
     }
-};
-
-static int Tasks::not_at_work() {
-    return 0;
-}
-
-int Tasks::get_value(const std::string key) {
-    return m_task_map[key];
-}
-
-void Tasks::add_task(std::string new_key) {
-    for(std::string task : m_task_list){
-        if(new_key == task){
-            throw std::invalid_argument("Task already exists.");
-        }
-    }
-    m_task_list.push_back(new_key);
-    m_task_map[new_key] = (int)m_task_list.size()+1;
-}
-
-std::vector<std::string> Tasks::get_all_task_names() {
-    return m_task_list;
 }
 
 /**

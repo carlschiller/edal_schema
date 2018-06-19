@@ -65,14 +65,15 @@ enum class Tasks{
 
 class Tasks{
 private:
-    std::map<std::string,int> m_task_map;
     std::vector<std::string> m_task_list;
 public:
     Tasks();
     std::vector<std::string> get_all_task_names();
-    int get_value(std::string);
+    std::string get_task_name(int);
+    int get_task_value(const std::string &);
     static int not_at_work();
     void add_task(std::string);
+    void load_tasks_from_file();
 };
 
 // Worker class, each object type of Worker will contain all neccessary information about a person.
