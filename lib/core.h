@@ -65,7 +65,7 @@ enum class Tasks{
 
 class Tasks{
 private:
-    std::vector<std::string> m_task_list;
+    std::map<std::string,int> m_task_map;
 public:
     Tasks();
     std::vector<std::string> get_all_task_names();
@@ -105,7 +105,7 @@ class Work_day{
 private:
     std::vector<Worker> m_worker_list;
     time_t m_work_day_date;
-    std::vector<std::vector<Tasks>> m_work_day_tasks; // vector of tasks.
+    Tasks m_work_day_tasks; // vector of tasks.
     int m_resolution; // how many chunks a day should be divided into.
 public:
     Work_day();
@@ -115,7 +115,7 @@ public:
     void change_resolution(int);
     void remove_worker(const std::string &worker_name);
     int find_worker_id(const std::string &worker_name);
-    std::vector<Tasks> view_worker_tasks(const std::string &worker_name);
+    std::vector<int> view_worker_tasks(const std::string &worker_name);
     std::vector<std::vector<Tasks>> view_all_worker_tasks();
     std::vector<Worker> get_all_workers();
     int get_resolution();

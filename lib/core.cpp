@@ -11,14 +11,13 @@
  * Methods for Tasks class
  * --------------
  * constructor: loads tasks from txt file.
- * .not_at_work(): returns default not at work task.
- * .get_task_values(string key): returns task number for given string key.
- * .get_task_name(int index): return string name of task for given int index.
- * .add_task(string new_key): appends a new task to the list at last position.
- * .get_all_task_names(): returns whole list of tasks.
- * .load_tasks_from_file(): method for loading Tasks class from separate txt file.
+ * .not_at_work(): returns default not at work task. O(1)
+ * .get_task_values(string key): returns task number for given string key. O(log(n))
+ * .get_task_name(int index): return string name of task for given int index. O(n)
+ * .add_task(string new_key): appends a new task to the list at last position. O(log(n))
+ * .get_all_task_names(): returns whole list of tasks. O(n)
+ * .load_tasks_from_file(): method for loading Tasks class from separate txt file. O(n)
  * --------------
- * All methods are O(1) except get_task_value, add_task, load_tasks_from_file which are O(n).
  */
 
 Tasks::Tasks(){
@@ -30,37 +29,47 @@ static int Tasks::not_at_work() {
 }
 
 int Tasks::get_task_value(const std::string &key) {
-    int counter = 0;
-    for(const std::string &task_name : m_task_list){
-        if(task_name == key){
-            return counter;
-        }
-        counter++;
+    std::map<std::string,int>::iterator value;
+    value = m_task_map.find(key);
+    if(value == m_task_map.end()){
+        throw std::invalid_argument("Name of task not found in map.");
     }
-    throw std::invalid_argument("Name of task not found.");
+    else{
+        int result = value->second;
+        return result;
+    }
 }
 
 std::string Tasks::get_task_name(int index){
-    if(index > m_task_list.size()-1 || index < 0){
-        throw std::invalid_argument("Index out of range");
-    }
-    else{
-        return m_task_list[index];
+    for(auto& it : m_task_map){
+        if(it.second == index){
+            return it.first;
+        }
+        if(it == m_task_map.end()){
+            throw std::invalid_argument("Value of task not found in map.");
+        }
     }
 }
 
 // adds a new task in the list.
 void Tasks::add_task(std::string new_key) {
-    for(const std::string &task : m_task_list){
-        if(new_key == task){
-            throw std::invalid_argument("Task already exists.");
-        }
+    std::map<std::string,int>::iterator value;
+    value = m_task_map.find(new_key);
+    if(value != m_task_map.end()){
+        auto size = static_cast<int>(m_task_map.size());
+        m_task_map[new_key] = size;
     }
-    m_task_list.push_back(new_key);
+    else{
+        throw std::invalid_argument("Name of task already exists.");
+    }
 }
 
 std::vector<std::string> Tasks::get_all_task_names() {
-    return m_task_list;
+    std::vector<std::string> list_of_tasks;
+    for(auto& it : m_task_map){
+        list_of_tasks.push_back(it.first);
+    }
+    return list_of_tasks;
 }
 
 // method below loads enum names from separate txt file into a private vector.
@@ -72,9 +81,11 @@ void Tasks::load_tasks_from_file(){
         file.open(filename);
         if(file.is_open()){
             std::string key;
+            int index = 0;
             while(file >> key){
-                m_task_list.push_back(key);
+                m_task_map[key] = index;
                 key = "";
+                index++;
             }
         }
     }
