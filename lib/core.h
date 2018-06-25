@@ -124,6 +124,7 @@ public:
     void remove_work_day_reference_column(int id);
     std::vector<std::vector<int>> get_work_day_reference();
     void build_work_day(); // creates m_worker_task_list;
+    Tasks get_tasks();
 };
 
 

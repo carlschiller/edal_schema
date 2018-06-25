@@ -298,6 +298,10 @@ void Work_day::build_work_day() {
     // shit complex thing.
 }
 
+Tasks Work_day::get_tasks() {
+    return m_work_day_tasks;
+}
+
 
 
 

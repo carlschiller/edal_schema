@@ -5,14 +5,16 @@
 #include <iostream>
 #include "menu.h"
 #include "core.h"
+#include <cmath>
 
 enum Selections{
     ADD_WORKER = 0,
     REMOVE_WORKER,
     FIND_WORKER,
+    ADD_TASK,
+    DISPLAY_TASKS,
     DISPLAY_DAY,
     EXIT,
-    NUM_OF_SELECTIONS
 };
 
 Worker menu_add(){
@@ -43,10 +45,54 @@ Worker menu_add(){
     return Worker(name_of_worker,gender_of_worker_cast,position_of_worker_cast, personal_number);
 }
 
-void display_day(Work_day this_day){
-
+std::vector<int> menu_add_task(Work_day work_day){
+    std::vector<int> selections;
+    selections.reserve(3);
+    std::cout << "Enter starting time:" << std::endl;
+    int start_time;
+    std::cin >> start_time;
+    std::cout << "Enter end time:" << std::endl;
+    int end_time;
+    std::cin >> end_time;
+    std::vector<std::string> current_tasks = work_day.get_tasks().get_all_task_names();
+    std::vector<int> current_task_id = work_day.get_tasks().get_all_task_values();
+    for(int i = 0; i < current_tasks.size(); ++i){
+        std::cout << current_task_id[i] << ": "<< current_tasks[i] << std::endl;
+    }
+    int task;
+    std::cin >> task;
+    selections.push_back(start_time);
+    selections.push_back(end_time);
+    selections.push_back(task);
+    return selections;
 }
 
+std::string clock_parser(int resolution, int time_to_convert){
+    double time_step = 24/(double)resolution;
+    auto hour = (int)floor(time_step*time_to_convert);
+    auto minute = (int)round((time_step*time_to_convert-hour)*60);
+    std::string hour_string = std::to_string(hour);
+    std::string minute_string = std::to_string(minute);
+    if(hour_string.length() == 1){
+        hour_string = "0" + hour_string;
+    }
+    if(minute_string.length() == 1){
+        minute_string = "0" + minute_string;
+    }
+    return hour_string + ":" + minute_string;
+}
+
+void display_day_tasks(Work_day work_day){
+    std::vector<std::vector<int>> matrix = work_day.get_work_day_reference();
+    Tasks current_tasks = work_day.get_tasks();
+    for(int i = 0; i < work_day.get_resolution(); ++i){
+        std::string temp_row = clock_parser(work_day.get_resolution(),i) + ": ";
+        for(int j = 0; j < matrix.size(); ++j){
+            temp_row += current_tasks.get_task_name(matrix[j][i]) + "    ";
+        }
+        std::cout << temp_row << std::endl;
+    }
+}
 
 void menu(){
     Work_day current_day = Work_day();
@@ -57,6 +103,8 @@ void menu(){
         std::cout << Selections::ADD_WORKER << " :add a user." << std::endl;
         std::cout << Selections::REMOVE_WORKER << " :remove a user."<< std::endl;
         std::cout << Selections::FIND_WORKER << " :find a user."<< std::endl;
+        std::cout << Selections::ADD_TASK << " :add task."<< std::endl;
+        std::cout << Selections::DISPLAY_TASKS << " :display tasks."<< std::endl;
         std::cout << Selections::DISPLAY_DAY << " :display the day."<< std::endl;
         std::cout << Selections::EXIT << " :exit."<< std::endl;
         int user_selection;
@@ -72,6 +120,15 @@ void menu(){
             case Selections::REMOVE_WORKER:
                 break;
             case Selections::FIND_WORKER:
+                break;
+            case Selections::ADD_TASK:
+            {
+                std::vector<int> task_adder = menu_add_task(current_day);
+                current_day.add_work_day_reference_column(task_adder[2],task_adder[0],task_adder[1]);
+                break;
+            }
+            case Selections::DISPLAY_TASKS:
+                display_day_tasks(current_day);
                 break;
             case Selections::DISPLAY_DAY:
                 break;
