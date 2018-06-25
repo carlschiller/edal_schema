@@ -69,6 +69,7 @@ private:
 public:
     Tasks();
     std::vector<std::string> get_all_task_names();
+    std::vector<int> get_all_task_values();
     std::string get_task_name(int);
     int get_task_value(const std::string &);
     static int not_at_work();
@@ -105,8 +106,10 @@ class Work_day{
 private:
     std::vector<Worker> m_worker_list;
     time_t m_work_day_date;
-    Tasks m_work_day_tasks; // vector of tasks.
+    Tasks m_work_day_tasks; // tasks used during this day.
     int m_resolution; // how many chunks a day should be divided into.
+    std::vector<std::vector<int>> m_work_day_reference; // matrix of work day tasks to be done.
+    std::vector<std::vector<int>> m_worker_task_list; // matrix of tasks for workers
 public:
     Work_day();
     Work_day(time_t, int, std::vector<Worker>);
@@ -115,10 +118,13 @@ public:
     void change_resolution(int);
     void remove_worker(const std::string &worker_name);
     int find_worker_id(const std::string &worker_name);
-    std::vector<int> view_worker_tasks(const std::string &worker_name);
-    std::vector<std::vector<Tasks>> view_all_worker_tasks();
     std::vector<Worker> get_all_workers();
     int get_resolution();
+    void add_work_day_reference_column(int task_number, int start_time, int end_time);
+    void remove_work_day_reference_column(int id);
+    std::vector<std::vector<int>> get_work_day_reference();
+    void build_work_day(); // creates m_worker_task_list;
+
 
 };
 

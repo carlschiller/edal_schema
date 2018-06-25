@@ -72,6 +72,14 @@ std::vector<std::string> Tasks::get_all_task_names() {
     return list_of_tasks;
 }
 
+std::vector<int> Tasks::get_all_task_values() {
+    std::vector<int> list_of_tasks;
+    for(auto& it : m_task_map){
+        list_of_tasks.push_back(it.second);
+    }
+    return list_of_tasks;
+}
+
 // method below loads enum names from separate txt file into a private vector.
 void Tasks::load_tasks_from_file(){
     const std::string filename = "tasks.txt";
@@ -95,6 +103,8 @@ void Tasks::load_tasks_from_file(){
         throw std::runtime_error(msg.str());
     }
 }
+
+
 
 /**
  * Methods for Worker class
@@ -174,15 +184,7 @@ Work_day::Work_day(time_t date_of_workday,int resolution, std::vector<Worker> wo
     m_resolution = resolution;
     m_worker_list = std::move(worker_list);
     m_work_day_date = date_of_workday;
-
-    int id_assignment = 0;
-    for(Worker worker : m_worker_list){
-        worker.change_id(id_assignment);
-        id_assignment++;
-    }
-    // resizing list of tasks for workers to match length of worker list, each worker receives a list of size resolution with empty tasks.
-    std::vector<Tasks> init_tasks((unsigned long)m_resolution,Tasks::not_at_work());
-    m_work_day_tasks.resize(m_worker_list.size(),init_tasks);
+    m_work_day_tasks = Tasks(); // automatically loads from file when Work_day constructor is called.
 }
 
 void Work_day::add_worker(Worker new_worker) {
@@ -192,12 +194,10 @@ void Work_day::add_worker(Worker new_worker) {
         }
     }
 
-    // assigning an id to new worker, adding worker to day task list with NOT_AVAILABLE as standard.
+    // assigning an id to new worker.
     int id_assignment = (int)m_worker_list.size();
     new_worker.change_id(id_assignment);
     m_worker_list.push_back(new_worker);
-    std::vector<Tasks> init_tasks((unsigned long)m_resolution,Tasks::NOT_AVAILABLE);
-    m_work_day_tasks.push_back(init_tasks);
 
 }
 
@@ -217,7 +217,6 @@ void Work_day::remove_worker(const std::string &worker_name) {
     }
     else{
         // removing worker from task list based on position and id.
-        m_work_day_tasks.erase(m_work_day_tasks.begin()+m_worker_list[position_of_found_worker].get_id());
         m_worker_list.erase(m_worker_list.begin()+position_of_found_worker);
         for (int i = position_of_found_worker; i < m_worker_list.size(); ++i) {
             m_worker_list[i].change_id(m_worker_list[i].get_id()-1);
@@ -239,14 +238,6 @@ void Work_day::change_resolution(int new_resolution) {
     m_resolution = new_resolution;
 }
 
-std::vector<Tasks> Work_day::view_worker_tasks(const std::string &worker_name) {
-    return m_work_day_tasks[find_worker_id(worker_name)];
-}
-
-std::vector<std::vector<Tasks>> Work_day::view_all_worker_tasks() {
-    return m_work_day_tasks;
-}
-
 std::vector<Worker> Work_day::get_all_workers() {
     return m_worker_list;
 }
@@ -254,3 +245,55 @@ std::vector<Worker> Work_day::get_all_workers() {
 int Work_day::get_resolution() {
     return m_resolution;
 }
+
+void Work_day::add_work_day_reference_column(int task_number, int start_time, int end_time) {
+    // first check if start or end time has allowed values.
+    if(start_time < end_time && start_time < m_resolution && end_time < m_resolution){
+        // check if task number is in list of tasks.
+        bool found_task_flag = false;
+        const std::vector<int> &list_of_task_numbers = m_work_day_tasks.get_all_task_values();
+        for(int task : list_of_task_numbers){
+            if(task == task_number){
+                found_task_flag = true;
+            }
+        }
+        if(found_task_flag){
+            // add task to reference matrix.
+            std::vector<int> reference_column;
+            for (int i = 0; i < start_time; ++i) {
+                // assigning no work before start time.
+                reference_column.push_back(Tasks::not_at_work());
+            }
+            for (int j = start_time; j < end_time; ++j){
+                // assigning task number
+                reference_column.push_back(task_number);
+            }
+            for (int k = end_time; k < m_resolution; ++k) {
+                reference_column.push_back(Tasks::not_at_work());
+            }
+            // appending column to reference matrix.
+            m_work_day_reference.push_back(reference_column);
+        }
+        else{
+            throw std::invalid_argument("invalid task id");
+        }
+    }
+    else{
+        throw std::invalid_argument("invalid start and/or end time");
+    }
+}
+
+void Work_day::remove_work_day_reference_column(int id) {
+    m_work_day_reference.erase(m_work_day_reference.begin()+id);
+}
+
+std::vector<std::vector<int>> Work_day::get_work_day_reference() {
+    return m_work_day_reference;
+}
+
+void Work_day::build_work_day() {
+    // shit complex thing.
+}
+
+
+
