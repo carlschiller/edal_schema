@@ -6,6 +6,7 @@
 #include "core.h"
 #include <fstream>
 #include <sstream>
+#include <iostream>
 
 /**
  * Methods for Tasks class
@@ -16,6 +17,7 @@
  * .get_task_name(int index): return string name of task for given int index. O(n)
  * .add_task(string new_key): appends a new task to the list at last position. O(log(n))
  * .get_all_task_names(): returns whole list of tasks. O(n)
+ * .get_all_task_values(): returns whole list of tasks values. O(n)
  * .load_tasks_from_file(): method for loading Tasks class from separate txt file. O(n)
  * --------------
  */
@@ -24,7 +26,7 @@ Tasks::Tasks(){
     load_tasks_from_file();
 };
 
-static int Tasks::not_at_work() {
+int Tasks::not_at_work() {
     return 0;
 }
 
@@ -45,10 +47,8 @@ std::string Tasks::get_task_name(int index){
         if(it.second == index){
             return it.first;
         }
-        if(it == m_task_map.end()){
-            throw std::invalid_argument("Value of task not found in map.");
-        }
     }
+    throw std::invalid_argument("Value of task not found in map.");
 }
 
 // adds a new task in the list.
@@ -82,26 +82,21 @@ std::vector<int> Tasks::get_all_task_values() {
 
 // method below loads enum names from separate txt file into a private vector.
 void Tasks::load_tasks_from_file(){
-    const std::string filename = "tasks.txt";
-    std::ifstream file;
-    file.exceptions(std::ifstream::failbit);
-    try{
-        file.open(filename);
-        if(file.is_open()){
-            std::string key;
-            int index = 0;
-            while(file >> key){
-                m_task_map[key] = index;
-                key = "";
-                index++;
-            }
+    const std::string filename = "../lib/tasks.txt";
+    std::ifstream file(filename);
+    if(!file.is_open()){
+        std::exit(6);
+    }
+    else{
+        std::string key;
+        int index = 0;
+        while(std::getline(file, key)){
+            m_task_map[key] = index;
+            key = "";
+            index++;
         }
     }
-    catch(const std::exception& e){
-        std::ostringstream msg;
-        msg << "Opening file " << filename << " failed, probably doesn't exist.";
-        throw std::runtime_error(msg.str());
-    }
+    file.close();
 }
 
 
@@ -170,6 +165,12 @@ void Worker::change_id(int new_id) {
  * .add_worker : adds a new Worker class to the vector of workers currently available. O(1).
  * .remove_worker: removes a worker, searched by name. O(n).
  * .find_worker: finds and returns a worker, searched by name. O(n).
+ * .change_resolution: change resolution of work day. O(1)
+ * .get_all_workers: returns worker list for day. O(1) ish.
+ * .get_resolutions: returns resolution of day. O(1).
+ * .add_work_day_reference_column: adds a column to the reference matrix,
+ * a column of tasks to be distributed between some workers. O(n).
+ *
  * -----------------
  */
 
@@ -177,6 +178,7 @@ void Worker::change_id(int new_id) {
 Work_day::Work_day(){
     m_work_day_date = time(nullptr);
     m_worker_list.clear();
+    m_work_day_tasks = Tasks();
 }
 
 // constructor for workday with timestamp and worker list.
@@ -251,7 +253,7 @@ void Work_day::add_work_day_reference_column(int task_number, int start_time, in
     if(start_time < end_time && start_time < m_resolution && end_time < m_resolution){
         // check if task number is in list of tasks.
         bool found_task_flag = false;
-        const std::vector<int> &list_of_task_numbers = m_work_day_tasks.get_all_task_values();
+        std::vector<int> list_of_task_numbers = m_work_day_tasks.get_all_task_values(); // hope this works for speed.r
         for(int task : list_of_task_numbers){
             if(task == task_number){
                 found_task_flag = true;
@@ -260,6 +262,7 @@ void Work_day::add_work_day_reference_column(int task_number, int start_time, in
         if(found_task_flag){
             // add task to reference matrix.
             std::vector<int> reference_column;
+            reference_column.reserve((unsigned long)m_resolution);
             for (int i = 0; i < start_time; ++i) {
                 // assigning no work before start time.
                 reference_column.push_back(Tasks::not_at_work());
@@ -294,6 +297,7 @@ std::vector<std::vector<int>> Work_day::get_work_day_reference() {
 void Work_day::build_work_day() {
     // shit complex thing.
 }
+
 
 
 

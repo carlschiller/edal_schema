@@ -44,20 +44,9 @@ Worker menu_add(){
 }
 
 void display_day(Work_day this_day){
-    std::vector<std::vector<Tasks>> day_matrix = this_day.view_all_worker_tasks();
-    std::vector<Worker> day_workers = this_day.get_all_workers();
-    for(Worker worker : day_workers){
-        std::cout << worker.get_name() << "   ";
-    }
-    std::cout << std::endl;
-    for(int timestep = 0; timestep < this_day.get_resolution(); timestep++){
-        std::cout << timestep << ": ";
-        for(Worker worker : day_workers){
-            std::cout << static_cast<int>(day_matrix[worker.get_id()][timestep]) << "    ";
-        }
-        std::cout << std::endl;
-    }
+
 }
+
 
 void menu(){
     Work_day current_day = Work_day();
@@ -85,7 +74,6 @@ void menu(){
             case Selections::FIND_WORKER:
                 break;
             case Selections::DISPLAY_DAY:
-                display_day(current_day);
                 break;
             case Selections::EXIT:
                 user_exit = true;
