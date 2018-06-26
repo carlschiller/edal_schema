@@ -133,8 +133,6 @@ void display_day_tasks(Work_day work_day){
     }
 }
 
-
-
 void menu(){
     Work_day current_day = Work_day();
     current_day.change_resolution(48);

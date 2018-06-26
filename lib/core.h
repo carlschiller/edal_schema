@@ -28,41 +28,6 @@ enum class Positions{
     NUM_OF_POSITIONS
 };
 
-/*
-enum class Tasks{
-    NOT_AVAILABLE,
-    AT_WORK,
-    SPOL_HERR,
-    SPOL_DAM,
-    STORSTAED_HERR,
-    STORSTAED_DAM,
-    AEVENTYR,
-    RECEPTION,
-    UTE_RECEPTION,
-    UTE_1,
-    UTE_2,
-    UTE_3,
-    UTE_4,
-    ROND,
-    ROND_BEVAKNING,
-    ROND_UTE,
-    UTEFIX,
-    INNEFIX,
-    BOTTENSUG_INNE,
-    AVRAEKNING,
-    GYM,
-    KONDITIONSPARK,
-    TOALETT_PLAN_1,
-    TOALETT_PLAN_23,
-    SPOL_25,
-    SPOL_50,
-    SPOL_AEVENTYR,
-    SPOL_AEVENTYRGANG,
-    SPOL_HOPPET,
-    NUM_OF_TASKS
-};
-*/
-
 class Tasks{
 private:
     std::map<std::string,int> m_task_map;
@@ -126,7 +91,5 @@ public:
     void build_work_day(); // creates m_worker_task_list;
     Tasks get_tasks();
 };
-
-
 
 #endif //EDAL_SCHEMA_CORE_H
