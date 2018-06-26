@@ -67,6 +67,7 @@ std::vector<int> menu_add_task(Work_day work_day){
     return selections;
 }
 
+// parses resolutions steps into a string representation of time.
 std::string clock_parser(int resolution, int time_to_convert){
     double time_step = 24/(double)resolution;
     auto hour = (int)floor(time_step*time_to_convert);
@@ -82,17 +83,57 @@ std::string clock_parser(int resolution, int time_to_convert){
     return hour_string + ":" + minute_string;
 }
 
+// finds max length of name of task in the matrix.
+int get_max_char_length(std::vector<std::vector<int>> matrix, Tasks current_tasks, int resolution){
+    int max_guess = 0;
+    for (int i = 0; i < resolution; ++i) {
+        for (int j = 0; j < matrix.size(); ++j) {
+            if(max_guess < current_tasks.get_task_name(matrix[j][i]).length()){
+                max_guess = (int)current_tasks.get_task_name(matrix[j][i]).length();
+            }
+        }
+    }
+    return max_guess;
+}
+
+// displays a column view of tasks, with names of tasks, for user readability and debugging purposes.
 void display_day_tasks(Work_day work_day){
     std::vector<std::vector<int>> matrix = work_day.get_work_day_reference();
     Tasks current_tasks = work_day.get_tasks();
+    // integer below is for padding of spaces in order to get even columns printed.
+    int max_length_of_task_names = get_max_char_length(matrix, current_tasks,work_day.get_resolution());
+
+    // printing a header for the columns:
+    std::string header;
+    unsigned long clock_padding = clock_parser(work_day.get_resolution(), 0).length();
+    header += std::string(clock_padding + 2,' '); // padding for clock.
+    for(int k = 0; k < matrix.size(); ++k){
+        std::string column_name = "Column " + std::to_string(k);
+        unsigned long column_padding = max_length_of_task_names - column_name.length();
+        column_name += std::string(column_padding,' ');
+        header += column_name;
+    }
+    // printing header and a separation line.
+    std::cout << header << std::endl;
+    std::cout << std::string(clock_padding, '-') + std::string((unsigned long)max_length_of_task_names*matrix.size(), '-') << std::endl;
+
     for(int i = 0; i < work_day.get_resolution(); ++i){
-        std::string temp_row = clock_parser(work_day.get_resolution(),i) + ": ";
+        std::string temp_row = clock_parser(work_day.get_resolution(),i) + ": "; // print clock as first column.
         for(int j = 0; j < matrix.size(); ++j){
-            temp_row += current_tasks.get_task_name(matrix[j][i]) + "    ";
+            // padding for current column.
+            int padding = max_length_of_task_names - (int)current_tasks.get_task_name(matrix[j][i]).length();
+            if(padding > 0){
+                temp_row += current_tasks.get_task_name(matrix[j][i]) + std::string((unsigned long)padding, ' ');
+            }
+            else{
+                temp_row += current_tasks.get_task_name(matrix[j][i]);
+            }
         }
-        std::cout << temp_row << std::endl;
+        std::cout << temp_row << std::endl; // prints row, repeat with next time slot.
     }
 }
+
+
 
 void menu(){
     Work_day current_day = Work_day();
