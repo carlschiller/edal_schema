@@ -15,11 +15,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e9642f34-6737-42ce-b1a8-d0654935f454" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/lib/core.h" beforeDir="false" afterPath="$PROJECT_DIR$/lib/core.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/menu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lib/menu.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/tasks.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/tasks.txt" afterDir="false" />
-    </list>
+    <list default="true" id="e9642f34-6737-42ce-b1a8-d0654935f454" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -67,7 +63,7 @@
       <file leaf-file-name="core.h" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/core.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="774">
+            <state relative-caret-position="816">
               <caret line="92" column="2" selection-start-line="92" selection-start-column="2" selection-end-line="92" selection-end-column="2" />
               <folding>
                 <element signature="e#105#122#0" expanded="true" />
@@ -254,16 +250,15 @@
       <workItem from="1529421669109" duration="4975000" />
       <workItem from="1529427637438" duration="1797000" />
       <workItem from="1529429633888" duration="754000" />
-      <workItem from="1529932272521" duration="13800000" />
+      <workItem from="1529932272521" duration="13810000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="49444000" />
+    <option name="totallyTimeSpent" value="49454000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.21428572" />
       <window_info anchor="bottom" id="TODO" order="10" />
@@ -272,7 +267,7 @@
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
       <window_info anchor="bottom" id="Find" order="5" weight="0.3296593" />
       <window_info anchor="bottom" id="Version Control" order="2" />
-      <window_info active="true" anchor="bottom" id="Run" order="6" visible="true" weight="0.04208417" />
+      <window_info anchor="bottom" id="Run" order="6" weight="0.3236473" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="3" />
       <window_info id="Favorites" order="0" side_tool="true" />
@@ -659,7 +654,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/core.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="774">
+        <state relative-caret-position="816">
           <caret line="92" column="2" selection-start-line="92" selection-start-column="2" selection-end-line="92" selection-end-column="2" />
           <folding>
             <element signature="e#105#122#0" expanded="true" />
