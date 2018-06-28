@@ -53,12 +53,14 @@ std::string Tasks::get_task_name(int index){
 }
 
 // adds a new task in the list.
-void Tasks::add_task(std::string new_key) {
+void Tasks::add_task(std::string new_key,bool flexibility, Genders sex) {
     std::map<std::string,int>::iterator value;
     value = m_task_map.find(new_key);
     if(value != m_task_map.end()){
         auto size = static_cast<int>(m_task_map.size());
         m_task_map[new_key] = size;
+        m_task_flexibility[new_key] = flexibility;
+        m_task_sex_requirement[new_key] = sex;
     }
     else{
         throw std::invalid_argument("Name of task already exists.");
@@ -121,6 +123,31 @@ Genders string_to_sex(const std::string &input){
     }
 }
 
+std::string boolean_to_string(bool input){
+    if(input){
+        return "<true>";
+    }
+    else{
+        return "<false>";
+    }
+}
+
+std::string sex_to_string(Genders input){
+    if(input == Genders::NONE){
+        return "<NONE>";
+    }
+    else if(input == Genders::MALE){
+        return "<MALE>";
+    }
+    else{
+        return "<FEMALE>";
+    }
+}
+
+std::string regex_find_and_replace(const std::string &line_of_text, const std::string &matcher, const std::string &replacer){
+    return std::regex_replace(line_of_text,std::regex(matcher),replacer);
+}
+
 // method below loads enum names from separate txt file into a private vector.
 // how tasks.txt is supposed to be formatted for this to work:
 // [NAME_OF_TASK],flexibility:[bool],sex_req:[MALE/FEMALE/NULL]'\n'
@@ -132,7 +159,6 @@ void Tasks::load_tasks_from_file(){
     }
     else{
         std::string line; // a line representing a task from tasks.txt.
-        std::string parameters; // arguments for the index, eg. sex specified task.
         int index = 0; // index of the enum.
         char delim = ',';
         std::vector<std::string> tokens; // after splitting line in tasks.txt by delimiter.
@@ -147,6 +173,35 @@ void Tasks::load_tasks_from_file(){
     file.close();
 }
 
+void Tasks::save_tasks_from_file() {
+    const std::string filename = "../lib/tasks.txt";
+    std::ifstream read_file(filename);
+    std::ofstream write_file(filename);
+    if(!read_file.is_open() || !write_file.is_open()){
+        std::exit(6); // TODO: fix a proper exception here.
+    }
+    else{
+        std::string line; // a line representing a task from tasks.txt.
+        int index = 0; // index of the enum.
+        char delim = ',';
+        std::vector<std::string> tokens; // after splitting line in tasks.txt by delimiter.
+        while(std::getline(read_file,line)){
+            tokens = split_by_delimiter(line,delim);
+            if(m_task_flexibility[tokens[0]] != string_to_boolean(tokens[1])){
+                // string_to_boolean(token[1]) converts original text file's boolean token into a boolean, then back into a string.
+                // this is for getting the right regex match string.
+                line = regex_find_and_replace(line,boolean_to_string(string_to_boolean(tokens[1])),boolean_to_string(m_task_flexibility[tokens[0]]));
+            }
+            if(m_task_sex_requirement[tokens[0]] != string_to_sex(tokens[2])){
+                // same reasoning as above.
+                line = regex_find_and_replace(line,sex_to_string(string_to_sex(tokens[2])),sex_to_string(m_task_sex_requirement[tokens[0]]));
+            }
+            write_file << line << std::endl;
+        }
+        read_file.close();
+        write_file.close();
+    }
+}
 
 
 /**

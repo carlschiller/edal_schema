@@ -39,8 +39,9 @@ public:
     std::string get_task_name(int);
     int get_task_value(const std::string &);
     static int not_at_work();
-    void add_task(std::string);
+    void add_task(std::string key, bool flexibility, Genders sex);
     void load_tasks_from_file();
+    void save_tasks_from_file();
 };
 
 // Worker class, each object type of Worker will contain all neccessary information about a person.
