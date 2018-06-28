@@ -9,12 +9,11 @@
 #include <ctime>
 #include <map>
 
-// Available genders.
+// Available sex.
 enum class Genders{
+    NONE = 0,
     MALE,
     FEMALE,
-    APPACHE_ATTACK_HELICOPTER,
-    NUM_OF_GENDERS
 };
 
 // Types of available work positions.
@@ -30,7 +29,9 @@ enum class Positions{
 
 class Tasks{
 private:
-    std::map<std::string,int> m_task_map;
+    std::map<std::string,int> m_task_map; // maps each name of task to an int.
+    std::map<std::string,bool> m_task_flexibility; // if worker is able to leave earlier than req. time
+    std::map<std::string,Genders> m_task_sex_requirement; // sex specific task [MALE/FEMALE/NULL]
 public:
     Tasks();
     std::vector<std::string> get_all_task_names();

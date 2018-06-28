@@ -481,6 +481,8 @@ sstream
 -
 iostream
 -
+regex
+-
 
 /Users/carlschiller/Documents/Github/edal_schema/lib/core.h
 vector

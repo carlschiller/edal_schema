@@ -17,7 +17,7 @@ enum Selections{
     EXIT,
 };
 
-Worker menu_add(){
+Worker menu_add_worker(){
     std::cout << "Enter name:" << std::endl;
     std::string name_of_worker;
     std::cin >> name_of_worker;
@@ -101,12 +101,12 @@ void display_day_tasks(Work_day work_day){
     std::vector<std::vector<int>> matrix = work_day.get_work_day_reference();
     Tasks current_tasks = work_day.get_tasks();
     // integer below is for padding of spaces in order to get even columns printed.
-    int max_length_of_task_names = get_max_char_length(matrix, current_tasks,work_day.get_resolution());
+    int max_length_of_task_names = get_max_char_length(matrix, current_tasks,work_day.get_resolution())+1;
 
     // printing a header for the columns:
     std::string header;
-    unsigned long clock_padding = clock_parser(work_day.get_resolution(), 0).length();
-    header += std::string(clock_padding + 2,' '); // padding for clock.
+    unsigned long clock_padding = clock_parser(work_day.get_resolution(), 0).length()+2;
+    header += std::string(clock_padding,' '); // padding for clock.
     for(int k = 0; k < matrix.size(); ++k){
         std::string column_name = "Column " + std::to_string(k);
         unsigned long column_padding = max_length_of_task_names - column_name.length();
@@ -154,7 +154,7 @@ void menu(){
                 user_exit = false;
                 break;
             case Selections::ADD_WORKER:
-                current_day.add_worker(menu_add());
+                current_day.add_worker(menu_add_worker());
                 break;
             case Selections::REMOVE_WORKER:
                 break;

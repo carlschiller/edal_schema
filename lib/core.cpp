@@ -7,6 +7,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <regex>
 
 /**
  * Methods for Tasks class
@@ -80,19 +81,66 @@ std::vector<int> Tasks::get_all_task_values() {
     return list_of_tasks;
 }
 
+// stolen from fluent{C++}, splitting a line into components based on a delimiter.
+std::vector<std::string> split_by_delimiter(const std::string &line, char delim){
+    std::vector<std::string> tokens;
+    std::string token;
+    std::istringstream token_stream(line); // converts string into a stream.
+    while(std::getline(token_stream,token,delim)){
+        tokens.push_back(token);
+    }
+    return tokens;
+}
+
+// converts string to boolean from tasks file.
+bool string_to_boolean(const std::string &input){
+    if(std::regex_search(input,std::regex("<true>"))){
+        return true;
+    }
+    else if(std::regex_search(input,std::regex("<false>"))){
+        return false;
+    }
+    else{
+        throw std::invalid_argument("Input string cannot be interpreted as boolean");
+    }
+}
+
+// converts string to Genders class from tasks file.
+Genders string_to_sex(const std::string &input){
+    if(std::regex_search(input,std::regex("<MALE>"))){
+        return Genders::MALE;
+    }
+    else if(std::regex_search(input,std::regex("<FEMALE>"))){
+        return Genders::FEMALE;
+    }
+    else if(std::regex_search(input,std::regex("<NULL>"))){
+        return Genders::NONE;
+    }
+    else{
+        throw std::invalid_argument("Input string cannot be interpreted as Genders class");
+    }
+}
+
 // method below loads enum names from separate txt file into a private vector.
+// how tasks.txt is supposed to be formatted for this to work:
+// [NAME_OF_TASK],flexibility:[bool],sex_req:[MALE/FEMALE/NULL]'\n'
 void Tasks::load_tasks_from_file(){
     const std::string filename = "../lib/tasks.txt";
     std::ifstream file(filename);
     if(!file.is_open()){
-        std::exit(6);
+        std::exit(6); // crash program if file is not found.
     }
     else{
-        std::string key;
-        int index = 0;
-        while(std::getline(file, key)){
-            m_task_map[key] = index;
-            key = "";
+        std::string line; // a line representing a task from tasks.txt.
+        std::string parameters; // arguments for the index, eg. sex specified task.
+        int index = 0; // index of the enum.
+        char delim = ',';
+        std::vector<std::string> tokens; // after splitting line in tasks.txt by delimiter.
+        while(std::getline(file, line)){
+            tokens = split_by_delimiter(line,delim);
+            m_task_map[tokens[0]] = index;
+            m_task_flexibility[tokens[0]] = string_to_boolean(tokens[1]);
+            m_task_sex_requirement[tokens[0]] = string_to_sex(tokens[2]);
             index++;
         }
     }
