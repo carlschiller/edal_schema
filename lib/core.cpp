@@ -185,6 +185,7 @@ void Tasks::save_tasks_from_file() {
         int index = 0; // index of the enum.
         char delim = ',';
         std::vector<std::string> tokens; // after splitting line in tasks.txt by delimiter.
+        // overwriting changes to existing tasks.
         while(std::getline(read_file,line)){
             tokens = split_by_delimiter(line,delim);
             if(m_task_flexibility[tokens[0]] != string_to_boolean(tokens[1])){
@@ -196,8 +197,19 @@ void Tasks::save_tasks_from_file() {
                 // same reasoning as above.
                 line = regex_find_and_replace(line,sex_to_string(string_to_sex(tokens[2])),sex_to_string(m_task_sex_requirement[tokens[0]]));
             }
+            ++index;
             write_file << line << std::endl;
         }
+        // now add new tasks to file not in original file.
+        auto task_size = static_cast<int>(m_task_map.size());
+        for(int i = index; i < task_size; ++i){
+            std::string task_name = Tasks::get_task_name(i);
+            std::string new_line = task_name + ',' + "flexibility:" +
+                     boolean_to_string(m_task_flexibility[task_name])+ ',' + "sex_req:" +
+                                   sex_to_string(m_task_sex_requirement[task_name]);
+            write_file << line << std::endl;
+        }
+
         read_file.close();
         write_file.close();
     }
