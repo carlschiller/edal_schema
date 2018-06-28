@@ -4,6 +4,102 @@
 
 #include <string>
 #include "core.h"
+#include <fstream>
+#include <sstream>
+#include <iostream>
+
+/**
+ * Methods for Tasks class
+ * --------------
+ * constructor: loads tasks from txt file.
+ * .not_at_work(): returns default not at work task. O(1)
+ * .get_task_values(string key): returns task number for given string key. O(log(n))
+ * .get_task_name(int index): return string name of task for given int index. O(n)
+ * .add_task(string new_key): appends a new task to the list at last position. O(log(n))
+ * .get_all_task_names(): returns whole list of tasks. O(n)
+ * .get_all_task_values(): returns whole list of tasks values. O(n)
+ * .load_tasks_from_file(): method for loading Tasks class from separate txt file. O(n)
+ * --------------
+ */
+
+Tasks::Tasks(){
+    load_tasks_from_file();
+};
+
+int Tasks::not_at_work() {
+    return 0;
+}
+
+int Tasks::get_task_value(const std::string &key) {
+    std::map<std::string,int>::iterator value;
+    value = m_task_map.find(key);
+    if(value == m_task_map.end()){
+        throw std::invalid_argument("Name of task not found in map.");
+    }
+    else{
+        int result = value->second;
+        return result;
+    }
+}
+
+std::string Tasks::get_task_name(int index){
+    for(auto& it : m_task_map){
+        if(it.second == index){
+            return it.first;
+        }
+    }
+    throw std::invalid_argument("Value of task not found in map.");
+}
+
+// adds a new task in the list.
+void Tasks::add_task(std::string new_key) {
+    std::map<std::string,int>::iterator value;
+    value = m_task_map.find(new_key);
+    if(value != m_task_map.end()){
+        auto size = static_cast<int>(m_task_map.size());
+        m_task_map[new_key] = size;
+    }
+    else{
+        throw std::invalid_argument("Name of task already exists.");
+    }
+}
+
+std::vector<std::string> Tasks::get_all_task_names() {
+    std::vector<std::string> list_of_tasks;
+    for(auto& it : m_task_map){
+        list_of_tasks.push_back(it.first);
+    }
+    return list_of_tasks;
+}
+
+std::vector<int> Tasks::get_all_task_values() {
+    std::vector<int> list_of_tasks;
+    for(auto& it : m_task_map){
+        list_of_tasks.push_back(it.second);
+    }
+    return list_of_tasks;
+}
+
+// method below loads enum names from separate txt file into a private vector.
+void Tasks::load_tasks_from_file(){
+    const std::string filename = "../lib/tasks.txt";
+    std::ifstream file(filename);
+    if(!file.is_open()){
+        std::exit(6);
+    }
+    else{
+        std::string key;
+        int index = 0;
+        while(std::getline(file, key)){
+            m_task_map[key] = index;
+            key = "";
+            index++;
+        }
+    }
+    file.close();
+}
+
+
 
 /**
  * Methods for Worker class
@@ -69,6 +165,12 @@ void Worker::change_id(int new_id) {
  * .add_worker : adds a new Worker class to the vector of workers currently available. O(1).
  * .remove_worker: removes a worker, searched by name. O(n).
  * .find_worker: finds and returns a worker, searched by name. O(n).
+ * .change_resolution: change resolution of work day. O(1)
+ * .get_all_workers: returns worker list for day. O(1) ish.
+ * .get_resolutions: returns resolution of day. O(1).
+ * .add_work_day_reference_column: adds a column to the reference matrix,
+ * a column of tasks to be distributed between some workers. O(n).
+ *
  * -----------------
  */
 
@@ -76,6 +178,7 @@ void Worker::change_id(int new_id) {
 Work_day::Work_day(){
     m_work_day_date = time(nullptr);
     m_worker_list.clear();
+    m_work_day_tasks = Tasks();
 }
 
 // constructor for workday with timestamp and worker list.
@@ -83,15 +186,7 @@ Work_day::Work_day(time_t date_of_workday,int resolution, std::vector<Worker> wo
     m_resolution = resolution;
     m_worker_list = std::move(worker_list);
     m_work_day_date = date_of_workday;
-
-    int id_assignment = 0;
-    for(Worker worker : m_worker_list){
-        worker.change_id(id_assignment);
-        id_assignment++;
-    }
-    // resizing list of tasks for workers to match length of worker list, each worker receives a list of size resolution with empty tasks.
-    std::vector<Tasks> init_tasks((unsigned long)m_resolution,Tasks::NOT_AVAILABLE);
-    m_work_day_tasks.resize(m_worker_list.size(),init_tasks);
+    m_work_day_tasks = Tasks(); // automatically loads from file when Work_day constructor is called.
 }
 
 void Work_day::add_worker(Worker new_worker) {
@@ -101,12 +196,10 @@ void Work_day::add_worker(Worker new_worker) {
         }
     }
 
-    // assigning an id to new worker, adding worker to day task list with NOT_AVAILABLE as standard.
+    // assigning an id to new worker.
     int id_assignment = (int)m_worker_list.size();
     new_worker.change_id(id_assignment);
     m_worker_list.push_back(new_worker);
-    std::vector<Tasks> init_tasks((unsigned long)m_resolution,Tasks::NOT_AVAILABLE);
-    m_work_day_tasks.push_back(init_tasks);
 
 }
 
@@ -126,7 +219,6 @@ void Work_day::remove_worker(const std::string &worker_name) {
     }
     else{
         // removing worker from task list based on position and id.
-        m_work_day_tasks.erase(m_work_day_tasks.begin()+m_worker_list[position_of_found_worker].get_id());
         m_worker_list.erase(m_worker_list.begin()+position_of_found_worker);
         for (int i = position_of_found_worker; i < m_worker_list.size(); ++i) {
             m_worker_list[i].change_id(m_worker_list[i].get_id()-1);
@@ -148,14 +240,6 @@ void Work_day::change_resolution(int new_resolution) {
     m_resolution = new_resolution;
 }
 
-std::vector<Tasks> Work_day::view_worker_tasks(const std::string &worker_name) {
-    return m_work_day_tasks[find_worker_id(worker_name)];
-}
-
-std::vector<std::vector<Tasks>> Work_day::view_all_worker_tasks() {
-    return m_work_day_tasks;
-}
-
 std::vector<Worker> Work_day::get_all_workers() {
     return m_worker_list;
 }
@@ -163,3 +247,61 @@ std::vector<Worker> Work_day::get_all_workers() {
 int Work_day::get_resolution() {
     return m_resolution;
 }
+
+void Work_day::add_work_day_reference_column(int task_number, int start_time, int end_time) {
+    // first check if start or end time has allowed values.
+    if(start_time < end_time && start_time < m_resolution && end_time < m_resolution){
+        // check if task number is in list of tasks.
+        bool found_task_flag = false;
+        std::vector<int> list_of_task_numbers = m_work_day_tasks.get_all_task_values(); // hope this works for speed.r
+        for(int task : list_of_task_numbers){
+            if(task == task_number){
+                found_task_flag = true;
+            }
+        }
+        if(found_task_flag){
+            // add task to reference matrix.
+            std::vector<int> reference_column;
+            reference_column.reserve((unsigned long)m_resolution);
+            for (int i = 0; i < start_time; ++i) {
+                // assigning no work before start time.
+                reference_column.push_back(Tasks::not_at_work());
+            }
+            for (int j = start_time; j < end_time; ++j){
+                // assigning task number
+                reference_column.push_back(task_number);
+            }
+            for (int k = end_time; k < m_resolution; ++k) {
+                reference_column.push_back(Tasks::not_at_work());
+            }
+            // appending column to reference matrix.
+            m_work_day_reference.push_back(reference_column);
+        }
+        else{
+            throw std::invalid_argument("invalid task id");
+        }
+    }
+    else{
+        throw std::invalid_argument("invalid start and/or end time");
+    }
+}
+
+void Work_day::remove_work_day_reference_column(int id) {
+    m_work_day_reference.erase(m_work_day_reference.begin()+id);
+}
+
+std::vector<std::vector<int>> Work_day::get_work_day_reference() {
+    return m_work_day_reference;
+}
+
+void Work_day::build_work_day() {
+    // shit complex thing.
+}
+
+Tasks Work_day::get_tasks() {
+    return m_work_day_tasks;
+}
+
+
+
+
