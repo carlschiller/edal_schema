@@ -20,6 +20,7 @@
  * .get_all_task_names(): returns whole list of tasks. O(n)
  * .get_all_task_values(): returns whole list of tasks values. O(n)
  * .load_tasks_from_file(): method for loading Tasks class from separate txt file. O(n)
+ * .save_tasks_to_file(): method for saving Tasks class to separate txt file. O(n)
  * --------------
  */
 
@@ -56,7 +57,7 @@ std::string Tasks::get_task_name(int index){
 void Tasks::add_task(std::string new_key,bool flexibility, Genders sex) {
     std::map<std::string,int>::iterator value;
     value = m_task_map.find(new_key);
-    if(value != m_task_map.end()){
+    if(value == m_task_map.end()){
         auto size = static_cast<int>(m_task_map.size());
         m_task_map[new_key] = size;
         m_task_flexibility[new_key] = flexibility;
@@ -84,7 +85,7 @@ std::vector<int> Tasks::get_all_task_values() {
 }
 
 // stolen from fluent{C++}, splitting a line into components based on a delimiter.
-std::vector<std::string> split_by_delimiter(const std::string &line, char delim){
+std::vector<std::string> Tasks::split_by_delimiter(const std::string &line, char delim){
     std::vector<std::string> tokens;
     std::string token;
     std::istringstream token_stream(line); // converts string into a stream.
@@ -95,7 +96,7 @@ std::vector<std::string> split_by_delimiter(const std::string &line, char delim)
 }
 
 // converts string to boolean from tasks file.
-bool string_to_boolean(const std::string &input){
+bool Tasks::string_to_boolean(const std::string &input){
     if(std::regex_search(input,std::regex("<true>"))){
         return true;
     }
@@ -108,7 +109,7 @@ bool string_to_boolean(const std::string &input){
 }
 
 // converts string to Genders class from tasks file.
-Genders string_to_sex(const std::string &input){
+Genders Tasks::string_to_sex(const std::string &input){
     if(std::regex_search(input,std::regex("<MALE>"))){
         return Genders::MALE;
     }
@@ -123,7 +124,7 @@ Genders string_to_sex(const std::string &input){
     }
 }
 
-std::string boolean_to_string(bool input){
+std::string Tasks::boolean_to_string(bool input){
     if(input){
         return "<true>";
     }
@@ -132,7 +133,7 @@ std::string boolean_to_string(bool input){
     }
 }
 
-std::string sex_to_string(Genders input){
+std::string Tasks::sex_to_string(Genders input){
     if(input == Genders::NONE){
         return "<NONE>";
     }
@@ -144,7 +145,7 @@ std::string sex_to_string(Genders input){
     }
 }
 
-std::string regex_find_and_replace(const std::string &line_of_text, const std::string &matcher, const std::string &replacer){
+std::string Tasks::regex_find_and_replace(const std::string &line_of_text, const std::string &matcher, const std::string &replacer){
     return std::regex_replace(line_of_text,std::regex(matcher),replacer);
 }
 
@@ -173,7 +174,7 @@ void Tasks::load_tasks_from_file(){
     file.close();
 }
 
-void Tasks::save_tasks_from_file() {
+void Tasks::save_tasks_to_file() {
     const std::string filename = "../lib/tasks.txt";
     std::ifstream read_file(filename);
     std::ofstream write_file(filename);
@@ -285,7 +286,8 @@ void Worker::change_id(int new_id) {
  * .get_resolutions: returns resolution of day. O(1).
  * .add_work_day_reference_column: adds a column to the reference matrix,
  * a column of tasks to be distributed between some workers. O(n).
- *
+ * .build_work_day: TODO finish this function.
+ * .save_work_day: saves changes made to members of this function.
  * -----------------
  */
 
@@ -293,7 +295,7 @@ void Worker::change_id(int new_id) {
 Work_day::Work_day(){
     m_work_day_date = time(nullptr);
     m_worker_list.clear();
-    m_work_day_tasks = Tasks();
+    work_day_tasks = Tasks();
 }
 
 // constructor for workday with timestamp and worker list.
@@ -301,7 +303,7 @@ Work_day::Work_day(time_t date_of_workday,int resolution, std::vector<Worker> wo
     m_resolution = resolution;
     m_worker_list = std::move(worker_list);
     m_work_day_date = date_of_workday;
-    m_work_day_tasks = Tasks(); // automatically loads from file when Work_day constructor is called.
+    work_day_tasks = Tasks(); // automatically loads from file when Work_day constructor is called.
 }
 
 void Work_day::add_worker(Worker new_worker) {
@@ -368,7 +370,7 @@ void Work_day::add_work_day_reference_column(int task_number, int start_time, in
     if(start_time < end_time && start_time < m_resolution && end_time < m_resolution){
         // check if task number is in list of tasks.
         bool found_task_flag = false;
-        std::vector<int> list_of_task_numbers = m_work_day_tasks.get_all_task_values(); // hope this works for speed.r
+        std::vector<int> list_of_task_numbers = work_day_tasks.get_all_task_values(); // hope this works for speed.r
         for(int task : list_of_task_numbers){
             if(task == task_number){
                 found_task_flag = true;
@@ -413,9 +415,11 @@ void Work_day::build_work_day() {
     // shit complex thing.
 }
 
-Tasks Work_day::get_tasks() {
-    return m_work_day_tasks;
+// save changes made to work day.
+void Work_day::save_work_day(){
+    work_day_tasks.save_tasks_to_file();
 }
+
 
 
 

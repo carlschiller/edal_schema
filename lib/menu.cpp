@@ -12,6 +12,7 @@ enum Selections{
     REMOVE_WORKER,
     FIND_WORKER,
     ADD_TASK,
+    NEW_TASK,
     DISPLAY_TASKS,
     DISPLAY_DAY,
     EXIT,
@@ -54,8 +55,8 @@ std::vector<int> menu_add_task(Work_day work_day){
     std::cout << "Enter end time:" << std::endl;
     int end_time;
     std::cin >> end_time;
-    std::vector<std::string> current_tasks = work_day.get_tasks().get_all_task_names();
-    std::vector<int> current_task_id = work_day.get_tasks().get_all_task_values();
+    std::vector<std::string> current_tasks = work_day.work_day_tasks.get_all_task_names();
+    std::vector<int> current_task_id = work_day.work_day_tasks.get_all_task_values();
     for(int i = 0; i < current_tasks.size(); ++i){
         std::cout << current_task_id[i] << ": "<< current_tasks[i] << std::endl;
     }
@@ -99,7 +100,7 @@ int get_max_char_length(std::vector<std::vector<int>> matrix, Tasks current_task
 // displays a column view of tasks, with names of tasks, for user readability and debugging purposes.
 void display_day_tasks(Work_day work_day){
     std::vector<std::vector<int>> matrix = work_day.get_work_day_reference();
-    Tasks current_tasks = work_day.get_tasks();
+    Tasks current_tasks = work_day.work_day_tasks;
     // integer below is for padding of spaces in order to get even columns printed.
     int max_length_of_task_names = get_max_char_length(matrix, current_tasks,work_day.get_resolution())+1;
 
@@ -133,6 +134,24 @@ void display_day_tasks(Work_day work_day){
     }
 }
 
+Work_day add_new_task_menu(Work_day day){
+    std::string name_of_task;
+    bool flexibility;
+    std::string temp_flex;
+    Genders sex;
+    std::string temp_sex;
+    std::cout << "Enter name of task" << std::endl;
+    std::cin >> name_of_task;
+    std::cout << "Enter flexibility (true/false)" << std::endl;
+    std::cin >> temp_flex;
+    flexibility = Tasks::string_to_boolean(temp_flex);
+    std::cout << "Enter sex req: (MALE/FEMALE/NONE)" << std::endl;
+    std::cin >> temp_sex;
+    sex = Tasks::string_to_sex(temp_sex);
+    day.work_day_tasks.add_task(name_of_task,flexibility,sex);
+    return day;
+}
+
 void menu(){
     Work_day current_day = Work_day();
     current_day.change_resolution(48);
@@ -143,6 +162,7 @@ void menu(){
         std::cout << Selections::REMOVE_WORKER << " :remove a user."<< std::endl;
         std::cout << Selections::FIND_WORKER << " :find a user."<< std::endl;
         std::cout << Selections::ADD_TASK << " :add task."<< std::endl;
+        std::cout << Selections::NEW_TASK << " :new task."<< std::endl;
         std::cout << Selections::DISPLAY_TASKS << " :display tasks."<< std::endl;
         std::cout << Selections::DISPLAY_DAY << " :display the day."<< std::endl;
         std::cout << Selections::EXIT << " :exit."<< std::endl;
@@ -166,6 +186,11 @@ void menu(){
                 current_day.add_work_day_reference_column(task_adder[2],task_adder[0],task_adder[1]);
                 break;
             }
+            case Selections::NEW_TASK:
+            {
+                current_day = add_new_task_menu(current_day);
+                break;
+            }
             case Selections::DISPLAY_TASKS:
                 display_day_tasks(current_day);
                 break;
@@ -173,6 +198,7 @@ void menu(){
                 break;
             case Selections::EXIT:
                 user_exit = true;
+                current_day.save_work_day();
                 break;
 
         }

@@ -32,6 +32,9 @@ private:
     std::map<std::string,int> m_task_map; // maps each name of task to an int.
     std::map<std::string,bool> m_task_flexibility; // if worker is able to leave earlier than req. time
     std::map<std::string,Genders> m_task_sex_requirement; // sex specific task [MALE/FEMALE/NULL]
+    std::vector<std::string> split_by_delimiter(const std::string &line, char delim);
+    std::string regex_find_and_replace(const std::string &line_of_text,
+                                       const std::string &matcher, const std::string &replacer);
 public:
     Tasks();
     std::vector<std::string> get_all_task_names();
@@ -41,7 +44,12 @@ public:
     static int not_at_work();
     void add_task(std::string key, bool flexibility, Genders sex);
     void load_tasks_from_file();
-    void save_tasks_from_file();
+    void save_tasks_to_file();
+
+    static bool string_to_boolean(const std::string &input);
+    static Genders string_to_sex(const std::string &input);
+    std::string boolean_to_string(bool input);
+    std::string sex_to_string(Genders input);
 };
 
 // Worker class, each object type of Worker will contain all neccessary information about a person.
@@ -73,7 +81,7 @@ class Work_day{
 private:
     std::vector<Worker> m_worker_list;
     time_t m_work_day_date;
-    Tasks m_work_day_tasks; // tasks used during this day.
+
     int m_resolution; // how many chunks a day should be divided into.
     std::vector<std::vector<int>> m_work_day_reference; // matrix of work day tasks to be done.
     std::vector<std::vector<int>> m_worker_task_list; // matrix of tasks for workers
@@ -81,6 +89,7 @@ public:
     Work_day();
     Work_day(time_t, int, std::vector<Worker>);
 
+    Tasks work_day_tasks; // tasks used during this day.
     void add_worker(Worker new_worker);
     void change_resolution(int);
     void remove_worker(const std::string &worker_name);
@@ -91,7 +100,7 @@ public:
     void remove_work_day_reference_column(int id);
     std::vector<std::vector<int>> get_work_day_reference();
     void build_work_day(); // creates m_worker_task_list;
-    Tasks get_tasks();
+    void save_work_day();
 };
 
 #endif //EDAL_SCHEMA_CORE_H
