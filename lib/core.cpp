@@ -116,7 +116,7 @@ Genders Tasks::string_to_sex(const std::string &input){
     else if(std::regex_search(input,std::regex("<FEMALE>"))){
         return Genders::FEMALE;
     }
-    else if(std::regex_search(input,std::regex("<NULL>"))){
+    else if(std::regex_search(input,std::regex("<NONE>"))){
         return Genders::NONE;
     }
     else{
@@ -164,11 +164,13 @@ void Tasks::load_tasks_from_file(){
         char delim = ',';
         std::vector<std::string> tokens; // after splitting line in tasks.txt by delimiter.
         while(std::getline(file, line)){
-            tokens = split_by_delimiter(line,delim);
-            m_task_map[tokens[0]] = index;
-            m_task_flexibility[tokens[0]] = string_to_boolean(tokens[1]);
-            m_task_sex_requirement[tokens[0]] = string_to_sex(tokens[2]);
-            index++;
+            if(line.length() != 0){
+                tokens = split_by_delimiter(line,delim);
+                m_task_map[tokens[0]] = index;
+                m_task_flexibility[tokens[0]] = string_to_boolean(tokens[1]);
+                m_task_sex_requirement[tokens[0]] = string_to_sex(tokens[2]);
+                index++;
+            }
         }
     }
     file.close();
@@ -176,42 +178,20 @@ void Tasks::load_tasks_from_file(){
 
 void Tasks::save_tasks_to_file() {
     const std::string filename = "../lib/tasks.txt";
-    std::ifstream read_file(filename);
     std::ofstream write_file(filename);
-    if(!read_file.is_open() || !write_file.is_open()){
+    if(!write_file.is_open()){
         std::exit(6); // TODO: fix a proper exception here.
     }
     else{
-        std::string line; // a line representing a task from tasks.txt.
-        int index = 0; // index of the enum.
-        char delim = ',';
-        std::vector<std::string> tokens; // after splitting line in tasks.txt by delimiter.
-        // overwriting changes to existing tasks.
-        while(std::getline(read_file,line)){
-            tokens = split_by_delimiter(line,delim);
-            if(m_task_flexibility[tokens[0]] != string_to_boolean(tokens[1])){
-                // string_to_boolean(token[1]) converts original text file's boolean token into a boolean, then back into a string.
-                // this is for getting the right regex match string.
-                line = regex_find_and_replace(line,boolean_to_string(string_to_boolean(tokens[1])),boolean_to_string(m_task_flexibility[tokens[0]]));
-            }
-            if(m_task_sex_requirement[tokens[0]] != string_to_sex(tokens[2])){
-                // same reasoning as above.
-                line = regex_find_and_replace(line,sex_to_string(string_to_sex(tokens[2])),sex_to_string(m_task_sex_requirement[tokens[0]]));
-            }
-            ++index;
-            write_file << line << std::endl;
-        }
         // now add new tasks to file not in original file.
         auto task_size = static_cast<int>(m_task_map.size());
-        for(int i = index; i < task_size; ++i){
+        for(int i = 0; i < task_size; ++i){
             std::string task_name = Tasks::get_task_name(i);
             std::string new_line = task_name + ',' + "flexibility:" +
                      boolean_to_string(m_task_flexibility[task_name])+ ',' + "sex_req:" +
                                    sex_to_string(m_task_sex_requirement[task_name]);
-            write_file << line << std::endl;
+            write_file << new_line << std::endl;
         }
-
-        read_file.close();
         write_file.close();
     }
 }
@@ -314,7 +294,7 @@ void Work_day::add_worker(Worker new_worker) {
     }
 
     // assigning an id to new worker.
-    int id_assignment = (int)m_worker_list.size();
+    auto id_assignment = (int)m_worker_list.size();
     new_worker.change_id(id_assignment);
     m_worker_list.push_back(new_worker);
 
