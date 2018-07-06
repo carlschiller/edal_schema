@@ -8,6 +8,7 @@
 #include <vector>
 #include <ctime>
 #include <map>
+#include <regex>
 
 // Available sex.
 enum class Genders{
@@ -24,23 +25,34 @@ enum class Positions{
     PARENT_LEAVE,
     WEEKEND_WORKER,
     EXTRA_WORKER,
-    NUM_OF_POSITIONS
+};
+
+std::string Positions_name_table[6]{
+    "FULL_TIME",
+    "HALF_TIME",
+    "TEMPORARY_POSITION",
+    "PARENT_LEAVE",
+    "WEEKEND_WORKER",
+    "EXTRA_WORKER"
 };
 
 // Functions for saving and loading.
 static bool string_to_boolean(const std::string &input);
 static Genders string_to_sex(const std::string &input);
+static Positions string_to_positions(const std::string &input);
 std::string boolean_to_string(bool input);
 std::string sex_to_string(Genders input);
+std::string positions_to_string(Positions input);
 std::string regex_find_and_replace(const std::string &line_of_text,
-                                   const std::string &matcher, const std::string &replacer);
+                                   std::regex reg, const std::string &replacer);
+std::string regex_get_first_match(const std::string &line, std::regex reg);
+std::vector<std::string> split_by_delimiter(const std::string &line, char delim);
 
 class Tasks{
 private:
     std::map<std::string,int> m_task_map; // maps each name of task to an int.
     std::map<std::string,bool> m_task_flexibility; // if worker is able to leave earlier than req. time
     std::map<std::string,Genders> m_task_sex_requirement; // sex specific task [MALE/FEMALE/NULL]
-    std::vector<std::string> split_by_delimiter(const std::string &line, char delim);
 public:
     Tasks();
     std::vector<std::string> get_all_task_names();
@@ -87,7 +99,7 @@ private:
     void save_workers_to_file();
 public:
     Work_day();
-    Work_day(time_t, int, std::vector<Worker>);
+    Work_day(time_t, int);
 
     Tasks work_day_tasks; // tasks used during this day.
     void add_worker(Worker new_worker);

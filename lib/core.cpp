@@ -38,6 +38,16 @@ Genders string_to_sex(const std::string &input){
     }
 }
 
+Positions string_to_positions(const std::string &input){
+    int index = 0;
+    for(std::string position : Positions_name_table){
+       if(input == position){
+           return static_cast<Positions>(index);
+       }
+       index++;
+    }
+}
+
 std::string boolean_to_string(bool input){
     if(input){
         return "<true>";
@@ -59,8 +69,29 @@ std::string sex_to_string(Genders input){
     }
 }
 
-std::string regex_find_and_replace(const std::string &line_of_text, const std::string &matcher, const std::string &replacer){
-    return std::regex_replace(line_of_text,std::regex(matcher),replacer);
+std::string positions_to_string(Positions input){
+    return Positions_name_table[static_cast<int>(input)];
+}
+
+// stolen from fluent{C++}, splitting a line into components based on a delimiter.
+std::vector<std::string> split_by_delimiter(const std::string &line, char delim){
+    std::vector<std::string> tokens;
+    std::string token;
+    std::istringstream token_stream(line); // converts string into a stream.
+    while(std::getline(token_stream,token,delim)){
+        tokens.push_back(token);
+    }
+    return tokens;
+}
+
+std::string regex_find_and_replace(const std::string &line_of_text, std::regex reg, const std::string &replacer){
+    return std::regex_replace(line_of_text,reg,replacer);
+}
+
+std::string regex_get_first_match(const std::string &line, std::regex reg){
+    std::smatch matcher;
+    std::regex_search(line,matcher,reg);
+    return matcher[0];
 }
 
 /**
@@ -136,17 +167,6 @@ std::vector<int> Tasks::get_all_task_values() {
         list_of_tasks.push_back(it.second);
     }
     return list_of_tasks;
-}
-
-// stolen from fluent{C++}, splitting a line into components based on a delimiter.
-std::vector<std::string> Tasks::split_by_delimiter(const std::string &line, char delim){
-    std::vector<std::string> tokens;
-    std::string token;
-    std::istringstream token_stream(line); // converts string into a stream.
-    while(std::getline(token_stream,token,delim)){
-        tokens.push_back(token);
-    }
-    return tokens;
 }
 
 // method below loads enum names from separate txt file into a private vector.
@@ -268,18 +288,53 @@ Work_day::Work_day(){
     m_work_day_date = time(nullptr);
     m_worker_list.clear();
     work_day_tasks = Tasks();
+    load_workers_from_file();
 }
 
 // constructor for workday with timestamp and worker list.
-Work_day::Work_day(time_t date_of_workday,int resolution, std::vector<Worker> worker_list){
+Work_day::Work_day(time_t date_of_workday,int resolution){
     m_resolution = resolution;
-    m_worker_list = std::move(worker_list);
+    m_worker_list.clear();
     m_work_day_date = date_of_workday;
     work_day_tasks = Tasks(); // automatically loads from file when Work_day constructor is called.
+    load_workers_from_file();
 }
 
 void Work_day::load_workers_from_file() {
+    const std::string filename = "../lib/tasks.txt";
+    std::ifstream file(filename);
+    if(!file.is_open()){
+        std::exit(6);
+    }
+    else{
+        std::string line;
+        std::vector<std::string> splits;
+        while(std::getline(file,line)){
+            if(line.length()!=0){
+                splits = split_by_delimiter(line,',');
 
+                // getting name of worker
+                std::string worker_name = regex_get_first_match(splits[0],std::regex("<.*>"));
+                worker_name = regex_find_and_replace(worker_name,std::regex("[<>]"),"");
+
+                // getting sex of worker
+                Genders worker_sex = string_to_sex(splits[1]);
+
+                // getting position of worker, but must remove unneccessary clutter first from input.
+                std::string worker_position_sanitized_input = regex_get_first_match(splits[2],std::regex("<.*>"));
+                worker_position_sanitized_input = regex_find_and_replace(worker_position_sanitized_input,std::regex("[<>]"),"");
+                Positions worker_position = string_to_positions(worker_position_sanitized_input);
+
+                // getting personal number.
+                std::string worker_personal_number = regex_get_first_match(splits[3],std::regex("<.*>"));
+                worker_personal_number = regex_find_and_replace(worker_personal_number,std::regex("[<>]"),"");
+                long worker_number = std::stoi(worker_personal_number);
+
+                // appending to worker list.
+                m_worker_list.emplace_back(worker_name,worker_sex,worker_position,worker_number);
+            }
+        }
+    }
 }
 
 void Work_day::save_workers_to_file() {

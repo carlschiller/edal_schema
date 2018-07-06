@@ -16,9 +16,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e9642f34-6737-42ce-b1a8-d0654935f454" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/workers.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/core.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lib/core.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/core.h" beforeDir="false" afterPath="$PROJECT_DIR$/lib/core.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/workers.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lib/workers.txt" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -67,8 +67,8 @@
       <file leaf-file-name="core.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/core.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="653">
-              <caret line="94" column="55" selection-start-line="94" selection-start-column="55" selection-end-line="94" selection-end-column="55" />
+            <state relative-caret-position="1515">
+              <caret line="101" column="26" lean-forward="true" selection-start-line="101" selection-start-column="26" selection-end-line="101" selection-end-column="26" />
               <folding>
                 <element signature="e#105#122#0" expanded="true" />
               </folding>
@@ -76,11 +76,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="core.cpp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="core.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/core.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4740">
-              <caret line="316" column="1" selection-start-line="316" selection-start-column="1" selection-end-line="316" selection-end-column="1" />
+            <state relative-caret-position="-10">
+              <caret line="395" column="9" lean-forward="true" selection-start-line="395" selection-start-column="9" selection-end-line="395" selection-end-column="9" />
               <folding>
                 <element signature="e#50#67#0" expanded="true" />
               </folding>
@@ -88,7 +88,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tasks.txt" pinned="false" current-in-tab="false">
+      <file leaf-file-name="tasks.txt" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/tasks.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="15">
@@ -101,7 +101,7 @@
         <entry file="file://$PROJECT_DIR$/lib/workers.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret column="87" lean-forward="true" selection-start-column="87" selection-end-column="87" />
+              <caret column="83" lean-forward="true" selection-start-column="83" selection-end-column="83" />
             </state>
           </provider>
         </entry>
@@ -156,8 +156,8 @@
         <option value="$PROJECT_DIR$/lib/menu.cpp" />
         <option value="$PROJECT_DIR$/lib/tasks.txt" />
         <option value="$PROJECT_DIR$/lib/workers.txt" />
-        <option value="$PROJECT_DIR$/lib/core.h" />
         <option value="$PROJECT_DIR$/lib/core.cpp" />
+        <option value="$PROJECT_DIR$/lib/core.h" />
       </list>
     </option>
   </component>
@@ -269,24 +269,24 @@
       <workItem from="1529932272521" duration="13810000" />
       <workItem from="1530027855499" duration="687000" />
       <workItem from="1530037346552" duration="13489000" />
-      <workItem from="1530781829198" duration="5487000" />
+      <workItem from="1530781829198" duration="8886000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="69117000" />
+    <option name="totallyTimeSpent" value="72516000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.21428572" />
+      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.21428572" />
       <window_info anchor="bottom" id="TODO" order="10" />
       <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.67321426" weight="0.3296593" />
       <window_info anchor="bottom" id="CMake" order="0" />
-      <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.37083334" side_tool="true" visible="true" weight="0.04208417" />
+      <window_info active="true" anchor="bottom" id="Event Log" order="1" sideWeight="0.37083334" side_tool="true" visible="true" weight="0.12024048" />
       <window_info anchor="bottom" id="Version Control" order="2" />
-      <window_info anchor="bottom" id="Run" order="6" sideWeight="0.62916666" visible="true" weight="0.04208417" />
+      <window_info anchor="bottom" id="Run" order="6" sideWeight="0.62916666" weight="0.12024048" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="3" />
       <window_info id="Favorites" order="0" side_tool="true" />
@@ -694,24 +694,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/workers.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="87" lean-forward="true" selection-start-column="87" selection-end-column="87" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/tasks.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/core.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="653">
-          <caret line="94" column="55" selection-start-line="94" selection-start-column="55" selection-end-line="94" selection-end-column="55" />
+        <state relative-caret-position="1515">
+          <caret line="101" column="26" lean-forward="true" selection-start-line="101" selection-start-column="26" selection-end-line="101" selection-end-column="26" />
           <folding>
             <element signature="e#105#122#0" expanded="true" />
           </folding>
@@ -720,11 +706,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/core.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4740">
-          <caret line="316" column="1" selection-start-line="316" selection-start-column="1" selection-end-line="316" selection-end-column="1" />
+        <state relative-caret-position="-10">
+          <caret line="395" column="9" lean-forward="true" selection-start-line="395" selection-start-column="9" selection-end-line="395" selection-end-column="9" />
           <folding>
             <element signature="e#50#67#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/workers.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="83" lean-forward="true" selection-start-column="83" selection-end-column="83" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/tasks.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
         </state>
       </provider>
     </entry>
