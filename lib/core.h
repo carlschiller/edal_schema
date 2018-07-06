@@ -27,14 +27,20 @@ enum class Positions{
     NUM_OF_POSITIONS
 };
 
+// Functions for saving and loading.
+static bool string_to_boolean(const std::string &input);
+static Genders string_to_sex(const std::string &input);
+std::string boolean_to_string(bool input);
+std::string sex_to_string(Genders input);
+std::string regex_find_and_replace(const std::string &line_of_text,
+                                   const std::string &matcher, const std::string &replacer);
+
 class Tasks{
 private:
     std::map<std::string,int> m_task_map; // maps each name of task to an int.
     std::map<std::string,bool> m_task_flexibility; // if worker is able to leave earlier than req. time
     std::map<std::string,Genders> m_task_sex_requirement; // sex specific task [MALE/FEMALE/NULL]
     std::vector<std::string> split_by_delimiter(const std::string &line, char delim);
-    std::string regex_find_and_replace(const std::string &line_of_text,
-                                       const std::string &matcher, const std::string &replacer);
 public:
     Tasks();
     std::vector<std::string> get_all_task_names();
@@ -45,11 +51,6 @@ public:
     void add_task(std::string key, bool flexibility, Genders sex);
     void load_tasks_from_file();
     void save_tasks_to_file();
-
-    static bool string_to_boolean(const std::string &input);
-    static Genders string_to_sex(const std::string &input);
-    std::string boolean_to_string(bool input);
-    std::string sex_to_string(Genders input);
 };
 
 // Worker class, each object type of Worker will contain all neccessary information about a person.
@@ -59,7 +60,6 @@ private:
     Genders m_worker_sex;
     Positions m_position;
     long m_personal_number;
-    int m_date_id;
 public:
     Worker(std::string, Genders, Positions, long);
 
@@ -67,13 +67,11 @@ public:
     Genders get_gender();
     Positions get_position();
     long get_personal_number();
-    int get_id();
 
     void change_name(std::string);
     void change_gender(Genders);
     void change_position(Positions);
     void change_personal_number(long);
-    void change_id(int);
 };
 
 // Work day class, contains all necessary information about the workday.
@@ -85,6 +83,8 @@ private:
     int m_resolution; // how many chunks a day should be divided into.
     std::vector<std::vector<int>> m_work_day_reference; // matrix of work day tasks to be done.
     std::vector<std::vector<int>> m_worker_task_list; // matrix of tasks for workers
+    void load_workers_from_file();
+    void save_workers_to_file();
 public:
     Work_day();
     Work_day(time_t, int, std::vector<Worker>);
@@ -93,7 +93,6 @@ public:
     void add_worker(Worker new_worker);
     void change_resolution(int);
     void remove_worker(const std::string &worker_name);
-    int find_worker_id(const std::string &worker_name);
     std::vector<Worker> get_all_workers();
     int get_resolution();
     void add_work_day_reference_column(int task_number, int start_time, int end_time);

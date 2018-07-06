@@ -9,6 +9,60 @@
 #include <iostream>
 #include <regex>
 
+// converts string to boolean from tasks file.
+bool string_to_boolean(const std::string &input){
+    if(std::regex_search(input,std::regex("<true>"))){
+        return true;
+    }
+    else if(std::regex_search(input,std::regex("<false>"))){
+        return false;
+    }
+    else{
+        throw std::invalid_argument("Input string cannot be interpreted as boolean");
+    }
+}
+
+// converts string to Genders class from tasks file.
+Genders string_to_sex(const std::string &input){
+    if(std::regex_search(input,std::regex("<MALE>"))){
+        return Genders::MALE;
+    }
+    else if(std::regex_search(input,std::regex("<FEMALE>"))){
+        return Genders::FEMALE;
+    }
+    else if(std::regex_search(input,std::regex("<NONE>"))){
+        return Genders::NONE;
+    }
+    else{
+        throw std::invalid_argument("Input string cannot be interpreted as Genders class");
+    }
+}
+
+std::string boolean_to_string(bool input){
+    if(input){
+        return "<true>";
+    }
+    else{
+        return "<false>";
+    }
+}
+
+std::string sex_to_string(Genders input){
+    if(input == Genders::NONE){
+        return "<NONE>";
+    }
+    else if(input == Genders::MALE){
+        return "<MALE>";
+    }
+    else{
+        return "<FEMALE>";
+    }
+}
+
+std::string regex_find_and_replace(const std::string &line_of_text, const std::string &matcher, const std::string &replacer){
+    return std::regex_replace(line_of_text,std::regex(matcher),replacer);
+}
+
 /**
  * Methods for Tasks class
  * --------------
@@ -95,60 +149,6 @@ std::vector<std::string> Tasks::split_by_delimiter(const std::string &line, char
     return tokens;
 }
 
-// converts string to boolean from tasks file.
-bool Tasks::string_to_boolean(const std::string &input){
-    if(std::regex_search(input,std::regex("<true>"))){
-        return true;
-    }
-    else if(std::regex_search(input,std::regex("<false>"))){
-        return false;
-    }
-    else{
-        throw std::invalid_argument("Input string cannot be interpreted as boolean");
-    }
-}
-
-// converts string to Genders class from tasks file.
-Genders Tasks::string_to_sex(const std::string &input){
-    if(std::regex_search(input,std::regex("<MALE>"))){
-        return Genders::MALE;
-    }
-    else if(std::regex_search(input,std::regex("<FEMALE>"))){
-        return Genders::FEMALE;
-    }
-    else if(std::regex_search(input,std::regex("<NONE>"))){
-        return Genders::NONE;
-    }
-    else{
-        throw std::invalid_argument("Input string cannot be interpreted as Genders class");
-    }
-}
-
-std::string Tasks::boolean_to_string(bool input){
-    if(input){
-        return "<true>";
-    }
-    else{
-        return "<false>";
-    }
-}
-
-std::string Tasks::sex_to_string(Genders input){
-    if(input == Genders::NONE){
-        return "<NONE>";
-    }
-    else if(input == Genders::MALE){
-        return "<MALE>";
-    }
-    else{
-        return "<FEMALE>";
-    }
-}
-
-std::string Tasks::regex_find_and_replace(const std::string &line_of_text, const std::string &matcher, const std::string &replacer){
-    return std::regex_replace(line_of_text,std::regex(matcher),replacer);
-}
-
 // method below loads enum names from separate txt file into a private vector.
 // how tasks.txt is supposed to be formatted for this to work:
 // [NAME_OF_TASK],flexibility:[bool],sex_req:[MALE/FEMALE/NULL]'\n'
@@ -205,12 +205,10 @@ void Tasks::save_tasks_to_file() {
  * .get_gender : gets gender of worker.
  * .get_position : gets position of worker.
  * .get_personal_number: gets personal number of worker.
- * .get_id : gets id of worker for the current day.
  * .change_name: change name of worker.
  * .change_gender: changes (!) gender of worker.
  * .change_position: change position of worker.
  * .change_personal_number : change personal number of worker.
- * .change_id : changes id of worker for the current day.
  * -----------------
  * All methods are O(1).
  */
@@ -220,7 +218,6 @@ Worker::Worker(std::string worker_name, Genders worker_sex, Positions position, 
     m_worker_sex = worker_sex;
     m_position = position;
     m_personal_number = personal_number;
-    m_date_id = 0;
 }
 
 std::string Worker::get_name(){return m_worker_name;}
@@ -230,8 +227,6 @@ Genders Worker::get_gender(){return m_worker_sex;}
 Positions Worker::get_position(){return m_position;}
 
 long Worker::get_personal_number(){return m_personal_number;}
-
-int Worker::get_id() {return m_date_id;}
 
 void Worker::change_name(std::string worker_name){
     m_worker_name = std::move(worker_name);
@@ -249,15 +244,12 @@ void Worker::change_personal_number(long personal_number){
     m_personal_number = personal_number;
 }
 
-void Worker::change_id(int new_id) {
-    m_date_id = new_id;
-}
-
 
 /**
  * Methods for Work_day class
  * -----------------
  *  constructor: creates a new work day with a time stamp.
+ *  .load_workers_from_file(): loads workers from txt file.
  * .add_worker : adds a new Worker class to the vector of workers currently available. O(1).
  * .remove_worker: removes a worker, searched by name. O(n).
  * .find_worker: finds and returns a worker, searched by name. O(n).
@@ -286,16 +278,20 @@ Work_day::Work_day(time_t date_of_workday,int resolution, std::vector<Worker> wo
     work_day_tasks = Tasks(); // automatically loads from file when Work_day constructor is called.
 }
 
+void Work_day::load_workers_from_file() {
+
+}
+
+void Work_day::save_workers_to_file() {
+
+}
+
 void Work_day::add_worker(Worker new_worker) {
     for(Worker worker: m_worker_list){
         if(worker.get_name() == new_worker.get_name()){
             throw std::invalid_argument("Worker already exists");
         }
     }
-
-    // assigning an id to new worker.
-    auto id_assignment = (int)m_worker_list.size();
-    new_worker.change_id(id_assignment);
     m_worker_list.push_back(new_worker);
 
 }
@@ -317,20 +313,7 @@ void Work_day::remove_worker(const std::string &worker_name) {
     else{
         // removing worker from task list based on position and id.
         m_worker_list.erase(m_worker_list.begin()+position_of_found_worker);
-        for (int i = position_of_found_worker; i < m_worker_list.size(); ++i) {
-            m_worker_list[i].change_id(m_worker_list[i].get_id()-1);
-        }
-
     }
-}
-
-int Work_day::find_worker_id(const std::string &worker_name) {
-    for(Worker worker : m_worker_list){
-        if(worker.get_name() == worker_name){
-            return worker.get_id();
-        }
-    }
-    throw std::invalid_argument("Name not found in list of workers for the day");
 }
 
 void Work_day::change_resolution(int new_resolution) {
@@ -399,6 +382,7 @@ void Work_day::build_work_day() {
 void Work_day::save_work_day(){
     work_day_tasks.save_tasks_to_file();
 }
+
 
 
 
