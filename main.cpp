@@ -1,5 +1,4 @@
 #include <iostream>
-#include "lib/core.h"
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include "lib/menu.h"

@@ -483,6 +483,8 @@ iostream
 -
 regex
 -
+stdexcept
+-
 
 /Users/carlschiller/Documents/Github/edal_schema/lib/core.h
 vector
@@ -490,6 +492,8 @@ vector
 ctime
 -
 map
+-
+regex
 -
 
 /Users/carlschiller/Documents/Github/edal_schema/lib/menu.cpp
@@ -507,8 +511,6 @@ cmath
 /Users/carlschiller/Documents/Github/edal_schema/main.cpp
 iostream
 -
-lib/core.h
-/Users/carlschiller/Documents/Github/edal_schema/lib/core.h
 gtest/gtest.h
 -
 gmock/gmock.h

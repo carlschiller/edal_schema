@@ -10,6 +10,7 @@
 #include <map>
 #include <regex>
 
+
 // Available sex.
 enum class Genders{
     NONE = 0,
@@ -37,16 +38,19 @@ std::string Positions_name_table[6]{
 };
 
 // Functions for saving and loading.
-static bool string_to_boolean(const std::string &input);
-static Genders string_to_sex(const std::string &input);
-static Positions string_to_positions(const std::string &input);
-std::string boolean_to_string(bool input);
-std::string sex_to_string(Genders input);
-std::string positions_to_string(Positions input);
-std::string regex_find_and_replace(const std::string &line_of_text,
-                                   std::regex reg, const std::string &replacer);
-std::string regex_get_first_match(const std::string &line, std::regex reg);
-std::vector<std::string> split_by_delimiter(const std::string &line, char delim);
+
+namespace Converters {
+    extern bool string_to_boolean(const std::string &input);
+    extern Genders string_to_sex(const std::string &input);
+    extern Positions string_to_positions(const std::string &input);
+    extern std::string boolean_to_string(bool input);
+    extern std::string sex_to_string(Genders input);
+    extern std::string positions_to_string(Positions input);
+    extern std::string regex_find_and_replace(const std::string &line_of_text,
+                                              const std::regex &reg, const std::string &replacer);
+    extern std::string regex_get_first_match(const std::string &line, const std::regex &reg);
+    extern std::vector<std::string> split_by_delimiter(const std::string &line, char delim);
+}
 
 class Tasks{
 private:

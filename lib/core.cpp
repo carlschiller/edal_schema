@@ -8,90 +8,94 @@
 #include <sstream>
 #include <iostream>
 #include <regex>
+#include <stdexcept>
 
-// converts string to boolean from tasks file.
-bool string_to_boolean(const std::string &input){
-    if(std::regex_search(input,std::regex("<true>"))){
-        return true;
+namespace Converters{
+    Positions string_to_positions(const std::string &input){
+        int index = 0;
+        for(std::string position : Positions_name_table){
+            if(input == position){
+                return static_cast<Positions>(index);
+            }
+            index++;
+        }
+        throw std::runtime_error("Error converting string to positions");
     }
-    else if(std::regex_search(input,std::regex("<false>"))){
-        return false;
-    }
-    else{
-        throw std::invalid_argument("Input string cannot be interpreted as boolean");
-    }
-}
 
-// converts string to Genders class from tasks file.
-Genders string_to_sex(const std::string &input){
-    if(std::regex_search(input,std::regex("<MALE>"))){
-        return Genders::MALE;
+    std::string boolean_to_string(bool input){
+        if(input){
+            return "<true>";
+        }
+        else{
+            return "<false>";
+        }
     }
-    else if(std::regex_search(input,std::regex("<FEMALE>"))){
-        return Genders::FEMALE;
-    }
-    else if(std::regex_search(input,std::regex("<NONE>"))){
-        return Genders::NONE;
-    }
-    else{
-        throw std::invalid_argument("Input string cannot be interpreted as Genders class");
-    }
-}
 
-Positions string_to_positions(const std::string &input){
-    int index = 0;
-    for(std::string position : Positions_name_table){
-       if(input == position){
-           return static_cast<Positions>(index);
-       }
-       index++;
+    std::string sex_to_string(Genders input){
+        if(input == Genders::NONE){
+            return "<NONE>";
+        }
+        else if(input == Genders::MALE){
+            return "<MALE>";
+        }
+        else{
+            return "<FEMALE>";
+        }
     }
-}
 
-std::string boolean_to_string(bool input){
-    if(input){
-        return "<true>";
+    std::string positions_to_string(Positions input){
+        return Positions_name_table[static_cast<int>(input)];
     }
-    else{
-        return "<false>";
-    }
-}
 
-std::string sex_to_string(Genders input){
-    if(input == Genders::NONE){
-        return "<NONE>";
+    // stolen from fluent{C++}, splitting a line into components based on a delimiter.
+    std::vector<std::string> split_by_delimiter(const std::string &line, char delim){
+        std::vector<std::string> tokens;
+        std::string token;
+        std::istringstream token_stream(line); // converts string into a stream.
+        while(std::getline(token_stream,token,delim)){
+            tokens.push_back(token);
+        }
+        return tokens;
     }
-    else if(input == Genders::MALE){
-        return "<MALE>";
+
+    std::string regex_find_and_replace(const std::string &line_of_text, const std::regex &reg, const std::string &replacer){
+        return std::regex_replace(line_of_text,reg,replacer);
     }
-    else{
-        return "<FEMALE>";
+
+    std::string regex_get_first_match(const std::string &line, const std::regex &reg){
+        std::smatch matcher;
+        std::regex_search(line,matcher,reg);
+        return matcher[0];
     }
-}
 
-std::string positions_to_string(Positions input){
-    return Positions_name_table[static_cast<int>(input)];
-}
-
-// stolen from fluent{C++}, splitting a line into components based on a delimiter.
-std::vector<std::string> split_by_delimiter(const std::string &line, char delim){
-    std::vector<std::string> tokens;
-    std::string token;
-    std::istringstream token_stream(line); // converts string into a stream.
-    while(std::getline(token_stream,token,delim)){
-        tokens.push_back(token);
+    // converts string to Genders class from tasks file.
+    Genders string_to_sex(const std::string &input){
+        if(std::regex_search(input,std::regex("<MALE>"))){
+            return Genders::MALE;
+        }
+        else if(std::regex_search(input,std::regex("<FEMALE>"))){
+            return Genders::FEMALE;
+        }
+        else if(std::regex_search(input,std::regex("<NONE>"))){
+            return Genders::NONE;
+        }
+        else{
+            throw std::invalid_argument("Input string cannot be interpreted as Genders class");
+        }
     }
-    return tokens;
-}
 
-std::string regex_find_and_replace(const std::string &line_of_text, std::regex reg, const std::string &replacer){
-    return std::regex_replace(line_of_text,reg,replacer);
-}
-
-std::string regex_get_first_match(const std::string &line, std::regex reg){
-    std::smatch matcher;
-    std::regex_search(line,matcher,reg);
-    return matcher[0];
+    // converts string to boolean from tasks file.
+    bool string_to_boolean(const std::string &input){
+        if(std::regex_search(input,std::regex("<true>"))){
+            return true;
+        }
+        else if(std::regex_search(input,std::regex("<false>"))){
+            return false;
+        }
+        else{
+            throw std::invalid_argument("Input string cannot be interpreted as boolean");
+        }
+    }
 }
 
 /**
@@ -185,10 +189,10 @@ void Tasks::load_tasks_from_file(){
         std::vector<std::string> tokens; // after splitting line in tasks.txt by delimiter.
         while(std::getline(file, line)){
             if(line.length() != 0){
-                tokens = split_by_delimiter(line,delim);
+                tokens = Converters::split_by_delimiter(line,delim);
                 m_task_map[tokens[0]] = index;
-                m_task_flexibility[tokens[0]] = string_to_boolean(tokens[1]);
-                m_task_sex_requirement[tokens[0]] = string_to_sex(tokens[2]);
+                m_task_flexibility[tokens[0]] = Converters::string_to_boolean(tokens[1]);
+                m_task_sex_requirement[tokens[0]] = Converters::string_to_sex(tokens[2]);
                 index++;
             }
         }
@@ -208,8 +212,8 @@ void Tasks::save_tasks_to_file() {
         for(int i = 0; i < task_size; ++i){
             std::string task_name = Tasks::get_task_name(i);
             std::string new_line = task_name + ',' + "flexibility:" +
-                     boolean_to_string(m_task_flexibility[task_name])+ ',' + "sex_req:" +
-                                   sex_to_string(m_task_sex_requirement[task_name]);
+                     Converters::boolean_to_string(m_task_flexibility[task_name])+ ',' + "sex_req:" +
+                                   Converters::sex_to_string(m_task_sex_requirement[task_name]);
             write_file << new_line << std::endl;
         }
         write_file.close();
@@ -311,23 +315,23 @@ void Work_day::load_workers_from_file() {
         std::vector<std::string> splits;
         while(std::getline(file,line)){
             if(line.length()!=0){
-                splits = split_by_delimiter(line,',');
+                splits = Converters::split_by_delimiter(line,',');
 
                 // getting name of worker
-                std::string worker_name = regex_get_first_match(splits[0],std::regex("<.*>"));
-                worker_name = regex_find_and_replace(worker_name,std::regex("[<>]"),"");
+                std::string worker_name = Converters::regex_get_first_match(splits[0],std::regex("<.*>"));
+                worker_name = Converters::regex_find_and_replace(worker_name,std::regex("[<>]"),"");
 
                 // getting sex of worker
-                Genders worker_sex = string_to_sex(splits[1]);
+                Genders worker_sex = Converters::string_to_sex(splits[1]);
 
                 // getting position of worker, but must remove unneccessary clutter first from input.
-                std::string worker_position_sanitized_input = regex_get_first_match(splits[2],std::regex("<.*>"));
-                worker_position_sanitized_input = regex_find_and_replace(worker_position_sanitized_input,std::regex("[<>]"),"");
-                Positions worker_position = string_to_positions(worker_position_sanitized_input);
+                std::string worker_position_sanitized_input = Converters::regex_get_first_match(splits[2],std::regex("<.*>"));
+                worker_position_sanitized_input = Converters::regex_find_and_replace(worker_position_sanitized_input,std::regex("[<>]"),"");
+                Positions worker_position = Converters::string_to_positions(worker_position_sanitized_input);
 
                 // getting personal number.
-                std::string worker_personal_number = regex_get_first_match(splits[3],std::regex("<.*>"));
-                worker_personal_number = regex_find_and_replace(worker_personal_number,std::regex("[<>]"),"");
+                std::string worker_personal_number = Converters::regex_get_first_match(splits[3],std::regex("<.*>"));
+                worker_personal_number = Converters::regex_find_and_replace(worker_personal_number,std::regex("[<>]"),"");
                 long worker_number = std::stoi(worker_personal_number);
 
                 // appending to worker list.

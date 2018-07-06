@@ -144,10 +144,10 @@ Work_day add_new_task_menu(Work_day day){
     std::cin >> name_of_task;
     std::cout << "Enter flexibility (true/false)" << std::endl;
     std::cin >> temp_flex;
-    flexibility = Tasks::string_to_boolean(temp_flex);
+    flexibility = Converters::string_to_boolean(temp_flex);
     std::cout << "Enter sex req: (MALE/FEMALE/NONE)" << std::endl;
     std::cin >> temp_sex;
-    sex = Tasks::string_to_sex(temp_sex);
+    sex = Converters::string_to_sex(temp_sex);
     day.work_day_tasks.add_task(name_of_task,flexibility,sex);
     return day;
 }
