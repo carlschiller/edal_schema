@@ -11,14 +11,6 @@
 #include <stdexcept>
 
 namespace Converters{
-    std::string Positions_name_table[6]{
-            "FULL_TIME",
-            "HALF_TIME",
-            "TEMPORARY_POSITION",
-            "PARENT_LEAVE",
-            "WEEKEND_WORKER",
-            "EXTRA_WORKER"
-    };
 
     Positions string_to_positions(const std::string &input){
         int index = 0;

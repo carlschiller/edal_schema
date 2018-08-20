@@ -28,6 +28,15 @@ enum class Positions{
     EXTRA_WORKER,
 };
 
+static std::string Positions_name_table[6]{
+        "FULL_TIME",
+        "HALF_TIME",
+        "TEMPORARY_POSITION",
+        "PARENT_LEAVE",
+        "WEEKEND_WORKER",
+        "EXTRA_WORKER"
+};
+
 // Functions for saving and loading.
 
 namespace Converters {
