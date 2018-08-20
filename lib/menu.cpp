@@ -134,6 +134,7 @@ void display_day_tasks(Work_day work_day){
     }
 }
 
+
 Work_day add_new_task_menu(Work_day day){
     std::string name_of_task;
     bool flexibility;
@@ -151,6 +152,7 @@ Work_day add_new_task_menu(Work_day day){
     day.work_day_tasks.add_task(name_of_task,flexibility,sex);
     return day;
 }
+
 
 void menu(){
     Work_day current_day = Work_day();

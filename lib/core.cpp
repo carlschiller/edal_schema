@@ -11,6 +11,15 @@
 #include <stdexcept>
 
 namespace Converters{
+    std::string Positions_name_table[6]{
+            "FULL_TIME",
+            "HALF_TIME",
+            "TEMPORARY_POSITION",
+            "PARENT_LEAVE",
+            "WEEKEND_WORKER",
+            "EXTRA_WORKER"
+    };
+
     Positions string_to_positions(const std::string &input){
         int index = 0;
         for(std::string position : Positions_name_table){
@@ -305,7 +314,7 @@ Work_day::Work_day(time_t date_of_workday,int resolution){
 }
 
 void Work_day::load_workers_from_file() {
-    const std::string filename = "../lib/tasks.txt";
+    const std::string filename = "../lib/workers.txt"; // make sure this filename is correct.
     std::ifstream file(filename);
     if(!file.is_open()){
         std::exit(6);
@@ -332,7 +341,7 @@ void Work_day::load_workers_from_file() {
                 // getting personal number.
                 std::string worker_personal_number = Converters::regex_get_first_match(splits[3],std::regex("<.*>"));
                 worker_personal_number = Converters::regex_find_and_replace(worker_personal_number,std::regex("[<>]"),"");
-                long worker_number = std::stoi(worker_personal_number);
+                long worker_number = std::stol(worker_personal_number);
 
                 // appending to worker list.
                 m_worker_list.emplace_back(worker_name,worker_sex,worker_position,worker_number);
