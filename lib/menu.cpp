@@ -10,7 +10,7 @@
 enum Selections{
     ADD_WORKER = 0,
     REMOVE_WORKER,
-    FIND_WORKER,
+    SEE_WORKERS,
     ADD_TASK,
     NEW_TASK,
     DISPLAY_TASKS,
@@ -19,9 +19,10 @@ enum Selections{
 };
 
 Worker menu_add_worker(){
-    std::cout << "Enter name:" << std::endl;
     std::string name_of_worker;
-    std::cin >> name_of_worker;
+    std::cin.ignore();
+    std::cout << "Enter name:" << std::endl;
+    getline(std::cin,name_of_worker); //gets whole line
     std::cout << "Enter sex:" << std::endl;
     std::cout << static_cast<int>(Genders::MALE) << " : male" << std::endl;
     std::cout << static_cast<int>(Genders::FEMALE) << " : female" << std::endl ;
@@ -153,6 +154,60 @@ Work_day add_new_task_menu(Work_day day){
     return day;
 }
 
+void display_workers(std::vector<Worker> worker_list){
+    int i = 0;
+    unsigned int max_char_length = 0;
+    std::vector<std::string> console_output;
+    for(Worker worker : worker_list){
+        std::string console_row;
+        console_row += std::to_string(i) + ". ";
+        console_row += "Name : ";
+        console_row += worker.get_name();
+        console_row += ", Gender: ";
+        console_row += Converters::sex_to_string(worker.get_gender());
+        console_row += ", Position: ";
+        console_row += Converters::positions_to_string(worker.get_position());
+        console_row += ", Personal number: ";
+        console_row += std::to_string(worker.get_personal_number());
+        console_row += "\n";
+        console_output.push_back(console_row);
+        if(max_char_length < console_row.length()){
+            max_char_length = static_cast<unsigned int>(console_row.length());
+        }
+        i++;
+    }
+    // make padding before and after as to make sure to make it readable.
+    std::string padding = std::string(max_char_length, '=');
+    padding += "\n";
+    std::vector<std::string>::iterator it;
+    it = console_output.begin();
+    console_output.insert(it,padding);
+    console_output.push_back(padding);
+    // print output.
+    for(const std::string &row : console_output){
+        std::cout << row;
+    }
+}
+
+std::string remove_worker(std::vector<Worker> worker_list){
+    std::cout << "Enter number to remove, or any other number or character to ignore." << std::endl;
+    std::string selection;
+    std::cin >> selection;
+    try{
+        int integer_selection = std::stoi(selection);
+        if(integer_selection < worker_list.size()-1 || integer_selection >= 0){
+            return worker_list[integer_selection].get_name();
+        }
+        else{
+            return "";
+        }
+
+    }
+    catch(std::invalid_argument&){
+        return "";
+    }
+}
+
 
 void menu(){
     Work_day current_day = Work_day();
@@ -162,7 +217,7 @@ void menu(){
         std::cout << "Choose the following:" << std::endl;
         std::cout << Selections::ADD_WORKER << " :add a user." << std::endl;
         std::cout << Selections::REMOVE_WORKER << " :remove a user."<< std::endl;
-        std::cout << Selections::FIND_WORKER << " :find a user."<< std::endl;
+        std::cout << Selections::SEE_WORKERS << " :display workers."<< std::endl;
         std::cout << Selections::ADD_TASK << " :add task."<< std::endl;
         std::cout << Selections::NEW_TASK << " :new task."<< std::endl;
         std::cout << Selections::DISPLAY_TASKS << " :display tasks."<< std::endl;
@@ -179,8 +234,20 @@ void menu(){
                 current_day.add_worker(menu_add_worker());
                 break;
             case Selections::REMOVE_WORKER:
+            {
+                std::vector<Worker> worker_list = current_day.get_all_workers();
+                display_workers(worker_list);
+                std::string worker_to_be_removed = remove_worker(worker_list);
+                if(worker_to_be_removed == ""){
+                    std::cout << "Nothing removed." << std::endl;
+                }
+                else{
+                    current_day.remove_worker(worker_to_be_removed);
+                }
                 break;
-            case Selections::FIND_WORKER:
+            }
+            case Selections::SEE_WORKERS:
+                display_workers(current_day.get_all_workers());
                 break;
             case Selections::ADD_TASK:
             {

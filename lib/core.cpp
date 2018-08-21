@@ -14,7 +14,7 @@ namespace Converters{
 
     Positions string_to_positions(const std::string &input){
         int index = 0;
-        for(std::string position : Positions_name_table){
+        for(const std::string &position : Positions_name_table){
             if(input == position){
                 return static_cast<Positions>(index);
             }
