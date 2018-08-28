@@ -343,7 +343,23 @@ void Work_day::load_workers_from_file() {
 }
 
 void Work_day::save_workers_to_file() {
-
+    const std::string filename = "../lib/workers.txt";
+    std::ofstream write_file(filename);
+    if(!write_file.is_open()){
+        std::exit(6); // TODO: fix a proper exception here.
+    }
+    else{
+        // now add new tasks to file not in original file.
+        for(Worker worker : m_worker_list){
+            std::string worker_save_line;
+            worker_save_line += "name:<" + worker.get_name() + ">,";
+            worker_save_line += "sex:" + Converters::sex_to_string(worker.get_gender()) + ",";
+            worker_save_line += "position:<" + Converters::positions_to_string(worker.get_position()) + ">,";
+            worker_save_line += "personal_number:<" + std::to_string(worker.get_personal_number()) + ">";
+            write_file << worker_save_line << std::endl;
+        }
+    }
+    write_file.close();
 }
 
 void Work_day::add_worker(Worker new_worker) {

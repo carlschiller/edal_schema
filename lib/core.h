@@ -100,7 +100,6 @@ private:
     std::vector<std::vector<int>> m_work_day_reference; // matrix of work day tasks to be done.
     std::vector<std::vector<int>> m_worker_task_list; // matrix of tasks for workers
     void load_workers_from_file();
-    void save_workers_to_file();
 public:
     Work_day();
     Work_day(time_t, int);
@@ -116,6 +115,7 @@ public:
     std::vector<std::vector<int>> get_work_day_reference();
     void build_work_day(); // creates m_worker_task_list;
     void save_work_day();
+    void save_workers_to_file();
 };
 
 #endif //EDAL_SCHEMA_CORE_H

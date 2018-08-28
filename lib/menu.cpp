@@ -268,6 +268,7 @@ void menu(){
             case Selections::EXIT:
                 user_exit = true;
                 current_day.save_work_day();
+                current_day.save_workers_to_file();
                 break;
 
         }

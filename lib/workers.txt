@@ -1,1 +1,2 @@
 name:<Carl Schiller>,sex:<MALE>,position:<FULL_TIME>,personal_number:<199705266436>
+name:<Carl>,sex:<MALE>,position:<FULL_TIME>,personal_number:<9705266437>
