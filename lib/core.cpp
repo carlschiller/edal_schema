@@ -443,7 +443,16 @@ void Work_day::add_work_day_reference_column(int task_number, int start_time, in
 }
 
 void Work_day::remove_work_day_reference_column(int id) {
-    m_work_day_reference.erase(m_work_day_reference.begin()+id);
+    if(!m_work_day_reference.empty()){
+        if(id < 0 || id >= m_work_day_reference.size()){
+            throw std::invalid_argument("invalid id number, can't remove reference column.");
+        }
+        m_work_day_reference.erase(m_work_day_reference.begin()+id);
+    }
+}
+
+int Work_day::get_work_day_reference_size(){
+    return static_cast<int>(m_work_day_reference.size());
 }
 
 std::vector<std::vector<int>> Work_day::get_work_day_reference() {

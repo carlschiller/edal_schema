@@ -112,6 +112,7 @@ public:
     int get_resolution();
     void add_work_day_reference_column(int task_number, int start_time, int end_time);
     void remove_work_day_reference_column(int id);
+    int get_work_day_reference_size();
     std::vector<std::vector<int>> get_work_day_reference();
     void build_work_day(); // creates m_worker_task_list;
     void save_work_day();

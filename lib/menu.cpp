@@ -12,6 +12,7 @@ enum Selections{
     REMOVE_WORKER,
     SEE_WORKERS,
     ADD_TASK,
+    REMOVE_TASK,
     NEW_TASK,
     DISPLAY_TASKS,
     DISPLAY_DAY,
@@ -208,6 +209,15 @@ std::string remove_worker(std::vector<Worker> worker_list){
     }
 }
 
+Work_day remove_task_id(Work_day current_day){
+    if(current_day.get_work_day_reference_size() > 0){
+        std::cout << "Please select column to remove" << std::endl;
+        int id;
+        std::cin >> id;
+        current_day.remove_work_day_reference_column(id);
+    }
+    return current_day;
+}
 
 void menu(){
     Work_day current_day = Work_day();
@@ -215,12 +225,13 @@ void menu(){
     bool user_exit = false;
     while(!user_exit){
         std::cout << "Choose the following:" << std::endl;
-        std::cout << Selections::ADD_WORKER << " :add a user." << std::endl;
-        std::cout << Selections::REMOVE_WORKER << " :remove a user."<< std::endl;
+        std::cout << Selections::ADD_WORKER << " :add a worker." << std::endl;
+        std::cout << Selections::REMOVE_WORKER << " :remove a worker."<< std::endl;
         std::cout << Selections::SEE_WORKERS << " :display workers."<< std::endl;
-        std::cout << Selections::ADD_TASK << " :add task."<< std::endl;
-        std::cout << Selections::NEW_TASK << " :new task."<< std::endl;
-        std::cout << Selections::DISPLAY_TASKS << " :display tasks."<< std::endl;
+        std::cout << Selections::ADD_TASK << " :add a task to work day reference matrix."<< std::endl;
+        std::cout << Selections::REMOVE_TASK << " :remove a task from work day reference matrix."<< std::endl;
+        std::cout << Selections::NEW_TASK << " :create new task."<< std::endl;
+        std::cout << Selections::DISPLAY_TASKS << " :display reference matrix."<< std::endl;
         std::cout << Selections::DISPLAY_DAY << " :display the day."<< std::endl;
         std::cout << Selections::EXIT << " :exit."<< std::endl;
         int user_selection;
@@ -238,7 +249,7 @@ void menu(){
                 std::vector<Worker> worker_list = current_day.get_all_workers();
                 display_workers(worker_list);
                 std::string worker_to_be_removed = remove_worker(worker_list);
-                if(worker_to_be_removed == ""){
+                if(worker_to_be_removed.empty()){
                     std::cout << "Nothing removed." << std::endl;
                 }
                 else{
@@ -253,6 +264,12 @@ void menu(){
             {
                 std::vector<int> task_adder = menu_add_task(current_day);
                 current_day.add_work_day_reference_column(task_adder[2],task_adder[0],task_adder[1]);
+                break;
+            }
+            case Selections::REMOVE_TASK:
+            {
+                display_day_tasks(current_day);
+                current_day = remove_task_id(current_day);
                 break;
             }
             case Selections::NEW_TASK:
