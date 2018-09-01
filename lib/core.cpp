@@ -175,19 +175,19 @@ std::vector<int> Tasks::get_all_task_values() {
 }
 
 // method below loads enum names from separate txt file into a private vector.
-// how tasks.txt is supposed to be formatted for this to work:
+// how tasks.cfg is supposed to be formatted for this to work:
 // [NAME_OF_TASK],flexibility:[bool],sex_req:[MALE/FEMALE/NULL]'\n'
 void Tasks::load_tasks_from_file(){
-    const std::string filename = "../lib/tasks.txt";
+    const std::string filename = "../lib/tasks.cfg";
     std::ifstream file(filename);
     if(!file.is_open()){
         std::exit(6); // crash program if file is not found.
     }
     else{
-        std::string line; // a line representing a task from tasks.txt.
+        std::string line; // a line representing a task from tasks.cfg.
         int index = 0; // index of the enum.
         char delim = ',';
-        std::vector<std::string> tokens; // after splitting line in tasks.txt by delimiter.
+        std::vector<std::string> tokens; // after splitting line in tasks.cfg by delimiter.
         while(std::getline(file, line)){
             if(line.length() != 0){
                 tokens = Converters::split_by_delimiter(line,delim);
@@ -202,7 +202,7 @@ void Tasks::load_tasks_from_file(){
 }
 
 void Tasks::save_tasks_to_file() {
-    const std::string filename = "../lib/tasks.txt";
+    const std::string filename = "../lib/tasks.cfg";
     std::ofstream write_file(filename);
     if(!write_file.is_open()){
         std::exit(6); // TODO: fix a proper exception here.
@@ -306,7 +306,7 @@ Work_day::Work_day(time_t date_of_workday,int resolution){
 }
 
 void Work_day::load_workers_from_file() {
-    const std::string filename = "../lib/workers.txt"; // make sure this filename is correct.
+    const std::string filename = "../lib/workers.cfg"; // make sure this filename is correct.
     std::ifstream file(filename);
     if(!file.is_open()){
         std::exit(6);
@@ -343,7 +343,7 @@ void Work_day::load_workers_from_file() {
 }
 
 void Work_day::save_workers_to_file() {
-    const std::string filename = "../lib/workers.txt";
+    const std::string filename = "../lib/workers.cfg";
     std::ofstream write_file(filename);
     if(!write_file.is_open()){
         std::exit(6); // TODO: fix a proper exception here.

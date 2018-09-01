@@ -38,7 +38,6 @@ static std::string Positions_name_table[6]{
 };
 
 // Functions for saving and loading.
-
 namespace Converters {
     bool string_to_boolean(const std::string &input);
     Genders string_to_sex(const std::string &input);
@@ -52,6 +51,7 @@ namespace Converters {
     std::vector<std::string> split_by_delimiter(const std::string &line, char delim);
 }
 
+// An instance of this class contains a list of all task names and attributes for given task. E.g. sex requirement.
 class Tasks{
 private:
     std::map<std::string,int> m_task_map; // maps each name of task to an int.
@@ -103,18 +103,22 @@ private:
 public:
     Work_day();
     Work_day(time_t, int);
-
     Tasks work_day_tasks; // tasks used during this day.
+    // functions to add workers to day.
     void add_worker(Worker new_worker);
-    void change_resolution(int);
     void remove_worker(const std::string &worker_name);
     std::vector<Worker> get_all_workers();
+    // functions to change resolution of day, how many chunks a day should be divided into.
+    void change_resolution(int);
     int get_resolution();
+    // functions to add reference columns.
     void add_work_day_reference_column(int task_number, int start_time, int end_time);
     void remove_work_day_reference_column(int id);
     int get_work_day_reference_size();
     std::vector<std::vector<int>> get_work_day_reference();
+    // functions for building work day
     void build_work_day(); // creates m_worker_task_list;
+    // functions for loading and saving.
     void save_work_day();
     void save_workers_to_file();
 };
