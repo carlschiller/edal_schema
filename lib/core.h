@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <ctime>
+#include <chrono>
 #include <map>
 #include <regex>
 
@@ -100,6 +101,7 @@ private:
     std::vector<std::vector<int>> m_work_day_reference; // matrix of work day tasks to be done.
     std::vector<std::vector<int>> m_worker_task_list; // matrix of tasks for workers
     void load_workers_from_file();
+    std::string m_loaded_name; // name of file loaded.
 public:
     Work_day();
     Work_day(time_t, int);

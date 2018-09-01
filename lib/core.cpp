@@ -9,6 +9,9 @@
 #include <iostream>
 #include <regex>
 #include <stdexcept>
+#include <iomanip>
+#include <ctime>
+#include <sys/stat.h>
 
 namespace Converters{
 
@@ -465,7 +468,27 @@ void Work_day::build_work_day() {
 
 // save changes made to work day.
 void Work_day::save_work_day(){
-    work_day_tasks.save_tasks_to_file();
+    work_day_tasks.save_tasks_to_file(); // overwrites tasks if new have been added.
+
+    // checks if we have a saves directory or not.
+    const int dir_err = mkdir("../lib/saves", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+    if (-1 == dir_err) {
+        if (errno != EEXIST) {
+            printf("Error creating directory in ../lib/saves!\n");
+            exit(1);
+        }
+    }
+
+    auto t = std::time(nullptr);
+    auto tm = *std::localtime(&t);
+    std::ostringstream oss;
+    oss << std::put_time(&tm, "%Y-%m-%d");
+    auto str = oss.str();
+
+    std::string filename = std::string("../lib/saves/") + str + ".cfg";
+
+    std::ofstream filestream(filename);
+    filestream.close();
 }
 
 
