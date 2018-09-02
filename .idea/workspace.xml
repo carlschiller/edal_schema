@@ -17,9 +17,10 @@
   <component name="ChangeListManager">
     <list default="true" id="e9642f34-6737-42ce-b1a8-d0654935f454" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/edal_schema.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/edal_schema.dir/CXX.includecache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/core.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lib/core.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/core.h" beforeDir="false" afterPath="$PROJECT_DIR$/lib/core.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/saves/2018-09-01 21-09-12.cfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/saves/2018-09-01.cfg" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -65,8 +66,11 @@
       <file leaf-file-name="core.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/core.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+            <state relative-caret-position="234">
+              <caret line="110" column="60" selection-start-line="110" selection-start-column="60" selection-end-line="110" selection-end-column="60" />
+              <folding>
+                <element signature="e#105#122#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -74,8 +78,8 @@
       <file leaf-file-name="core.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/core.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="524">
-              <caret line="487" column="43" lean-forward="true" selection-start-line="487" selection-start-column="43" selection-end-line="487" selection-end-column="43" />
+            <state relative-caret-position="330">
+              <caret line="530" column="51" lean-forward="true" selection-start-line="530" selection-start-column="51" selection-end-line="530" selection-end-column="51" />
               <folding>
                 <element signature="e#50#67#0" expanded="true" />
               </folding>
@@ -104,7 +108,7 @@
       <file leaf-file-name="menu.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/menu.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
+            <state relative-caret-position="635">
               <caret line="277" column="22" selection-start-line="277" selection-start-column="22" selection-end-line="277" selection-end-column="22" />
               <folding>
                 <element signature="e#50#69#0" expanded="true" />
@@ -154,8 +158,8 @@
         <option value="$PROJECT_DIR$/lib/tasks.txt" />
         <option value="$PROJECT_DIR$/lib/workers.txt" />
         <option value="$PROJECT_DIR$/lib/menu.cpp" />
-        <option value="$PROJECT_DIR$/lib/core.h" />
         <option value="$PROJECT_DIR$/lib/core.cpp" />
+        <option value="$PROJECT_DIR$/lib/core.h" />
       </list>
     </option>
   </component>
@@ -197,6 +201,12 @@
               <item name="edal_schema" type="462c0819:PsiDirectoryNode" />
               <item name="lib" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="edal_schema" type="b2602c69:ProjectViewProjectNode" />
+              <item name="edal_schema" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="saves" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -206,7 +216,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -270,12 +280,13 @@
       <workItem from="1530781829198" duration="15745000" />
       <workItem from="1534783162011" duration="6034000" />
       <workItem from="1535362074309" duration="4360000" />
-      <workItem from="1535825349444" duration="2944000" />
+      <workItem from="1535825349444" duration="3550000" />
+      <workItem from="1535870777927" duration="6255000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="92713000" />
+    <option name="totallyTimeSpent" value="99574000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
@@ -286,13 +297,12 @@
       <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.65178573" weight="0.31462926" />
       <window_info anchor="bottom" id="CMake" order="0" />
       <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.39166668" side_tool="true" weight="0.25150302" />
-      <window_info anchor="bottom" id="Find" order="5" weight="0.3296593" />
-      <window_info anchor="bottom" id="Version Control" order="2" />
       <window_info active="true" anchor="bottom" id="Run" order="6" sideWeight="0.60833335" visible="true" weight="0.25150302" />
+      <window_info anchor="bottom" id="Version Control" order="2" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="3" />
-      <window_info id="Favorites" order="0" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.4" />
+      <window_info id="Favorites" order="0" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
       <window_info anchor="right" id="Commander" order="1" weight="0.4" />
@@ -300,6 +310,7 @@
       <window_info anchor="right" id="Data View" order="0" />
       <window_info anchor="bottom" id="Message" order="4" />
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="5" weight="0.3296593" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -653,13 +664,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/core.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/test.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -686,7 +690,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/menu.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
+        <state relative-caret-position="635">
           <caret line="277" column="22" selection-start-line="277" selection-start-column="22" selection-end-line="277" selection-end-column="22" />
           <folding>
             <element signature="e#50#69#0" expanded="true" />
@@ -694,15 +698,40 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/lib/core.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="110" column="60" selection-start-line="110" selection-start-column="60" selection-end-line="110" selection-end-column="60" />
+          <folding>
+            <element signature="e#105#122#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/lib/core.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="524">
-          <caret line="487" column="43" lean-forward="true" selection-start-line="487" selection-start-column="43" selection-end-line="487" selection-end-column="43" />
+        <state relative-caret-position="330">
+          <caret line="530" column="51" lean-forward="true" selection-start-line="530" selection-start-column="51" selection-end-line="530" selection-end-column="51" />
           <folding>
             <element signature="e#50#67#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.20103092" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>

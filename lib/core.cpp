@@ -13,6 +13,41 @@
 #include <ctime>
 #include <sys/stat.h>
 
+namespace Utilities{
+
+    // stolen from https://stackoverflow.com/questions/4316442/stdofstream-check-if-file-exists-before-writing
+    // checks if file exists before writing.
+    bool file_exists(const std::string & file_name){
+        struct stat buf{};
+        return stat(file_name.c_str(), &buf) != -1;
+    }
+
+    // recursively finds appropriate file name;
+    std::string stream_name(std::string file_name){
+        if(file_exists(file_name)){
+            // split by delimiter -
+            std::string temporary_name;
+            std::vector<std::string> tokens = Converters::split_by_delimiter(file_name,'.');
+            unsigned int token_place = static_cast<unsigned int>(tokens.size())-2;
+            temporary_name += ".." + tokens[token_place];
+            std::vector<std::string> number_of_saves_vector = Converters::split_by_delimiter(temporary_name,'n');
+            if(number_of_saves_vector.size() > 1){
+                std::string number_of_saves = std::to_string(std::stoi(number_of_saves_vector[1])+1);
+                temporary_name = number_of_saves_vector[0] + "n" + number_of_saves + ".cfg";
+            }
+            else{
+                temporary_name += "n1.cfg";
+
+            }
+            return stream_name(temporary_name);
+        }
+        else{
+            return file_name;
+        }
+
+    }
+}
+
 namespace Converters{
 
     Positions string_to_positions(const std::string &input){
@@ -466,29 +501,46 @@ void Work_day::build_work_day() {
     // shit complex thing.
 }
 
-// save changes made to work day.
-void Work_day::save_work_day(){
-    work_day_tasks.save_tasks_to_file(); // overwrites tasks if new have been added.
-
+void Work_day::work_day_lexer(bool indent, bool file_name_override, std::string &custom_file_name) {
+    const std::string path = "../lib/saves/"; // path to saves folder.
     // checks if we have a saves directory or not.
-    const int dir_err = mkdir("../lib/saves", S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+    // TODO: Create cross platform solution.
+    const int dir_err = mkdir(path.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
     if (-1 == dir_err) {
         if (errno != EEXIST) {
-            printf("Error creating directory in ../lib/saves!\n");
+            std::cout << "Error creating path in " + path << std::endl;
             exit(1);
         }
     }
 
-    auto t = std::time(nullptr);
-    auto tm = *std::localtime(&t);
-    std::ostringstream oss;
-    oss << std::put_time(&tm, "%Y-%m-%d");
-    auto str = oss.str();
+    std::string filename;
+    std::ofstream file_stream;
+    // checks if we want to save file as name of date or custom name.
+    if(file_name_override){
+        // name to path
+        filename = path + custom_file_name + ".cfg";
+    }
+    else{
+        // converts current time to date of current time as string.
+        auto t = std::time(nullptr);
+        auto tm = *std::localtime(&t);
+        std::ostringstream oss;
+        oss << std::put_time(&tm, "%Y-%m-%d");
+        std::string time_string = oss.str();
+        filename = path + time_string + ".cfg";
+        // checks if filename already exits, else it finds a new name.
+        filename = Utilities::stream_name(filename);
+    }
+    // open and close file for debug.
+    file_stream.open(filename,std::ofstream::out);
+    file_stream.close();
+}
 
-    std::string filename = std::string("../lib/saves/") + str + ".cfg";
-
-    std::ofstream filestream(filename);
-    filestream.close();
+// save changes made to work day.
+void Work_day::save_work_day(){
+    work_day_tasks.save_tasks_to_file(); // overwrites tasks if new have been added.
+    std::string custom_name = "hej";
+    work_day_lexer(false,false,custom_name);
 }
 
 

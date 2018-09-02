@@ -38,6 +38,11 @@ static std::string Positions_name_table[6]{
         "EXTRA_WORKER"
 };
 
+namespace Utilities {
+    bool file_exists(const std::string& file_name);
+    std::string stream_name(std::string file_name);
+}
+
 // Functions for saving and loading.
 namespace Converters {
     bool string_to_boolean(const std::string &input);
@@ -102,6 +107,8 @@ private:
     std::vector<std::vector<int>> m_worker_task_list; // matrix of tasks for workers
     void load_workers_from_file();
     std::string m_loaded_name; // name of file loaded.
+
+    void work_day_lexer(bool indent, bool file_name_override, std::string &filename);
 public:
     Work_day();
     Work_day(time_t, int);
