@@ -46,6 +46,31 @@ namespace Utilities{
         }
 
     }
+
+    void lexer_save_stream(const std::string & filename,std::ios_base::open_mode mode, Work_day &current_day, bool indent){
+        // open stream.
+        std::ofstream file_stream(filename, mode);
+        int indent_counter = 0; //level of indentation
+
+        // save workers who work that day.
+        std::string file_date = Converters::split_by_delimiter(filename,'n')[0];
+        file_stream << std::string(indent_counter, '\t') << "date:" << file_date << std::endl;
+        file_stream << std::string(indent_counter, '\t') << "worker_list:{" << std::endl;
+        if(indent){indent_counter++;}
+        std::vector<Worker> worker_list = current_day.get_all_workers();
+        for(Worker worker : worker_list){
+            std::string name = worker.get_name();
+            std::string gender = Converters::sex_to_string(worker.get_gender());
+            std::string position = Converters::positions_to_string(worker.get_position());
+            std::string personal_number = std::to_string(worker.get_personal_number());
+            file_stream << std::string(indent_counter, '\t') << "name:<" << name << ">,sex:<" << gender
+                        << ">,position:<" << position << ">,personal_number:<" << personal_number << ">\n";
+        }
+        if(indent){indent_counter--;}
+        file_stream << std::string(indent_counter, '\t') << "}\n";
+
+        file_stream.close();
+    }
 }
 
 namespace Converters{
@@ -514,7 +539,6 @@ void Work_day::work_day_lexer(bool indent, bool file_name_override, std::string 
     }
 
     std::string filename;
-    std::ofstream file_stream;
     // checks if we want to save file as name of date or custom name.
     if(file_name_override){
         // name to path
@@ -532,8 +556,7 @@ void Work_day::work_day_lexer(bool indent, bool file_name_override, std::string 
         filename = Utilities::stream_name(filename);
     }
     // open and close file for debug.
-    file_stream.open(filename,std::ofstream::out);
-    file_stream.close();
+    Utilities::lexer_save_stream(filename,std::ios_base::out,*this,true);
 }
 
 // save changes made to work day.
