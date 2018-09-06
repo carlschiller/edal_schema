@@ -57,23 +57,41 @@ namespace Converters {
     std::vector<std::string> split_by_delimiter(const std::string &line, char delim);
 }
 
+// Instance of this class holds task name, sex requirement etc. Think of this as a container.
+class Task{
+private:
+    std::string m_task_name;
+    bool m_task_flexibility;
+    Genders m_task_sex_requirement;
+public:
+    Task(); //default empty constructor
+    Task(std::string &name, bool flex, Genders sex);
+
+    std::string name(); // returns name.
+    bool flexibility(); // returns flexibility;
+    Genders sex_requirement(); //returns sex_requirement
+
+    void change_name(std::string &name);
+    void change_flexibility(bool &flex);
+    void change_sex_requirement(Genders &sex);
+};
+
 // An instance of this class contains a list of all task names and attributes for given task. E.g. sex requirement.
 class Tasks{
 private:
-    std::map<std::string,int> m_task_map; // maps each name of task to an int.
-    std::map<std::string,bool> m_task_flexibility; // if worker is able to leave earlier than req. time
-    std::map<std::string,Genders> m_task_sex_requirement; // sex specific task [MALE/FEMALE/NULL]
+    std::map<std::string, Task> m_task_map; // maps each Task name to a Task.
 public:
-    Tasks();
+    Tasks(); // constructor for Tasks.
+
     std::vector<std::string> get_all_task_names();
-    std::vector<int> get_all_task_values();
-    std::string get_task_name(int);
-    int get_task_value(const std::string &);
-    static int not_at_work();
-    void add_task(std::string key, bool flexibility, Genders sex);
+    std::map<std::string, Task> get_all_tasks();
+    void add_task(std::string name, bool flexibility, Genders sex);
+    void remove_task(std::string name);
+
     void load_tasks_from_file();
     void save_tasks_to_file();
 };
+
 
 // Worker class, each object type of Worker will contain all neccessary information about a person.
 class Worker{
@@ -96,40 +114,60 @@ public:
     void change_personal_number(long);
 };
 
+class Workers{
+private:
+    std::map<std::string, Worker> m_worker_map; // maps each Worker name to a Worker.
+public:
+    Workers(); // constructor for Workers.
+
+    std::vector<std::string> get_all_worker_names();
+    std::map<std::string, Worker> get_all_workers();
+    Worker get_worker(std::string &name);
+    void add_worker(std::string &name, Genders sex, Positions position, long personal_number);
+    void remove_worker(std::string &name);
+
+    void load_workers_from_file();
+    void save_workers_to_file();
+};
+
 // Work day class, contains all necessary information about the workday.
 class Work_day{
 private:
-    std::vector<Worker> m_worker_list;
-    time_t m_work_day_date;
+    std::map<std::string,Worker> m_worker_map;
+    time_t m_date;
 
     int m_resolution; // how many chunks a day should be divided into.
-    std::vector<std::vector<int>> m_work_day_reference; // matrix of work day tasks to be done.
-    std::vector<std::vector<int>> m_worker_task_list; // matrix of tasks for workers
-    void load_workers_from_file();
+    std::vector<std::vector<Task>> m_reference_matrix; // matrix of work day tasks to be done.
+    std::vector<std::vector<Task>> m_worker_task_list; // matrix of tasks for workers
     std::string m_loaded_name; // name of file loaded.
 
     void work_day_lexer(bool indent, bool file_name_override, std::string &filename);
 public:
     Work_day();
     Work_day(time_t, int);
-    Tasks work_day_tasks; // tasks used during this day.
+    Tasks tasks_list; // tasks used during this day.
+
     // functions to add workers to day.
     void add_worker(Worker new_worker);
-    void remove_worker(const std::string &worker_name);
-    std::vector<Worker> get_all_workers();
+    void remove_worker(std::string &worker_name);
+    std::map<std::string,Worker> get_all_workers();
+    std::vector<std::string> get_all_worker_names();
+
     // functions to change resolution of day, how many chunks a day should be divided into.
     void change_resolution(int);
     int get_resolution();
+
     // functions to add reference columns.
-    void add_work_day_reference_column(int task_number, int start_time, int end_time);
-    void remove_work_day_reference_column(int id);
-    int get_work_day_reference_size();
-    std::vector<std::vector<int>> get_work_day_reference();
+    void add_reference_column(Task task_number, int start_time, int end_time);
+    void remove_reference_column(int id);
+    int reference_size();
+    std::vector<std::vector<Task>> get_reference_matrix();
+
     // functions for building work day
-    void build_work_day(); // creates m_worker_task_list;
+    void build_work_day(); // creates m_worker_task_list
+
     // functions for loading and saving.
     void save_work_day();
-    void save_workers_to_file();
 };
 
 #endif //EDAL_SCHEMA_CORE_H

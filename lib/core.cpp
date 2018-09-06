@@ -11,7 +11,9 @@
 #include <stdexcept>
 #include <iomanip>
 #include <ctime>
+#include <utility>
 #include <sys/stat.h>
+
 
 namespace Utilities{
 
@@ -47,27 +49,34 @@ namespace Utilities{
 
     }
 
+    void matrix_saver(std::ofstream stream){
+
+    }
+
     void lexer_save_stream(const std::string & filename,std::ios_base::open_mode mode, Work_day &current_day, bool indent){
         // open stream.
         std::ofstream file_stream(filename, mode);
         int indent_counter = 0; //level of indentation
 
+
+        // save date in file.
+        std::string file_date = Converters::regex_get_first_match(filename,std::regex(R"(\d+-\d+-\d+)"));
+        file_stream << std::string(indent_counter, '\t') << "date:<" << file_date << ">\n";
         // save workers who work that day.
-        std::string file_date = Converters::split_by_delimiter(filename,'n')[0];
-        file_stream << std::string(indent_counter, '\t') << "date:" << file_date << std::endl;
-        file_stream << std::string(indent_counter, '\t') << "worker_list:{" << std::endl;
+        file_stream << std::string(indent_counter, '\t') << "worker_list:{\n";
         if(indent){indent_counter++;}
-        std::vector<Worker> worker_list = current_day.get_all_workers();
-        for(Worker worker : worker_list){
-            std::string name = worker.get_name();
-            std::string gender = Converters::sex_to_string(worker.get_gender());
-            std::string position = Converters::positions_to_string(worker.get_position());
-            std::string personal_number = std::to_string(worker.get_personal_number());
+        std::map<std::string,Worker> worker_map = current_day.get_all_workers();
+        for(auto it : worker_map){
+            std::string name = it.first;
+            std::string gender = Converters::sex_to_string(it.second.get_gender());
+            std::string position = Converters::positions_to_string(it.second.get_position());
+            std::string personal_number = std::to_string(it.second.get_personal_number());
             file_stream << std::string(indent_counter, '\t') << "name:<" << name << ">,sex:<" << gender
                         << ">,position:<" << position << ">,personal_number:<" << personal_number << ">\n";
         }
         if(indent){indent_counter--;}
         file_stream << std::string(indent_counter, '\t') << "}\n";
+        // save reference matrix to file.
 
         file_stream.close();
     }
@@ -163,15 +172,61 @@ namespace Converters{
 }
 
 /**
+ * Method for Task class
+ * --------------
+ * constructor: creates container with a all information for this task.
+ * .name(): returns name of task.
+ * .flexibility(): returns flexibility of this task.
+ * .sex_requirement(): returns sex_requirement of this task.
+ * .change_[insert parameter here](): changes [parameter] of this task.
+ * --------------
+ * O(1) in complexity.
+ */
+
+Task::Task() {
+    m_task_name = "NOT_AT_WORK";
+    m_task_flexibility = false;
+    m_task_sex_requirement = Genders::NONE;
+}
+
+Task::Task(std::string &name, bool flex, Genders sex_req) {
+    m_task_name = std::move(name);
+    m_task_flexibility = flex;
+    m_task_sex_requirement = sex_req;
+}
+
+std::string Task::name() {
+    return m_task_name;
+}
+
+bool Task::flexibility() {
+    return m_task_flexibility;
+}
+
+Genders Task::sex_requirement() {
+    return m_task_sex_requirement;
+}
+
+void Task::change_name(std::string &name) {
+    m_task_name = std::move(name);
+}
+
+void Task::change_flexibility(bool &flex) {
+    m_task_flexibility = flex;
+}
+
+void Task::change_sex_requirement(Genders &sex) {
+    m_task_sex_requirement = sex;
+}
+
+/**
  * Methods for Tasks class
  * --------------
  * constructor: loads tasks from txt file.
  * .not_at_work(): returns default not at work task. O(1)
- * .get_task_values(string key): returns task number for given string key. O(log(n))
- * .get_task_name(int index): return string name of task for given int index. O(n)
  * .add_task(string new_key): appends a new task to the list at last position. O(log(n))
  * .get_all_task_names(): returns whole list of tasks. O(n)
- * .get_all_task_values(): returns whole list of tasks values. O(n)
+ * .get_all_tasks(): returns all tasks as a map. O(1)
  * .load_tasks_from_file(): method for loading Tasks class from separate txt file. O(n)
  * .save_tasks_to_file(): method for saving Tasks class to separate txt file. O(n)
  * --------------
@@ -181,46 +236,29 @@ Tasks::Tasks(){
     load_tasks_from_file();
 };
 
-int Tasks::not_at_work() {
-    return 0;
-}
-
-int Tasks::get_task_value(const std::string &key) {
-    std::map<std::string,int>::iterator value;
-    value = m_task_map.find(key);
-    if(value == m_task_map.end()){
-        throw std::invalid_argument("Name of task not found in map.");
-    }
-    else{
-        int result = value->second;
-        return result;
-    }
-}
-
-std::string Tasks::get_task_name(int index){
-    for(auto& it : m_task_map){
-        if(it.second == index){
-            return it.first;
-        }
-    }
-    throw std::invalid_argument("Value of task not found in map.");
-}
-
 // adds a new task in the list.
-void Tasks::add_task(std::string new_key,bool flexibility, Genders sex) {
-    std::map<std::string,int>::iterator value;
-    value = m_task_map.find(new_key);
+void Tasks::add_task(std::string new_name,bool flexibility, Genders sex) {
+    std::map<std::string,Task>::iterator value;
+    value = m_task_map.find(new_name);
     if(value == m_task_map.end()){
         auto size = static_cast<int>(m_task_map.size());
-        m_task_map[new_key] = size;
-        m_task_flexibility[new_key] = flexibility;
-        m_task_sex_requirement[new_key] = sex;
+        m_task_map[new_name] = Task(new_name,flexibility,sex);
     }
     else{
         throw std::invalid_argument("Name of task already exists.");
     }
 }
 
+// removes a task from the list by name.
+void Tasks::remove_task(std::string name) {
+    std::map<std::string,Task>::iterator value;
+    value = m_task_map.find(name);
+    if(value != m_task_map.end()){
+        m_task_map.erase(value); // removes by iterator.
+    }
+}
+
+// returns a list of all names of tasks from map.
 std::vector<std::string> Tasks::get_all_task_names() {
     std::vector<std::string> list_of_tasks;
     for(auto& it : m_task_map){
@@ -229,15 +267,12 @@ std::vector<std::string> Tasks::get_all_task_names() {
     return list_of_tasks;
 }
 
-std::vector<int> Tasks::get_all_task_values() {
-    std::vector<int> list_of_tasks;
-    for(auto& it : m_task_map){
-        list_of_tasks.push_back(it.second);
-    }
-    return list_of_tasks;
+// returns map of all Tasks.
+std::map<std::string,Task> Tasks::get_all_tasks() {
+    return m_task_map;
 }
 
-// method below loads enum names from separate txt file into a private vector.
+// method below loads enum names from separate txt file into a private map.
 // how tasks.cfg is supposed to be formatted for this to work:
 // [NAME_OF_TASK],flexibility:[bool],sex_req:[MALE/FEMALE/NULL]'\n'
 void Tasks::load_tasks_from_file(){
@@ -245,19 +280,20 @@ void Tasks::load_tasks_from_file(){
     std::ifstream file(filename);
     if(!file.is_open()){
         std::exit(6); // crash program if file is not found.
+        // TODO: fix this error if crashes.
     }
     else{
         std::string line; // a line representing a task from tasks.cfg.
-        int index = 0; // index of the enum.
         char delim = ',';
         std::vector<std::string> tokens; // after splitting line in tasks.cfg by delimiter.
         while(std::getline(file, line)){
             if(line.length() != 0){
                 tokens = Converters::split_by_delimiter(line,delim);
-                m_task_map[tokens[0]] = index;
-                m_task_flexibility[tokens[0]] = Converters::string_to_boolean(tokens[1]);
-                m_task_sex_requirement[tokens[0]] = Converters::string_to_sex(tokens[2]);
-                index++;
+                std::string temp_name = tokens[0];
+                bool temp_flex = Converters::string_to_boolean(tokens[1]);
+                Genders temp_sex = Converters::string_to_sex(tokens[2]);
+
+                m_task_map[temp_name] = Task(temp_name,temp_flex,temp_sex);
             }
         }
     }
@@ -272,18 +308,16 @@ void Tasks::save_tasks_to_file() {
     }
     else{
         // now add new tasks to file not in original file.
-        auto task_size = static_cast<int>(m_task_map.size());
-        for(int i = 0; i < task_size; ++i){
-            std::string task_name = Tasks::get_task_name(i);
-            std::string new_line = task_name + ',' + "flexibility:" +
-                     Converters::boolean_to_string(m_task_flexibility[task_name])+ ',' + "sex_req:" +
-                                   Converters::sex_to_string(m_task_sex_requirement[task_name]);
-            write_file << new_line << std::endl;
+        for(auto it : m_task_map){
+            std::string temp_name = it.first;
+            std::string temp_sex_string = Converters::sex_to_string(it.second.sex_requirement());
+            std::string temp_flex_string = Converters::boolean_to_string(it.second.flexibility());
+            std::string output_line = temp_name += ",flexibility:" + temp_sex_string += ",sex_req:" + temp_flex_string;
+            write_file << output_line;
         }
         write_file.close();
     }
 }
-
 
 /**
  * Methods for Worker class
@@ -308,28 +342,137 @@ Worker::Worker(std::string worker_name, Genders worker_sex, Positions position, 
     m_personal_number = personal_number;
 }
 
-std::string Worker::get_name(){return m_worker_name;}
+std::string Worker::get_name(){ return m_worker_name; }
 
-Genders Worker::get_gender(){return m_worker_sex;}
+Genders Worker::get_gender(){ return m_worker_sex; }
 
-Positions Worker::get_position(){return m_position;}
+Positions Worker::get_position(){ return m_position; }
 
-long Worker::get_personal_number(){return m_personal_number;}
+long Worker::get_personal_number(){ return m_personal_number; }
 
-void Worker::change_name(std::string worker_name){
-    m_worker_name = std::move(worker_name);
+void Worker::change_name(std::string worker_name){ m_worker_name = std::move(worker_name); }
+
+void Worker::change_gender(Genders new_sex){ m_worker_sex = new_sex; }
+
+void Worker::change_position(Positions position){ m_position = position; }
+
+void Worker::change_personal_number(long personal_number){ m_personal_number = personal_number; }
+
+/**
+ * Methods for Workers class
+ * -----------------
+ * constructor : loads workers from file.
+ * .get_name : returns name of worker.
+ * .get_gender : gets gender of worker.
+ * .get_position : gets position of worker.
+ * .get_personal_number: gets personal number of worker.
+ * .change_name: change name of worker.
+ * .change_gender: changes (!) gender of worker.
+ * .change_position: change position of worker.
+ * .change_personal_number : change personal number of worker.
+ * -----------------
+ * All methods are O(1).
+ */
+
+Workers::Workers() { load_workers_from_file(); }
+
+std::vector<std::string> Workers::get_all_worker_names() {
+    std::vector<std::string> worker_list;
+    for(auto it : m_worker_map){
+        worker_list.push_back(it.first);
+    }
+    return worker_list;
 }
 
-void Worker::change_gender(Genders new_sex){
-    m_worker_sex = new_sex;
+std::map<std::string, Worker> Workers::get_all_workers() { return m_worker_map; }
+
+Worker Workers::get_worker(std::string &name) {
+    auto it = m_worker_map.find(name);
+    if(it != m_worker_map.end()) { return m_worker_map[name]; }
+    else { throw std::invalid_argument("Worker name doesn't exist."); }
 }
 
-void Worker::change_position(Positions position){
-    m_position = position;
+void Workers::add_worker(std::string &name, Genders sex, Positions position, long personal_number) {
+    auto it = m_worker_map.find(name);
+    if(it == m_worker_map.end()){
+        m_worker_map[name] = Worker(name,sex,position,personal_number);
+    }
+    else{
+        throw std::invalid_argument("Worker name already exists");
+    }
 }
 
-void Worker::change_personal_number(long personal_number){
-    m_personal_number = personal_number;
+void Workers::remove_worker(std::string &name) {
+    auto it = m_worker_map.find(name);
+    if(it != m_worker_map.end()){
+        m_worker_map.erase(name);
+    }
+    else{
+        throw std::invalid_argument("Worker name not found to remove");
+    }
+}
+
+void Workers::load_workers_from_file() {
+    const std::string filename = "../lib/workers.cfg"; // make sure this filename is correct.
+    std::ifstream file(filename);
+    if(!file.is_open()){
+        std::exit(6);
+    }
+    else {
+        std::string line;
+        std::vector<std::string> tokens;
+        while (std::getline(file, line)) {
+            if (line.length() != 0) {
+                tokens = Converters::split_by_delimiter(line, ',');
+
+                // getting name of worker
+                std::string worker_name = Converters::regex_get_first_match(tokens[0], std::regex("<.*>"));
+                worker_name = Converters::regex_find_and_replace(worker_name, std::regex("[<>]"), "");
+
+                // getting sex of worker
+                Genders worker_sex = Converters::string_to_sex(tokens[1]);
+
+                // getting position of worker, but must remove unnecessary clutter first from input.
+                std::string worker_position_sanitized_input = Converters::regex_get_first_match(tokens[2], std::regex("<.*>"));
+                worker_position_sanitized_input = Converters::regex_find_and_replace(worker_position_sanitized_input,
+                                                                                     std::regex("[<>]"), "");
+                Positions worker_position = Converters::string_to_positions(worker_position_sanitized_input);
+
+                // getting personal number.
+                std::string worker_personal_number = Converters::regex_get_first_match(tokens[3], std::regex("<.*>"));
+                worker_personal_number = Converters::regex_find_and_replace(worker_personal_number, std::regex("[<>]"), "");
+                long worker_number = std::stol(worker_personal_number);
+
+                // add to map.
+                add_worker(worker_name,worker_sex,worker_position,worker_number);
+            }
+        }
+    }
+}
+
+void Workers::save_workers_to_file() {
+    const std::string filename = "../lib/workers.cfg";
+    std::ofstream write_file(filename);
+    if(!write_file.is_open()){
+        std::exit(6); // TODO: fix a proper exception here.
+    }
+    else{
+        for(auto &it : m_worker_map){
+            std::string worker_save_line;
+            std::string worker_name = it.first;
+            std::string worker_sex = Converters::sex_to_string(it.second.get_gender());
+            std::string worker_position = Converters::positions_to_string(it.second.get_position());
+            std::string worker_personal_number = std::to_string(it.second.get_personal_number());
+
+            worker_save_line += "name:<" + worker_name + ">,";
+            worker_save_line += "sex:" + worker_sex + ",";
+            worker_save_line += "position:<" + worker_position + ">,";
+            worker_save_line += "personal_number:<" + worker_personal_number + ">";
+
+            write_file << worker_save_line;
+        }
+    }
+    write_file.close();
 }
 
 
@@ -337,190 +480,118 @@ void Worker::change_personal_number(long personal_number){
  * Methods for Work_day class
  * -----------------
  *  constructor: creates a new work day with a time stamp.
- *  .load_workers_from_file(): loads workers from txt file.
- * .add_worker : adds a new Worker class to the vector of workers currently available. O(1).
- * .remove_worker: removes a worker, searched by name. O(n).
- * .find_worker: finds and returns a worker, searched by name. O(n).
- * .change_resolution: change resolution of work day. O(1)
- * .get_all_workers: returns worker list for day. O(1) ish.
- * .get_resolutions: returns resolution of day. O(1).
- * .add_work_day_reference_column: adds a column to the reference matrix,
- * a column of tasks to be distributed between some workers. O(n).
- * .build_work_day: TODO finish this function.
- * .save_work_day: saves changes made to members of this function.
+ *
+ *  Worker class related function:
+ *  =====================
+ *   .add_worker : adds a new Worker for the day to the worker_map. O(log(n))
+ *   .remove_worker: removes a worker, searched by name. O(log(n)).
+ *   .get_all_workers: returns worker map for day. O(1)
+ *   .get_all_worker_names: returns vector of all names for the day. O(log(n))
+ *
+ *  Resolution related functions:
+ *  =====================
+ *   .change_resolution: change resolution of work day. O(1)
+ *   .get_resolution: returns resolution of day. O(1).
+ *
+ *  Work day reference matrix related functions:
+ *  =====================
+ *   .add_reference_column: adds a column to the reference matrix,
+ *                                   a column of tasks to be distributed between some workers. O(n).
+ *   .remove_reference_column: removes a reference column by id. O(n)
+ *   .reference_matrix_size: returns column size of work_day matrix. O(fast)
+ *   .get_reference_matrix: returns reference_matrix. O(1)
+ *
+ *  Work day schedule matrix related functions:
+ *  =====================
+ *   .build_work_day: TODO finish this function.
+ *
+ *  Utility functions:
+ *  =====================
+ *   .work_day_lexer: converts class into a .cfg file.
+ *   .save_work_day: saves changes made to members of this function.
  * -----------------
  */
 
 // default constructor.
 Work_day::Work_day(){
-    m_work_day_date = time(nullptr);
-    m_worker_list.clear();
-    work_day_tasks = Tasks();
-    load_workers_from_file();
+    m_date = time(nullptr);
+    tasks_list = Tasks();
+    m_date = std::time(nullptr);
 }
 
 // constructor for workday with timestamp and worker list.
 Work_day::Work_day(time_t date_of_workday,int resolution){
     m_resolution = resolution;
-    m_worker_list.clear();
-    m_work_day_date = date_of_workday;
-    work_day_tasks = Tasks(); // automatically loads from file when Work_day constructor is called.
-    load_workers_from_file();
+    m_date = date_of_workday;
+    tasks_list = Tasks(); // automatically loads from file when Work_day constructor is called.
 }
 
-void Work_day::load_workers_from_file() {
-    const std::string filename = "../lib/workers.cfg"; // make sure this filename is correct.
-    std::ifstream file(filename);
-    if(!file.is_open()){
-        std::exit(6);
-    }
-    else{
-        std::string line;
-        std::vector<std::string> splits;
-        while(std::getline(file,line)){
-            if(line.length()!=0){
-                splits = Converters::split_by_delimiter(line,',');
-
-                // getting name of worker
-                std::string worker_name = Converters::regex_get_first_match(splits[0],std::regex("<.*>"));
-                worker_name = Converters::regex_find_and_replace(worker_name,std::regex("[<>]"),"");
-
-                // getting sex of worker
-                Genders worker_sex = Converters::string_to_sex(splits[1]);
-
-                // getting position of worker, but must remove unneccessary clutter first from input.
-                std::string worker_position_sanitized_input = Converters::regex_get_first_match(splits[2],std::regex("<.*>"));
-                worker_position_sanitized_input = Converters::regex_find_and_replace(worker_position_sanitized_input,std::regex("[<>]"),"");
-                Positions worker_position = Converters::string_to_positions(worker_position_sanitized_input);
-
-                // getting personal number.
-                std::string worker_personal_number = Converters::regex_get_first_match(splits[3],std::regex("<.*>"));
-                worker_personal_number = Converters::regex_find_and_replace(worker_personal_number,std::regex("[<>]"),"");
-                long worker_number = std::stol(worker_personal_number);
-
-                // appending to worker list.
-                m_worker_list.emplace_back(worker_name,worker_sex,worker_position,worker_number);
-            }
-        }
-    }
-}
-
-void Work_day::save_workers_to_file() {
-    const std::string filename = "../lib/workers.cfg";
-    std::ofstream write_file(filename);
-    if(!write_file.is_open()){
-        std::exit(6); // TODO: fix a proper exception here.
-    }
-    else{
-        // now add new tasks to file not in original file.
-        for(Worker worker : m_worker_list){
-            std::string worker_save_line;
-            worker_save_line += "name:<" + worker.get_name() + ">,";
-            worker_save_line += "sex:" + Converters::sex_to_string(worker.get_gender()) + ",";
-            worker_save_line += "position:<" + Converters::positions_to_string(worker.get_position()) + ">,";
-            worker_save_line += "personal_number:<" + std::to_string(worker.get_personal_number()) + ">";
-            write_file << worker_save_line << std::endl;
-        }
-    }
-    write_file.close();
-}
-
+// add worker to work_day map.
 void Work_day::add_worker(Worker new_worker) {
-    for(Worker worker: m_worker_list){
-        if(worker.get_name() == new_worker.get_name()){
-            throw std::invalid_argument("Worker already exists");
-        }
-    }
-    m_worker_list.push_back(new_worker);
-
-}
-
-void Work_day::remove_worker(const std::string &worker_name) {
-    int position = 0;
-    int position_of_found_worker = 0;
-    bool worker_found = false;
-    for(Worker worker : m_worker_list){
-        if(worker.get_name() == worker_name){
-            worker_found = true;
-            position_of_found_worker = position;
-        }
-        position++;
-    }
-    if(!worker_found){
-        throw std::invalid_argument("Name not found in list of workers for the day");
+    std::string worker_name = new_worker.get_name();
+    auto it = m_worker_map.find(worker_name);
+    if(it == m_worker_map.end()){
+        m_worker_map[worker_name] = new_worker;
     }
     else{
-        // removing worker from task list based on position and id.
-        m_worker_list.erase(m_worker_list.begin()+position_of_found_worker);
+        std::string error_msg = "Worker " + worker_name + "already exits for this day.";
+        throw std::invalid_argument(error_msg);
     }
 }
 
-void Work_day::change_resolution(int new_resolution) {
-    m_resolution = new_resolution;
+void Work_day::remove_worker(std::string &name) {
+    auto it = m_worker_map.find(name);
+    if(it != m_worker_map.end()){
+        m_worker_map.erase(name);
+    }
+    else{
+        std::string error_msg = name + " is not in the list of workers for the day.";
+        throw std::invalid_argument(error_msg);
+    }
 }
 
-std::vector<Worker> Work_day::get_all_workers() {
-    return m_worker_list;
+std::map<std::string,Worker> Work_day::get_all_workers() { return m_worker_map; }
+
+std::vector<std::string> Work_day::get_all_worker_names() {
+    std::vector<std::string> worker_list;
+    for(auto it : m_worker_map){
+        worker_list.push_back(it.first);
+    }
+    return worker_list;
 }
 
-int Work_day::get_resolution() {
-    return m_resolution;
-}
+void Work_day::change_resolution(int new_resolution) { m_resolution = new_resolution; }
 
-void Work_day::add_work_day_reference_column(int task_number, int start_time, int end_time) {
+int Work_day::get_resolution() { return m_resolution; }
+
+void Work_day::add_reference_column(Task task, int start_time, int end_time) {
     // first check if start or end time has allowed values.
     if(start_time < end_time && start_time < m_resolution && end_time < m_resolution){
-        // check if task number is in list of tasks.
-        bool found_task_flag = false;
-        std::vector<int> list_of_task_numbers = work_day_tasks.get_all_task_values(); // hope this works for speed.r
-        for(int task : list_of_task_numbers){
-            if(task == task_number){
-                found_task_flag = true;
-            }
+        std::vector<Task> reference_column;
+        Task empty_task = Task();
+        for(int i = 0; i < m_resolution; ++i){
+            if(i >= start_time && i < end_time){ reference_column.push_back(task); }
+            else { reference_column.push_back(empty_task); }
         }
-        if(found_task_flag){
-            // add task to reference matrix.
-            std::vector<int> reference_column;
-            reference_column.reserve((unsigned long)m_resolution);
-            for (int i = 0; i < start_time; ++i) {
-                // assigning no work before start time.
-                reference_column.push_back(Tasks::not_at_work());
-            }
-            for (int j = start_time; j < end_time; ++j){
-                // assigning task number
-                reference_column.push_back(task_number);
-            }
-            for (int k = end_time; k < m_resolution; ++k) {
-                reference_column.push_back(Tasks::not_at_work());
-            }
-            // appending column to reference matrix.
-            m_work_day_reference.push_back(reference_column);
-        }
-        else{
-            throw std::invalid_argument("invalid task id");
-        }
+        m_reference_matrix.push_back(reference_column);
     }
     else{
         throw std::invalid_argument("invalid start and/or end time");
     }
 }
 
-void Work_day::remove_work_day_reference_column(int id) {
-    if(!m_work_day_reference.empty()){
-        if(id < 0 || id >= m_work_day_reference.size()){
+void Work_day::remove_reference_column(int id) {
+    if(!m_reference_matrix.empty()){
+        if(id < 0 || id >= m_reference_matrix.size()){
             throw std::invalid_argument("invalid id number, can't remove reference column.");
         }
-        m_work_day_reference.erase(m_work_day_reference.begin()+id);
+        m_reference_matrix.erase(m_reference_matrix.begin()+id);
     }
 }
 
-int Work_day::get_work_day_reference_size(){
-    return static_cast<int>(m_work_day_reference.size());
-}
+int Work_day::reference_size(){ return static_cast<int>(m_reference_matrix.size()); }
 
-std::vector<std::vector<int>> Work_day::get_work_day_reference() {
-    return m_work_day_reference;
-}
+std::vector<std::vector<Task>> Work_day::get_reference_matrix() { return m_reference_matrix; }
 
 void Work_day::build_work_day() {
     // shit complex thing.
@@ -546,8 +617,7 @@ void Work_day::work_day_lexer(bool indent, bool file_name_override, std::string 
     }
     else{
         // converts current time to date of current time as string.
-        auto t = std::time(nullptr);
-        auto tm = *std::localtime(&t);
+        auto tm = *std::localtime(&m_date);
         std::ostringstream oss;
         oss << std::put_time(&tm, "%Y-%m-%d");
         std::string time_string = oss.str();
@@ -561,7 +631,7 @@ void Work_day::work_day_lexer(bool indent, bool file_name_override, std::string 
 
 // save changes made to work day.
 void Work_day::save_work_day(){
-    work_day_tasks.save_tasks_to_file(); // overwrites tasks if new have been added.
+    tasks_list.save_tasks_to_file(); // overwrites tasks if new have been added.
     std::string custom_name = "hej";
     work_day_lexer(false,false,custom_name);
 }

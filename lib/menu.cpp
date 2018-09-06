@@ -8,7 +8,7 @@
 #include <cmath>
 
 enum Selections{
-    ADD_WORKER = 0,
+    CREATE_NEW_WORKER = 0,
     REMOVE_WORKER,
     SEE_WORKERS,
     ADD_TASK,
@@ -57,8 +57,8 @@ std::vector<int> menu_add_task(Work_day work_day){
     std::cout << "Enter end time:" << std::endl;
     int end_time;
     std::cin >> end_time;
-    std::vector<std::string> current_tasks = work_day.work_day_tasks.get_all_task_names();
-    std::vector<int> current_task_id = work_day.work_day_tasks.get_all_task_values();
+    std::vector<std::string> current_tasks = work_day.tasks_list.get_all_task_names();
+    std::vector<int> current_task_id = work_day.tasks_list.get_all_task_values();
     for(int i = 0; i < current_tasks.size(); ++i){
         std::cout << current_task_id[i] << ": "<< current_tasks[i] << std::endl;
     }
@@ -102,7 +102,7 @@ int get_max_char_length(std::vector<std::vector<int>> matrix, Tasks current_task
 // displays a column view of tasks, with names of tasks, for user readability and debugging purposes.
 void display_day_tasks(Work_day work_day){
     std::vector<std::vector<int>> matrix = work_day.get_work_day_reference();
-    Tasks current_tasks = work_day.work_day_tasks;
+    Tasks current_tasks = work_day.tasks_list;
     // integer below is for padding of spaces in order to get even columns printed.
     int max_length_of_task_names = get_max_char_length(matrix, current_tasks,work_day.get_resolution())+1;
 
@@ -151,7 +151,7 @@ Work_day add_new_task_menu(Work_day day){
     std::cout << "Enter sex req: (MALE/FEMALE/NONE)" << std::endl;
     std::cin >> temp_sex;
     sex = Converters::string_to_sex(temp_sex);
-    day.work_day_tasks.add_task(name_of_task,flexibility,sex);
+    day.tasks_list.add_task(name_of_task,flexibility,sex);
     return day;
 }
 
@@ -225,7 +225,7 @@ void menu(){
     bool user_exit = false;
     while(!user_exit){
         std::cout << "Choose the following:" << std::endl;
-        std::cout << Selections::ADD_WORKER << " :add a worker." << std::endl;
+        std::cout << Selections::CREATE_NEW_WORKER << " :add a worker." << std::endl;
         std::cout << Selections::REMOVE_WORKER << " :remove a worker."<< std::endl;
         std::cout << Selections::SEE_WORKERS << " :display workers."<< std::endl;
         std::cout << Selections::ADD_TASK << " :add a task to work day reference matrix."<< std::endl;
@@ -241,7 +241,7 @@ void menu(){
             default:
                 user_exit = false;
                 break;
-            case Selections::ADD_WORKER:
+            case Selections::CREATE_NEW_WORKER:
                 current_day.add_worker(menu_add_worker());
                 break;
             case Selections::REMOVE_WORKER:
