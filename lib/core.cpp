@@ -37,15 +37,10 @@ namespace Utilities{
                 std::string number_of_saves = std::to_string(std::stoi(number_of_saves_vector[1])+1);
                 temporary_name = number_of_saves_vector[0] + "n" + number_of_saves + ".cfg";
             }
-            else{
-                temporary_name += "n1.cfg";
-
-            }
+            else{ temporary_name += "n1.cfg"; }
             return stream_name(temporary_name);
         }
-        else{
-            return file_name;
-        }
+        else{ return file_name; }
 
     }
 
@@ -87,47 +82,31 @@ namespace Converters{
     Positions string_to_positions(const std::string &input){
         int index = 0;
         for(const std::string &position : Positions_name_table){
-            if(input == position){
-                return static_cast<Positions>(index);
-            }
+            if(input == position){ return static_cast<Positions>(index); }
             index++;
         }
         throw std::runtime_error("Error converting string to positions");
     }
 
     std::string boolean_to_string(bool input){
-        if(input){
-            return "<true>";
-        }
-        else{
-            return "<false>";
-        }
+        if(input){ return "<true>"; }
+        else{ return "<false>"; }
     }
 
     std::string sex_to_string(Genders input){
-        if(input == Genders::NONE){
-            return "<NONE>";
-        }
-        else if(input == Genders::MALE){
-            return "<MALE>";
-        }
-        else{
-            return "<FEMALE>";
-        }
+        if(input == Genders::NONE){ return "<NONE>"; }
+        else if(input == Genders::MALE){ return "<MALE>"; }
+        else{ return "<FEMALE>"; }
     }
 
-    std::string positions_to_string(Positions input){
-        return Positions_name_table[static_cast<int>(input)];
-    }
+    std::string positions_to_string(Positions input){ return Positions_name_table[static_cast<int>(input)]; }
 
     // stolen from fluent{C++}, splitting a line into components based on a delimiter.
     std::vector<std::string> split_by_delimiter(const std::string &line, char delim){
         std::vector<std::string> tokens;
         std::string token;
         std::istringstream token_stream(line); // converts string into a stream.
-        while(std::getline(token_stream,token,delim)){
-            tokens.push_back(token);
-        }
+        while(std::getline(token_stream,token,delim)){ tokens.push_back(token); }
         return tokens;
     }
 
@@ -143,31 +122,17 @@ namespace Converters{
 
     // converts string to Genders class from tasks file.
     Genders string_to_sex(const std::string &input){
-        if(std::regex_search(input,std::regex("<MALE>"))){
-            return Genders::MALE;
-        }
-        else if(std::regex_search(input,std::regex("<FEMALE>"))){
-            return Genders::FEMALE;
-        }
-        else if(std::regex_search(input,std::regex("<NONE>"))){
-            return Genders::NONE;
-        }
-        else{
-            throw std::invalid_argument("Input string cannot be interpreted as Genders class");
-        }
+        if(std::regex_search(input,std::regex("<MALE>"))){ return Genders::MALE; }
+        else if(std::regex_search(input,std::regex("<FEMALE>"))){ return Genders::FEMALE; }
+        else if(std::regex_search(input,std::regex("<NONE>"))){ return Genders::NONE; }
+        else{ throw std::invalid_argument("Input string cannot be interpreted as Genders class"); }
     }
 
     // converts string to boolean from tasks file.
     bool string_to_boolean(const std::string &input){
-        if(std::regex_search(input,std::regex("<true>"))){
-            return true;
-        }
-        else if(std::regex_search(input,std::regex("<false>"))){
-            return false;
-        }
-        else{
-            throw std::invalid_argument("Input string cannot be interpreted as boolean");
-        }
+        if(std::regex_search(input,std::regex("<true>"))){ return true; }
+        else if(std::regex_search(input,std::regex("<false>"))){ return false; }
+        else{ throw std::invalid_argument("Input string cannot be interpreted as boolean"); }
     }
 }
 
@@ -195,29 +160,17 @@ Task::Task(std::string &name, bool flex, Genders sex_req) {
     m_task_sex_requirement = sex_req;
 }
 
-std::string Task::name() {
-    return m_task_name;
-}
+std::string Task::name() { return m_task_name; }
 
-bool Task::flexibility() {
-    return m_task_flexibility;
-}
+bool Task::flexibility() { return m_task_flexibility; }
 
-Genders Task::sex_requirement() {
-    return m_task_sex_requirement;
-}
+Genders Task::sex_requirement() { return m_task_sex_requirement; }
 
-void Task::change_name(std::string &name) {
-    m_task_name = std::move(name);
-}
+void Task::change_name(std::string &name) { m_task_name = std::move(name); }
 
-void Task::change_flexibility(bool &flex) {
-    m_task_flexibility = flex;
-}
+void Task::change_flexibility(bool &flex) { m_task_flexibility = flex; }
 
-void Task::change_sex_requirement(Genders &sex) {
-    m_task_sex_requirement = sex;
-}
+void Task::change_sex_requirement(Genders &sex) { m_task_sex_requirement = sex; }
 
 /**
  * Methods for Tasks class
@@ -232,9 +185,7 @@ void Task::change_sex_requirement(Genders &sex) {
  * --------------
  */
 
-Tasks::Tasks(){
-    load_tasks_from_file();
-};
+Tasks::Tasks(){ load_tasks_from_file(); };
 
 // adds a new task in the list.
 void Tasks::add_task(std::string new_name,bool flexibility, Genders sex) {
@@ -244,33 +195,25 @@ void Tasks::add_task(std::string new_name,bool flexibility, Genders sex) {
         auto size = static_cast<int>(m_task_map.size());
         m_task_map[new_name] = Task(new_name,flexibility,sex);
     }
-    else{
-        throw std::invalid_argument("Name of task already exists.");
-    }
+    else{ throw std::invalid_argument("Name of task already exists."); }
 }
 
 // removes a task from the list by name.
 void Tasks::remove_task(std::string name) {
     std::map<std::string,Task>::iterator value;
     value = m_task_map.find(name);
-    if(value != m_task_map.end()){
-        m_task_map.erase(value); // removes by iterator.
-    }
+    if(value != m_task_map.end()){ m_task_map.erase(value); } // removes by iterator.
 }
 
 // returns a list of all names of tasks from map.
 std::vector<std::string> Tasks::get_all_task_names() {
     std::vector<std::string> list_of_tasks;
-    for(auto& it : m_task_map){
-        list_of_tasks.push_back(it.first);
-    }
+    for(auto& it : m_task_map){ list_of_tasks.push_back(it.first); }
     return list_of_tasks;
 }
 
 // returns map of all Tasks.
-std::map<std::string,Task> Tasks::get_all_tasks() {
-    return m_task_map;
-}
+std::map<std::string,Task> Tasks::get_all_tasks() { return m_task_map; }
 
 // method below loads enum names from separate txt file into a private map.
 // how tasks.cfg is supposed to be formatted for this to work:
@@ -303,9 +246,7 @@ void Tasks::load_tasks_from_file(){
 void Tasks::save_tasks_to_file() {
     const std::string filename = "../lib/tasks.cfg";
     std::ofstream write_file(filename);
-    if(!write_file.is_open()){
-        std::exit(6); // TODO: fix a proper exception here.
-    }
+    if(!write_file.is_open()){ std::exit(6); } // TODO: fix a proper exception here.
     else{
         // now add new tasks to file not in original file.
         for(auto it : m_task_map){
@@ -378,9 +319,7 @@ Workers::Workers() { load_workers_from_file(); }
 
 std::vector<std::string> Workers::get_all_worker_names() {
     std::vector<std::string> worker_list;
-    for(auto it : m_worker_map){
-        worker_list.push_back(it.first);
-    }
+    for(auto it : m_worker_map){ worker_list.push_back(it.first); }
     return worker_list;
 }
 
@@ -394,30 +333,20 @@ Worker Workers::get_worker(std::string &name) {
 
 void Workers::add_worker(std::string &name, Genders sex, Positions position, long personal_number) {
     auto it = m_worker_map.find(name);
-    if(it == m_worker_map.end()){
-        m_worker_map[name] = Worker(name,sex,position,personal_number);
-    }
-    else{
-        throw std::invalid_argument("Worker name already exists");
-    }
+    if(it == m_worker_map.end()){ m_worker_map[name] = Worker(name,sex,position,personal_number); }
+    else{ throw std::invalid_argument("Worker name already exists"); }
 }
 
 void Workers::remove_worker(std::string &name) {
     auto it = m_worker_map.find(name);
-    if(it != m_worker_map.end()){
-        m_worker_map.erase(name);
-    }
-    else{
-        throw std::invalid_argument("Worker name not found to remove");
-    }
+    if(it != m_worker_map.end()){ m_worker_map.erase(name); }
+    else{ throw std::invalid_argument("Worker name not found to remove"); }
 }
 
 void Workers::load_workers_from_file() {
     const std::string filename = "../lib/workers.cfg"; // make sure this filename is correct.
     std::ifstream file(filename);
-    if(!file.is_open()){
-        std::exit(6);
-    }
+    if(!file.is_open()){ std::exit(6); }
     else {
         std::string line;
         std::vector<std::string> tokens;
@@ -453,9 +382,7 @@ void Workers::load_workers_from_file() {
 void Workers::save_workers_to_file() {
     const std::string filename = "../lib/workers.cfg";
     std::ofstream write_file(filename);
-    if(!write_file.is_open()){
-        std::exit(6); // TODO: fix a proper exception here.
-    }
+    if(!write_file.is_open()){ std::exit(6); } // TODO: fix a proper exception here.
     else{
         for(auto &it : m_worker_map){
             std::string worker_save_line;
@@ -530,9 +457,7 @@ Work_day::Work_day(time_t date_of_workday,int resolution){
 void Work_day::add_worker(Worker new_worker) {
     std::string worker_name = new_worker.get_name();
     auto it = m_worker_map.find(worker_name);
-    if(it == m_worker_map.end()){
-        m_worker_map[worker_name] = new_worker;
-    }
+    if(it == m_worker_map.end()){ m_worker_map[worker_name] = new_worker; }
     else{
         std::string error_msg = "Worker " + worker_name + "already exits for this day.";
         throw std::invalid_argument(error_msg);
@@ -541,9 +466,7 @@ void Work_day::add_worker(Worker new_worker) {
 
 void Work_day::remove_worker(std::string &name) {
     auto it = m_worker_map.find(name);
-    if(it != m_worker_map.end()){
-        m_worker_map.erase(name);
-    }
+    if(it != m_worker_map.end()){ m_worker_map.erase(name); }
     else{
         std::string error_msg = name + " is not in the list of workers for the day.";
         throw std::invalid_argument(error_msg);
@@ -554,9 +477,7 @@ std::map<std::string,Worker> Work_day::get_all_workers() { return m_worker_map; 
 
 std::vector<std::string> Work_day::get_all_worker_names() {
     std::vector<std::string> worker_list;
-    for(auto it : m_worker_map){
-        worker_list.push_back(it.first);
-    }
+    for(auto it : m_worker_map){ worker_list.push_back(it.first); }
     return worker_list;
 }
 
@@ -575,9 +496,7 @@ void Work_day::add_reference_column(Task task, int start_time, int end_time) {
         }
         m_reference_matrix.push_back(reference_column);
     }
-    else{
-        throw std::invalid_argument("invalid start and/or end time");
-    }
+    else{ throw std::invalid_argument("invalid start and/or end time"); }
 }
 
 void Work_day::remove_reference_column(int id) {
@@ -611,10 +530,7 @@ void Work_day::work_day_lexer(bool indent, bool file_name_override, std::string 
 
     std::string filename;
     // checks if we want to save file as name of date or custom name.
-    if(file_name_override){
-        // name to path
-        filename = path + custom_file_name + ".cfg";
-    }
+    if(file_name_override){ filename = path + custom_file_name + ".cfg"; } // name to path
     else{
         // converts current time to date of current time as string.
         auto tm = *std::localtime(&m_date);

@@ -223,6 +223,8 @@ void menu(){
     Work_day current_day = Work_day();
     current_day.change_resolution(48);
     bool user_exit = false;
+    Tasks available_tasks = Tasks();
+    Workers available_workers = Workers();
     while(!user_exit){
         std::cout << "Choose the following:" << std::endl;
         std::cout << Selections::CREATE_NEW_WORKER << " :add a worker." << std::endl;
