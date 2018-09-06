@@ -22,9 +22,9 @@ namespace {
 // Testing that we retrieve name etc of a person from special Worker class.
 TEST_F(ClassDeclaration, Worker_class_retrieval_test){
     std::string name("Carl Schiller");
-    Worker carl(name, Genders::APPACHE_ATTACK_HELICOPTER, Positions::EXTRA_WORKER, 199705266436);
+    Worker carl(name, Genders::MALE, Positions::EXTRA_WORKER, 199705266436);
     EXPECT_EQ(name,carl.get_name());
-    EXPECT_EQ(Genders::APPACHE_ATTACK_HELICOPTER, carl.get_gender());
+    EXPECT_EQ(Genders::MALE, carl.get_gender());
     EXPECT_EQ(Positions::EXTRA_WORKER, carl.get_position());
     EXPECT_EQ(199705266436,carl.get_personal_number());
 }
@@ -32,7 +32,7 @@ TEST_F(ClassDeclaration, Worker_class_retrieval_test){
 // Changing names in Worker class etc.
 TEST_F(ClassDeclaration, Worker_class_change_test){
     std::string name("Carl Schiller");
-    Worker carl(name, Genders::APPACHE_ATTACK_HELICOPTER, Positions::EXTRA_WORKER, 199705266436);
+    Worker carl(name, Genders::MALE, Positions::EXTRA_WORKER, 199705266436);
     carl.change_gender(Genders::FEMALE);
     carl.change_name("Carla");
     std::string new_name("Carla");

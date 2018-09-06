@@ -8,19 +8,22 @@
 #include <cmath>
 
 enum Selections{
-    ADD_WORKER = 0,
+    CREATE_NEW_WORKER = 0,
     REMOVE_WORKER,
-    FIND_WORKER,
+    SEE_WORKERS,
     ADD_TASK,
+    REMOVE_TASK,
+    NEW_TASK,
     DISPLAY_TASKS,
     DISPLAY_DAY,
     EXIT,
 };
 
-Worker menu_add(){
-    std::cout << "Enter name:" << std::endl;
+Worker menu_add_worker(){
     std::string name_of_worker;
-    std::cin >> name_of_worker;
+    std::cin.ignore();
+    std::cout << "Enter name:" << std::endl;
+    getline(std::cin,name_of_worker); //gets whole line
     std::cout << "Enter sex:" << std::endl;
     std::cout << static_cast<int>(Genders::MALE) << " : male" << std::endl;
     std::cout << static_cast<int>(Genders::FEMALE) << " : female" << std::endl ;
@@ -54,8 +57,8 @@ std::vector<int> menu_add_task(Work_day work_day){
     std::cout << "Enter end time:" << std::endl;
     int end_time;
     std::cin >> end_time;
-    std::vector<std::string> current_tasks = work_day.get_tasks().get_all_task_names();
-    std::vector<int> current_task_id = work_day.get_tasks().get_all_task_values();
+    std::vector<std::string> current_tasks = work_day.tasks_list.get_all_task_names();
+    std::vector<int> current_task_id = work_day.tasks_list.get_all_task_values();
     for(int i = 0; i < current_tasks.size(); ++i){
         std::cout << current_task_id[i] << ": "<< current_tasks[i] << std::endl;
     }
@@ -99,14 +102,14 @@ int get_max_char_length(std::vector<std::vector<int>> matrix, Tasks current_task
 // displays a column view of tasks, with names of tasks, for user readability and debugging purposes.
 void display_day_tasks(Work_day work_day){
     std::vector<std::vector<int>> matrix = work_day.get_work_day_reference();
-    Tasks current_tasks = work_day.get_tasks();
+    Tasks current_tasks = work_day.tasks_list;
     // integer below is for padding of spaces in order to get even columns printed.
-    int max_length_of_task_names = get_max_char_length(matrix, current_tasks,work_day.get_resolution());
+    int max_length_of_task_names = get_max_char_length(matrix, current_tasks,work_day.get_resolution())+1;
 
     // printing a header for the columns:
     std::string header;
-    unsigned long clock_padding = clock_parser(work_day.get_resolution(), 0).length();
-    header += std::string(clock_padding + 2,' '); // padding for clock.
+    unsigned long clock_padding = clock_parser(work_day.get_resolution(), 0).length()+2;
+    header += std::string(clock_padding,' '); // padding for clock.
     for(int k = 0; k < matrix.size(); ++k){
         std::string column_name = "Column " + std::to_string(k);
         unsigned long column_padding = max_length_of_task_names - column_name.length();
@@ -133,17 +136,102 @@ void display_day_tasks(Work_day work_day){
     }
 }
 
+
+Work_day add_new_task_menu(Work_day day){
+    std::string name_of_task;
+    bool flexibility;
+    std::string temp_flex;
+    Genders sex;
+    std::string temp_sex;
+    std::cout << "Enter name of task" << std::endl;
+    std::cin >> name_of_task;
+    std::cout << "Enter flexibility (true/false)" << std::endl;
+    std::cin >> temp_flex;
+    flexibility = Converters::string_to_boolean(temp_flex);
+    std::cout << "Enter sex req: (MALE/FEMALE/NONE)" << std::endl;
+    std::cin >> temp_sex;
+    sex = Converters::string_to_sex(temp_sex);
+    day.tasks_list.add_task(name_of_task,flexibility,sex);
+    return day;
+}
+
+void display_workers(std::vector<Worker> worker_list){
+    int i = 0;
+    unsigned int max_char_length = 0;
+    std::vector<std::string> console_output;
+    for(Worker worker : worker_list){
+        std::string console_row;
+        console_row += std::to_string(i) + ". ";
+        console_row += "Name : ";
+        console_row += worker.get_name();
+        console_row += ", Gender: ";
+        console_row += Converters::sex_to_string(worker.get_gender());
+        console_row += ", Position: ";
+        console_row += Converters::positions_to_string(worker.get_position());
+        console_row += ", Personal number: ";
+        console_row += std::to_string(worker.get_personal_number());
+        console_row += "\n";
+        console_output.push_back(console_row);
+        if(max_char_length < console_row.length()){
+            max_char_length = static_cast<unsigned int>(console_row.length());
+        }
+        i++;
+    }
+    // make padding before and after as to make sure to make it readable.
+    std::string padding = std::string(max_char_length, '=');
+    padding += "\n";
+    std::vector<std::string>::iterator it;
+    it = console_output.begin();
+    console_output.insert(it,padding);
+    console_output.push_back(padding);
+    // print output.
+    for(const std::string &row : console_output){
+        std::cout << row;
+    }
+}
+
+std::string remove_worker(std::vector<Worker> worker_list){
+    std::cout << "Enter number to remove, or any other number or character to ignore." << std::endl;
+    std::string selection;
+    std::cin >> selection;
+    try{
+        int integer_selection = std::stoi(selection);
+        if(integer_selection < worker_list.size()-1 || integer_selection >= 0){
+            return worker_list[integer_selection].get_name();
+        }
+        else{
+            return "";
+        }
+
+    }
+    catch(std::invalid_argument&){
+        return "";
+    }
+}
+
+Work_day remove_task_id(Work_day current_day){
+    if(current_day.get_work_day_reference_size() > 0){
+        std::cout << "Please select column to remove" << std::endl;
+        int id;
+        std::cin >> id;
+        current_day.remove_work_day_reference_column(id);
+    }
+    return current_day;
+}
+
 void menu(){
     Work_day current_day = Work_day();
     current_day.change_resolution(48);
     bool user_exit = false;
     while(!user_exit){
         std::cout << "Choose the following:" << std::endl;
-        std::cout << Selections::ADD_WORKER << " :add a user." << std::endl;
-        std::cout << Selections::REMOVE_WORKER << " :remove a user."<< std::endl;
-        std::cout << Selections::FIND_WORKER << " :find a user."<< std::endl;
-        std::cout << Selections::ADD_TASK << " :add task."<< std::endl;
-        std::cout << Selections::DISPLAY_TASKS << " :display tasks."<< std::endl;
+        std::cout << Selections::CREATE_NEW_WORKER << " :add a worker." << std::endl;
+        std::cout << Selections::REMOVE_WORKER << " :remove a worker."<< std::endl;
+        std::cout << Selections::SEE_WORKERS << " :display workers."<< std::endl;
+        std::cout << Selections::ADD_TASK << " :add a task to work day reference matrix."<< std::endl;
+        std::cout << Selections::REMOVE_TASK << " :remove a task from work day reference matrix."<< std::endl;
+        std::cout << Selections::NEW_TASK << " :create new task."<< std::endl;
+        std::cout << Selections::DISPLAY_TASKS << " :display reference matrix."<< std::endl;
         std::cout << Selections::DISPLAY_DAY << " :display the day."<< std::endl;
         std::cout << Selections::EXIT << " :exit."<< std::endl;
         int user_selection;
@@ -153,17 +241,40 @@ void menu(){
             default:
                 user_exit = false;
                 break;
-            case Selections::ADD_WORKER:
-                current_day.add_worker(menu_add());
+            case Selections::CREATE_NEW_WORKER:
+                current_day.add_worker(menu_add_worker());
                 break;
             case Selections::REMOVE_WORKER:
+            {
+                std::vector<Worker> worker_list = current_day.get_all_workers();
+                display_workers(worker_list);
+                std::string worker_to_be_removed = remove_worker(worker_list);
+                if(worker_to_be_removed.empty()){
+                    std::cout << "Nothing removed." << std::endl;
+                }
+                else{
+                    current_day.remove_worker(worker_to_be_removed);
+                }
                 break;
-            case Selections::FIND_WORKER:
+            }
+            case Selections::SEE_WORKERS:
+                display_workers(current_day.get_all_workers());
                 break;
             case Selections::ADD_TASK:
             {
                 std::vector<int> task_adder = menu_add_task(current_day);
                 current_day.add_work_day_reference_column(task_adder[2],task_adder[0],task_adder[1]);
+                break;
+            }
+            case Selections::REMOVE_TASK:
+            {
+                display_day_tasks(current_day);
+                current_day = remove_task_id(current_day);
+                break;
+            }
+            case Selections::NEW_TASK:
+            {
+                current_day = add_new_task_menu(current_day);
                 break;
             }
             case Selections::DISPLAY_TASKS:
@@ -173,6 +284,8 @@ void menu(){
                 break;
             case Selections::EXIT:
                 user_exit = true;
+                current_day.save_work_day();
+                current_day.save_workers_to_file();
                 break;
 
         }

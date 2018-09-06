@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.8)
 project(edal_schema)
 
 set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_FLAGS "-fexceptions")
 
 add_subdirectory(lib/googletest)
 include_directories(lib/googletest/googletest/include)
