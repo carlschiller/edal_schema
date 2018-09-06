@@ -18,7 +18,7 @@ namespace {
             }
     };
 }
-
+/*
 // Testing that we retrieve name etc of a person from special Worker class.
 TEST_F(ClassDeclaration, Worker_class_retrieval_test){
     std::string name("Carl Schiller");
@@ -43,3 +43,4 @@ TEST_F(ClassDeclaration, Worker_class_change_test){
     EXPECT_EQ(Positions::FULL_TIME, carl.get_position());
     EXPECT_EQ(200001011000,carl.get_personal_number());
 }
+*/

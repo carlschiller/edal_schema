@@ -12,33 +12,8 @@
 #include <regex>
 
 
-// Available sex.
-enum class Genders{
-    NONE = 0,
-    MALE,
-    FEMALE,
-};
-
-// Types of available work positions.
-enum class Positions{
-    FULL_TIME,
-    HALF_TIME,
-    TEMPORARY_POSITION,
-    PARENT_LEAVE,
-    WEEKEND_WORKER,
-    EXTRA_WORKER,
-};
-
-static std::string Positions_name_table[6]{
-        "FULL_TIME",
-        "HALF_TIME",
-        "TEMPORARY_POSITION",
-        "PARENT_LEAVE",
-        "WEEKEND_WORKER",
-        "EXTRA_WORKER"
-};
-
 namespace Utilities {
+    void create_directory(const std::string &path);
     bool file_exists(const std::string& file_name);
     std::string stream_name(std::string file_name);
 }
@@ -46,46 +21,66 @@ namespace Utilities {
 // Functions for saving and loading.
 namespace Converters {
     bool string_to_boolean(const std::string &input);
-    Genders string_to_sex(const std::string &input);
-    Positions string_to_positions(const std::string &input);
     std::string boolean_to_string(bool input);
-    std::string sex_to_string(Genders input);
-    std::string positions_to_string(Positions input);
     std::string regex_find_and_replace(const std::string &line_of_text,
                                               const std::regex &reg, const std::string &replacer);
     std::string regex_get_first_match(const std::string &line, const std::regex &reg);
     std::vector<std::string> split_by_delimiter(const std::string &line, char delim);
 }
 
+// custom "enum class", loads genders from file.
+class Genders{
+public:
+    Genders();
+    std::map<std::string,int> m_gender_map;
+
+    int get_gender(std::string &sex);
+    std::string get_string(int number);
+    void load_genders();
+    void save_genders();
+};
+
+// custom "positions class", loads positions from file.
+class Positions{
+private:
+    std::map<std::string,int> m_positions_map;
+    void load_positions();
+public:
+    Positions();
+    int get_position(std::string &position);
+    void save_positions();
+};
+
 // Instance of this class holds task name, sex requirement etc. Think of this as a container.
 class Task{
 private:
     std::string m_task_name;
     bool m_task_flexibility;
-    Genders m_task_sex_requirement;
+    int m_task_sex_requirement;
 public:
     Task(); //default empty constructor
-    Task(std::string &name, bool flex, Genders sex);
+    Task(std::string &name, bool flex, int sex);
 
     std::string name(); // returns name.
     bool flexibility(); // returns flexibility;
-    Genders sex_requirement(); //returns sex_requirement
+    int sex_requirement(); //returns sex_requirement
 
     void change_name(std::string &name);
     void change_flexibility(bool &flex);
-    void change_sex_requirement(Genders &sex);
+    void change_sex_requirement(int &sex);
 };
 
 // An instance of this class contains a list of all task names and attributes for given task. E.g. sex requirement.
 class Tasks{
 private:
     std::map<std::string, Task> m_task_map; // maps each Task name to a Task.
+    Genders genders;
 public:
     Tasks(); // constructor for Tasks.
 
     std::vector<std::string> get_all_task_names();
     std::map<std::string, Task> get_all_tasks();
-    void add_task(std::string name, bool flexibility, Genders sex);
+    void add_task(std::string name, bool flexibility, int sex);
     void remove_task(std::string name);
 
     void load_tasks_from_file();
@@ -97,20 +92,20 @@ public:
 class Worker{
 private:
     std::string m_worker_name;
-    Genders m_worker_sex;
-    Positions m_position;
+    int m_worker_sex;
+    int m_position;
     long m_personal_number;
 public:
-    Worker(std::string, Genders, Positions, long);
+    Worker(std::string, int, int, long);
 
     std::string get_name();
-    Genders get_gender();
-    Positions get_position();
+    int get_gender();
+    int get_position();
     long get_personal_number();
 
     void change_name(std::string);
-    void change_gender(Genders);
-    void change_position(Positions);
+    void change_gender(int);
+    void change_position(int);
     void change_personal_number(long);
 };
 
@@ -123,7 +118,7 @@ public:
     std::vector<std::string> get_all_worker_names();
     std::map<std::string, Worker> get_all_workers();
     Worker get_worker(std::string &name);
-    void add_worker(std::string &name, Genders sex, Positions position, long personal_number);
+    void add_worker(std::string &name, int sex, int position, long personal_number);
     void remove_worker(std::string &name);
 
     void load_workers_from_file();

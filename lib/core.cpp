@@ -17,6 +17,17 @@
 
 namespace Utilities{
 
+    // TODO: create cross platform
+    void create_directory(const std::string &path){
+        const int dir_err = mkdir(path.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+        if (-1 == dir_err) {
+            if (errno != EEXIST) {
+                std::cout << "Error creating path in " + path << std::endl;
+                exit(1);
+            }
+        }
+    }
+
     // stolen from https://stackoverflow.com/questions/4316442/stdofstream-check-if-file-exists-before-writing
     // checks if file exists before writing.
     bool file_exists(const std::string & file_name){
@@ -63,8 +74,8 @@ namespace Utilities{
         std::map<std::string,Worker> worker_map = current_day.get_all_workers();
         for(auto it : worker_map){
             std::string name = it.first;
-            std::string gender = Converters::sex_to_string(it.second.get_gender());
-            std::string position = Converters::positions_to_string(it.second.get_position());
+            std::string gender = std::to_string(it.second.get_gender());
+            std::string position = std::to_string(it.second.get_position());
             std::string personal_number = std::to_string(it.second.get_personal_number());
             file_stream << std::string(indent_counter, '\t') << "name:<" << name << ">,sex:<" << gender
                         << ">,position:<" << position << ">,personal_number:<" << personal_number << ">\n";
@@ -79,27 +90,23 @@ namespace Utilities{
 
 namespace Converters{
 
-    Positions string_to_positions(const std::string &input){
-        int index = 0;
-        for(const std::string &position : Positions_name_table){
-            if(input == position){ return static_cast<Positions>(index); }
-            index++;
-        }
-        throw std::runtime_error("Error converting string to positions");
-    }
-
     std::string boolean_to_string(bool input){
         if(input){ return "<true>"; }
         else{ return "<false>"; }
     }
 
-    std::string sex_to_string(Genders input){
-        if(input == Genders::NONE){ return "<NONE>"; }
-        else if(input == Genders::MALE){ return "<MALE>"; }
-        else{ return "<FEMALE>"; }
+    // converts string to boolean from tasks file.
+    bool string_to_boolean(const std::string &input){
+        if(std::regex_search(input,std::regex("<true>"))){ return true; }
+        else if(std::regex_search(input,std::regex("<false>"))){ return false; }
+        else{ throw std::invalid_argument("Input string cannot be interpreted as boolean"); }
     }
 
-    std::string positions_to_string(Positions input){ return Positions_name_table[static_cast<int>(input)]; }
+    int remove_container(std::string & input) {
+        std::string sanitized_input = regex_get_first_match(input,std::regex("<\\d+>"));
+        sanitized_input = regex_find_and_replace(sanitized_input,std::regex("[<>]"),"");
+        return std::stoi(sanitized_input);
+    }
 
     // stolen from fluent{C++}, splitting a line into components based on a delimiter.
     std::vector<std::string> split_by_delimiter(const std::string &line, char delim){
@@ -119,25 +126,151 @@ namespace Converters{
         std::regex_search(line,matcher,reg);
         return matcher[0];
     }
+}
 
-    // converts string to Genders class from tasks file.
-    Genders string_to_sex(const std::string &input){
-        if(std::regex_search(input,std::regex("<MALE>"))){ return Genders::MALE; }
-        else if(std::regex_search(input,std::regex("<FEMALE>"))){ return Genders::FEMALE; }
-        else if(std::regex_search(input,std::regex("<NONE>"))){ return Genders::NONE; }
-        else{ throw std::invalid_argument("Input string cannot be interpreted as Genders class"); }
+/**
+ * Methods for Genders class
+ * -------------
+ * constructor: loads genders from file
+ * .get_gender(): returns int from text.
+ * .load_genders(): loads from file.
+ * .save_genders(): saves from file.
+ */
+
+Genders::Genders() {
+    load_genders();
+}
+
+int Genders::get_gender(std::string &sex) {
+    auto it = m_gender_map.find(sex);
+    if(it == m_gender_map.end()){
+        std::string error_msg = "Can't find " + sex + " gender.";
+        throw std::invalid_argument(error_msg);
     }
+    else{ return m_gender_map[sex];}
+}
 
-    // converts string to boolean from tasks file.
-    bool string_to_boolean(const std::string &input){
-        if(std::regex_search(input,std::regex("<true>"))){ return true; }
-        else if(std::regex_search(input,std::regex("<false>"))){ return false; }
-        else{ throw std::invalid_argument("Input string cannot be interpreted as boolean"); }
+std::string Genders::get_string(int number) {
+    for(auto it : m_gender_map){
+        if(it.second == number){ return it.first; }
+    }
+}
+
+void Genders::load_genders() {
+    const std::string path = "../lib/config/";
+    Utilities::create_directory(path); // check if we have the directory;
+
+    const std::string filename = "genders.cfg";
+    std::string file_path = path + filename;
+    std::ifstream stream(file_path);
+    if(!stream.is_open()){
+        std::exit(6);
+        // TODO: fix error execution;
+    }
+    else{
+        std::string line;
+        int index = 0;
+        while(std::getline(stream,line)){
+            std::vector<std::string> tokens;
+            if(line.length() != 0){
+                tokens = Converters::split_by_delimiter(line,',');
+
+                m_gender_map[tokens[0]] = std::stoi(tokens[1]);
+            }
+            index++;
+        }
+    }
+    stream.close();
+}
+
+void Genders::save_genders() {
+    const std::string path = "../lib/config/";
+    Utilities::create_directory(path); // check if we have the directory;
+
+    const std::string filename = "genders.cfg";
+    std::string file_path = path + filename;
+    std::ofstream stream(file_path,std::ios_base::out);
+    if(!stream.is_open()){
+        std::exit(6);
+        // TODO: fix error execution;
+    }
+    else{
+        for(auto & it : m_gender_map){
+            stream << it.first + "," + it.second << std::endl;
+        }
     }
 }
 
 /**
- * Method for Task class
+ * Methods for Positions class
+ * -------------
+ * constructor: loads genders from file
+ * .get_position(): returns int from text.
+ * .load_positions(): loads from file.
+ * .save_positions(): saves from file.
+ */
+
+Positions::Positions() {
+    load_positions();
+}
+
+int Positions::get_position(std::string &position) {
+    auto it = m_positions_map.find(position);
+    if(it == m_positions_map.end()){
+        std::string error_msg = "Can't find " + position + " position.";
+        throw std::invalid_argument(error_msg);
+    }
+    else{ return m_positions_map[position]; }
+}
+
+void Positions::load_positions() {
+    const std::string path = "../lib/config/";
+    Utilities::create_directory(path); // check if we have the directory;
+
+    const std::string filename = "positions.cfg";
+    std::string file_path = path + filename;
+    std::ifstream stream(file_path);
+    if(!stream.is_open()){
+        std::exit(6);
+        // TODO: fix error execution;
+    }
+    else{
+        std::string line;
+        int index = 0;
+        while(std::getline(stream,line)){
+            std::vector<std::string> tokens;
+            if(line.length() != 0){
+                tokens = Converters::split_by_delimiter(line,',');
+
+                m_positions_map[tokens[0]] = std::stoi(tokens[1]);
+            }
+            index++;
+        }
+    }
+    stream.close();
+}
+
+void Positions::save_positions() {
+    const std::string path = "../lib/config/";
+    Utilities::create_directory(path); // check if we have the directory;
+
+    const std::string filename = "positions.cfg";
+    std::string file_path = path + filename;
+    std::ofstream stream(file_path,std::ios_base::out);
+    if(!stream.is_open()){
+        std::exit(6);
+        // TODO: fix error execution;
+    }
+    else{
+        for(auto & it : m_positions_map){
+            stream << it.first + "," + it.second << std::endl;
+        }
+    }
+}
+
+
+/**
+ * Methods for Task class
  * --------------
  * constructor: creates container with a all information for this task.
  * .name(): returns name of task.
@@ -151,10 +284,10 @@ namespace Converters{
 Task::Task() {
     m_task_name = "NOT_AT_WORK";
     m_task_flexibility = false;
-    m_task_sex_requirement = Genders::NONE;
+    m_task_sex_requirement = 0; // 0 = NONE
 }
 
-Task::Task(std::string &name, bool flex, Genders sex_req) {
+Task::Task(std::string &name, bool flex, int sex_req) {
     m_task_name = std::move(name);
     m_task_flexibility = flex;
     m_task_sex_requirement = sex_req;
@@ -164,13 +297,13 @@ std::string Task::name() { return m_task_name; }
 
 bool Task::flexibility() { return m_task_flexibility; }
 
-Genders Task::sex_requirement() { return m_task_sex_requirement; }
+int Task::sex_requirement() { return m_task_sex_requirement; }
 
 void Task::change_name(std::string &name) { m_task_name = std::move(name); }
 
 void Task::change_flexibility(bool &flex) { m_task_flexibility = flex; }
 
-void Task::change_sex_requirement(Genders &sex) { m_task_sex_requirement = sex; }
+void Task::change_sex_requirement(int &sex) { m_task_sex_requirement = sex; }
 
 /**
  * Methods for Tasks class
@@ -188,7 +321,7 @@ void Task::change_sex_requirement(Genders &sex) { m_task_sex_requirement = sex; 
 Tasks::Tasks(){ load_tasks_from_file(); };
 
 // adds a new task in the list.
-void Tasks::add_task(std::string new_name,bool flexibility, Genders sex) {
+void Tasks::add_task(std::string new_name,bool flexibility, int sex) {
     std::map<std::string,Task>::iterator value;
     value = m_task_map.find(new_name);
     if(value == m_task_map.end()){
@@ -219,8 +352,12 @@ std::map<std::string,Task> Tasks::get_all_tasks() { return m_task_map; }
 // how tasks.cfg is supposed to be formatted for this to work:
 // [NAME_OF_TASK],flexibility:[bool],sex_req:[MALE/FEMALE/NULL]'\n'
 void Tasks::load_tasks_from_file(){
-    const std::string filename = "../lib/tasks.cfg";
-    std::ifstream file(filename);
+    const std::string path = "../lib/config/";
+    Utilities::create_directory(path); // check if we have the directory;
+
+    const std::string filename = "tasks.cfg";
+    std::string file_path = path + filename;
+    std::ifstream file(file_path);
     if(!file.is_open()){
         std::exit(6); // crash program if file is not found.
         // TODO: fix this error if crashes.
@@ -234,7 +371,7 @@ void Tasks::load_tasks_from_file(){
                 tokens = Converters::split_by_delimiter(line,delim);
                 std::string temp_name = tokens[0];
                 bool temp_flex = Converters::string_to_boolean(tokens[1]);
-                Genders temp_sex = Converters::string_to_sex(tokens[2]);
+                int temp_sex = Converters::remove_container(tokens[2]);
 
                 m_task_map[temp_name] = Task(temp_name,temp_flex,temp_sex);
             }
@@ -244,15 +381,19 @@ void Tasks::load_tasks_from_file(){
 }
 
 void Tasks::save_tasks_to_file() {
-    const std::string filename = "../lib/tasks.cfg";
-    std::ofstream write_file(filename);
+    const std::string path = "../lib/config/";
+    Utilities::create_directory(path); // check if we have the directory;
+
+    const std::string filename = "tasks.cfg";
+    std::string file_path = path + filename;
+    std::ofstream write_file(file_path);
     if(!write_file.is_open()){ std::exit(6); } // TODO: fix a proper exception here.
     else{
         // now add new tasks to file not in original file.
         for(auto it : m_task_map){
             std::string temp_name = it.first;
-            std::string temp_sex_string = Converters::sex_to_string(it.second.sex_requirement());
-            std::string temp_flex_string = Converters::boolean_to_string(it.second.flexibility());
+            std::string temp_sex_string = "<" + std::to_string(it.second.sex_requirement()) + ">";
+            std::string temp_flex_string = "<" + std::to_string(it.second.flexibility()) + ">";
             std::string output_line = temp_name += ",flexibility:" + temp_sex_string += ",sex_req:" + temp_flex_string;
             write_file << output_line;
         }
@@ -276,7 +417,7 @@ void Tasks::save_tasks_to_file() {
  * All methods are O(1).
  */
 
-Worker::Worker(std::string worker_name, Genders worker_sex, Positions position, long personal_number){
+Worker::Worker(std::string worker_name, int worker_sex, int position, long personal_number){
     m_worker_name = std::move(worker_name);
     m_worker_sex = worker_sex;
     m_position = position;
@@ -285,17 +426,17 @@ Worker::Worker(std::string worker_name, Genders worker_sex, Positions position, 
 
 std::string Worker::get_name(){ return m_worker_name; }
 
-Genders Worker::get_gender(){ return m_worker_sex; }
+int Worker::get_gender(){ return m_worker_sex; }
 
-Positions Worker::get_position(){ return m_position; }
+int Worker::get_position(){ return m_position; }
 
 long Worker::get_personal_number(){ return m_personal_number; }
 
 void Worker::change_name(std::string worker_name){ m_worker_name = std::move(worker_name); }
 
-void Worker::change_gender(Genders new_sex){ m_worker_sex = new_sex; }
+void Worker::change_gender(int new_sex){ m_worker_sex = new_sex; }
 
-void Worker::change_position(Positions position){ m_position = position; }
+void Worker::change_position(int position){ m_position = position; }
 
 void Worker::change_personal_number(long personal_number){ m_personal_number = personal_number; }
 
@@ -331,7 +472,7 @@ Worker Workers::get_worker(std::string &name) {
     else { throw std::invalid_argument("Worker name doesn't exist."); }
 }
 
-void Workers::add_worker(std::string &name, Genders sex, Positions position, long personal_number) {
+void Workers::add_worker(std::string &name, int sex, int position, long personal_number) {
     auto it = m_worker_map.find(name);
     if(it == m_worker_map.end()){ m_worker_map[name] = Worker(name,sex,position,personal_number); }
     else{ throw std::invalid_argument("Worker name already exists"); }
@@ -344,8 +485,12 @@ void Workers::remove_worker(std::string &name) {
 }
 
 void Workers::load_workers_from_file() {
-    const std::string filename = "../lib/workers.cfg"; // make sure this filename is correct.
-    std::ifstream file(filename);
+    const std::string path = "../lib/config/";
+    Utilities::create_directory(path); // check if we have the directory;
+
+    const std::string filename = "workers.cfg"; // make sure this filename is correct.
+    std::string file_path = path + filename;
+    std::ifstream file(file_path);
     if(!file.is_open()){ std::exit(6); }
     else {
         std::string line;
@@ -359,13 +504,10 @@ void Workers::load_workers_from_file() {
                 worker_name = Converters::regex_find_and_replace(worker_name, std::regex("[<>]"), "");
 
                 // getting sex of worker
-                Genders worker_sex = Converters::string_to_sex(tokens[1]);
+                int worker_sex = Converters::remove_container(tokens[1]);
 
                 // getting position of worker, but must remove unnecessary clutter first from input.
-                std::string worker_position_sanitized_input = Converters::regex_get_first_match(tokens[2], std::regex("<.*>"));
-                worker_position_sanitized_input = Converters::regex_find_and_replace(worker_position_sanitized_input,
-                                                                                     std::regex("[<>]"), "");
-                Positions worker_position = Converters::string_to_positions(worker_position_sanitized_input);
+                int worker_position = Converters::remove_container(tokens[2]);
 
                 // getting personal number.
                 std::string worker_personal_number = Converters::regex_get_first_match(tokens[3], std::regex("<.*>"));
@@ -380,15 +522,20 @@ void Workers::load_workers_from_file() {
 }
 
 void Workers::save_workers_to_file() {
-    const std::string filename = "../lib/workers.cfg";
-    std::ofstream write_file(filename);
+    const std::string path = "../lib/config/";
+    Utilities::create_directory(path); // check if we have the directory;
+
+    std::string filename = "workers.cfg";
+    std::string file_path = path + filename; // path to file.
+
+    std::ofstream write_file(file_path);
     if(!write_file.is_open()){ std::exit(6); } // TODO: fix a proper exception here.
     else{
         for(auto &it : m_worker_map){
             std::string worker_save_line;
             std::string worker_name = it.first;
-            std::string worker_sex = Converters::sex_to_string(it.second.get_gender());
-            std::string worker_position = Converters::positions_to_string(it.second.get_position());
+            std::string worker_sex = std::to_string(it.second.get_gender());
+            std::string worker_position = std::to_string(it.second.get_position());
             std::string worker_personal_number = std::to_string(it.second.get_personal_number());
 
             worker_save_line += "name:<" + worker_name + ">,";
@@ -519,14 +666,7 @@ void Work_day::build_work_day() {
 void Work_day::work_day_lexer(bool indent, bool file_name_override, std::string &custom_file_name) {
     const std::string path = "../lib/saves/"; // path to saves folder.
     // checks if we have a saves directory or not.
-    // TODO: Create cross platform solution.
-    const int dir_err = mkdir(path.c_str(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
-    if (-1 == dir_err) {
-        if (errno != EEXIST) {
-            std::cout << "Error creating path in " + path << std::endl;
-            exit(1);
-        }
-    }
+    Utilities::create_directory(path);
 
     std::string filename;
     // checks if we want to save file as name of date or custom name.
