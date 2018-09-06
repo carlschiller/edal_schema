@@ -96,6 +96,7 @@ private:
     int m_position;
     long m_personal_number;
 public:
+    Worker();
     Worker(std::string, int, int, long);
 
     std::string get_name();
@@ -140,7 +141,6 @@ private:
 public:
     Work_day();
     Work_day(time_t, int);
-    Tasks tasks_list; // tasks used during this day.
 
     // functions to add workers to day.
     void add_worker(Worker new_worker);
