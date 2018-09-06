@@ -73,8 +73,8 @@ public:
 // An instance of this class contains a list of all task names and attributes for given task. E.g. sex requirement.
 class Tasks{
 private:
-    std::map<std::string, Task> m_task_map; // maps each Task name to a Task.
-    Genders genders;
+    std::map<std::string,Task> m_task_map; // maps each Task name to a Task.
+    void load_tasks_from_file();
 public:
     Tasks(); // constructor for Tasks.
 
@@ -83,7 +83,6 @@ public:
     void add_task(std::string name, bool flexibility, int sex);
     void remove_task(std::string name);
 
-    void load_tasks_from_file();
     void save_tasks_to_file();
 };
 

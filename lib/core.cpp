@@ -326,7 +326,8 @@ void Tasks::add_task(std::string new_name,bool flexibility, int sex) {
     std::map<std::string,Task>::iterator value;
     value = m_task_map.find(new_name);
     if(value == m_task_map.end()){
-        m_task_map[new_name] = Task(new_name,flexibility,sex);
+        std::string key = new_name;
+        m_task_map[key] = Task(new_name,flexibility,sex);
     }
     else{ throw std::invalid_argument("Name of task already exists."); }
 }

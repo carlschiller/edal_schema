@@ -317,10 +317,8 @@ void menu(){
     Positions positions_util = Positions();
 
     Work_day current_day = Work_day();
+    current_day.change_resolution(48);
 
-    unsigned long size = available_tasks.get_all_task_names().size();
-    std::cout << size << " is the amount of tasks available.\n";
-    std::cout << available_tasks.get_all_task_names()[0] << std::endl;
     bool user_exit = false;
     while(!user_exit){
         int index = 0;
