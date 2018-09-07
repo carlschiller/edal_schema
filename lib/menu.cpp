@@ -29,7 +29,8 @@ enum Outer_selections{
     TASK_MANAGEMENT,
     WORK_DAY_MANAGEMENT,
     REFERENCE_MANAGEMENT,
-    EXIT
+    EXIT,
+    WRONG
 };
 
 static const char* outer_strings[] = {
@@ -45,7 +46,8 @@ namespace w_management{
         DISPLAY_WORK_FORCE = 0,
         ADD_NEW_WORKER_TO_WORK_FORCE,
         REMOVE_WORKER_FROM_WORK_FORCE,
-        GO_BACK
+        GO_BACK,
+        WRONG
     };
 
     static const char* worker_strings[] = {
@@ -59,6 +61,7 @@ namespace w_management{
         bool user_exit = false;
         while(!user_exit){
             int index = 0;
+            std::cout << "You are here: [" << outer_strings[0] << "]\n";
             for(const char * string_selection : worker_strings){
                 std::cout << std::to_string(index) + ": "<< string_selection << std::endl;
                 index++;
@@ -72,7 +75,9 @@ namespace w_management{
                 user_choice = static_cast<Worker_selections >(before_cast);
             }
             catch(std::exception& e){
+                clear_terminal();
                 std::cout << "Enter valid selection.\n";
+                user_choice = Worker_selections ::WRONG;
             }
             switch(user_choice){
                 default:{break;}
@@ -93,6 +98,7 @@ namespace w_management{
                     user_exit = true;
                     break;
                 }
+                case Worker_selections::WRONG:{ break; }
             }
         }
     }
@@ -103,7 +109,8 @@ namespace t_management{
         DISPLAY_TASKS,
         ADD_NEW_TASK,
         REMOVE_TASK,
-        GO_BACK
+        GO_BACK,
+        WRONG
     };
 
     static const char* task_strings[] = {
@@ -117,6 +124,7 @@ namespace t_management{
         bool user_exit = false;
         while(!user_exit){
             int index = 0;
+            std::cout << "You are here: [" << outer_strings[1] << "]\n";
             for(const char * string_selection : task_strings){
                 std::cout << std::to_string(index) + ": "<< string_selection << std::endl;
                 index++;
@@ -130,7 +138,9 @@ namespace t_management{
                 user_choice = static_cast<Task_selections >(before_cast);
             }
             catch(std::exception& e){
+                clear_terminal();
                 std::cout << "Enter valid selection.\n";
+                user_choice = Task_selections ::WRONG;
             }
             switch(user_choice){
                 default:{break;}
@@ -151,6 +161,7 @@ namespace t_management{
                     user_exit = true;
                     break;
                 }
+                case Task_selections::WRONG:{ break; }
             }
         }
     }
@@ -163,7 +174,8 @@ namespace wd_management{
         CHANGE_RESOLUTION,
         ADD_WORKER_TO_THIS_DAY,
         REMOVE_WORKER_FROM_THIS_DAY,
-        GO_BACK
+        GO_BACK,
+        WRONG
     };
 
     static const char* wd_strings[] = {
@@ -173,6 +185,108 @@ namespace wd_management{
             "Remove worker from this day",
             "Go back"
     };
+
+    std::string worker_printer(Worker & your_worker, Genders & available_genders, Positions & available_positions){
+        std::string out_line;
+        out_line += "name:" + your_worker.get_name() + ",";
+        int worker_gender = your_worker.get_gender();
+        out_line += "gender:" + available_genders.get_string(worker_gender) + ",";
+        int worker_position = your_worker.get_position();
+        out_line += "position:" + available_positions.get_string(worker_position) + ",";
+        long worker_personal_number = your_worker.get_personal_number();
+        out_line += "personal_number:" + std::to_string(worker_personal_number);
+        return out_line;
+    }
+
+    Worker * worker_selector(std::vector<Worker> & worker_list, Genders & available_genders, Positions & available_positions){
+        bool correct = false;
+        int user_id = -1;
+        while(!correct){
+            std::cout << "=========================\n";
+
+            int i = 0;
+            for(Worker worker : worker_list){
+                std::string out_line;
+                out_line += std::to_string(i) + ":";
+                out_line += worker_printer(worker,available_genders,available_positions);
+                std::cout << out_line << std::endl;
+                i++;
+            }
+            std::cout << "=========================\n";
+
+            std::cout << "Please give index number to select worker, enter any other number to cancel.\n";
+            std::string user_selection;
+
+            std::cin >> user_selection;
+            try{
+                user_id = std::stoi(user_selection);
+                if(user_id < 0 || user_id > worker_list.size() -1){
+                    clear_terminal();
+                    std::cout << "Try again, enter index corresponding to a worker.\n";
+                }
+                else{ correct = true; }
+            }
+            catch(std::exception& e){ correct = true; }
+        }
+        if(user_id != -1){ return &(worker_list[user_id]); }
+        else{ return nullptr ;}
+    }
+
+    void display_day(Work_day & current_day, Genders & available_genders, Positions & available_positions){
+        std::cout << "Workers for the day:\n";
+        std::cout << "====================\n";
+        int i = 0;
+
+        for(auto it : current_day.get_all_workers()){
+            std::string out_line;
+            Worker your_worker = it.second;
+
+            out_line += std::to_string(i) + ":";
+            out_line += worker_printer(your_worker,available_genders,available_positions);
+            std::cout << out_line << std::endl;
+            i++;
+        }
+        std::cout << "====================\n";
+        std::cout << "Resolution:" << current_day.get_resolution() << "\n";
+        std::cout << "====================\n";
+    }
+
+    void add_worker(Work_day & current_day, std::vector<Worker> & worker_list, Genders & available_genders, Positions & available_positions){
+        std::cout << "Adding a worker to the day.\n";
+        std::cout << "Workers in the work pool:\n";
+        Worker * selected_worker = worker_selector(worker_list,available_genders,available_positions);
+        if(selected_worker != nullptr){
+            if(current_day.is_worker_in_day(*selected_worker)){
+                clear_terminal();
+                std::cout << "Worker already in the day\n";
+            }
+            else{
+                clear_terminal();
+                current_day.add_worker(*selected_worker);
+            }
+        }
+        else{ clear_terminal(); }
+    }
+
+    void remove_worker(Work_day & current_day, Genders & available_genders, Positions & available_positions){
+        std::vector<Worker> worker_list;
+        for(auto it : current_day.get_all_workers()){
+            worker_list.push_back(it.second);
+        }
+
+        if(worker_list.empty()){ std::cout << "No workers in day, can't remove worker.\n"; }
+        else{
+            std::cout << "Removing a worker from the day.\n";
+            std::cout << "Workers for the day:\n";
+
+            Worker * selected_worker = worker_selector(worker_list,available_genders,available_positions);
+            if(selected_worker != nullptr){
+                std::string name = selected_worker->get_name();
+                current_day.remove_worker(name);
+            }
+            clear_terminal();
+        }
+    }
 
     void change_resolution(Work_day & current_day){
         bool correct = false;
@@ -205,10 +319,11 @@ namespace wd_management{
         clear_terminal();
     }
 
-    void wd_menu(Work_day & current_day){
+    void wd_menu(Work_day & current_day, std::vector<Worker> & worker_list, Genders available_genders, Positions available_positions){
         bool user_exit = false;
         while(!user_exit){
             int index = 0;
+            std::cout << "You are here: [" << outer_strings[2] << "]\n";
             for(const char * string_selection : wd_strings){
                 std::cout << std::to_string(index) + ": "<< string_selection << std::endl;
                 index++;
@@ -222,20 +337,25 @@ namespace wd_management{
                 user_choice = static_cast<Work_day_selections>(before_cast);
             }
             catch(std::exception& e){
+                clear_terminal();
                 std::cout << "Enter valid selection.\n";
+                user_choice = Work_day_selections ::WRONG;
             }
             switch(user_choice){
                 default:{break;}
                 case Work_day_selections::DISPLAY_DAY_STATISTICS :{
                     clear_terminal();
+                    display_day(current_day,available_genders,available_positions);
                     break;
                 }
                 case Work_day_selections ::ADD_WORKER_TO_THIS_DAY :{
                     clear_terminal();
+                    add_worker(current_day,worker_list,available_genders,available_positions);
                     break;
                 }
                 case Work_day_selections ::REMOVE_WORKER_FROM_THIS_DAY :{
                     clear_terminal();
+                    remove_worker(current_day,available_genders,available_positions);
                     break;
                 }
                 case Work_day_selections ::CHANGE_RESOLUTION :{
@@ -248,6 +368,7 @@ namespace wd_management{
                     user_exit = true;
                     break;
                 }
+                case Work_day_selections ::WRONG:{ break; }
             }
         }
     }
@@ -423,6 +544,7 @@ namespace rf_management{
         bool user_exit = false;
         while(!user_exit){
             int index = 0;
+            std::cout << "You are here: [" << outer_strings[3] << "]\n";
             for(const char * string_selection : rf_strings){
                 std::cout << std::to_string(index) + ": "<< string_selection << std::endl;
                 index++;
@@ -477,11 +599,19 @@ void menu(){
     Positions positions_util = Positions();
 
     Work_day current_day = Work_day();
-    current_day.change_resolution(24); // minutes in a day must be divisible by resolution.
+    current_day.change_resolution(48); // minutes in a day must be divisible by resolution.
+
+    // load into a vector for easier selection.
+    std::vector<Worker> worker_list;
+    for(auto it : available_workers.get_all_workers()){
+        Worker your_worker = it.second;
+        worker_list.push_back(your_worker);
+    }
 
     bool user_exit = false;
     while(!user_exit){
         int index = 0;
+        std::cout << "You are here: [Main menu]\n";
         for(const char * string_selection : outer_strings){
             std::cout << std::to_string(index) + ": "<< string_selection << std::endl;
             index++;
@@ -495,7 +625,9 @@ void menu(){
             user_choice = static_cast<Outer_selections>(before_cast);
         }
         catch(std::exception& e){
+            clear_terminal();
             std::cout << "Enter valid selection.\n";
+            user_choice = Outer_selections::WRONG;
         }
         switch(user_choice){
             default:{break;}
@@ -511,7 +643,7 @@ void menu(){
             }
             case Outer_selections::WORK_DAY_MANAGEMENT :{
                 clear_terminal();
-                wd_management::wd_menu(current_day);
+                wd_management::wd_menu(current_day,worker_list,gender_util,positions_util);
                 break;
             }
             case Outer_selections::REFERENCE_MANAGEMENT :{
@@ -524,6 +656,7 @@ void menu(){
                 user_exit = true;
                 break;
             }
+            case Outer_selections::WRONG :{ break; }
         }
     }
 }

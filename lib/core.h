@@ -48,6 +48,7 @@ private:
 public:
     Positions();
     int get_position(std::string &position);
+    std::string get_string(int id);
     void save_positions();
 };
 
@@ -143,6 +144,7 @@ public:
 
     // functions to add workers to day.
     void add_worker(Worker new_worker);
+    bool is_worker_in_day(Worker worker);
     void remove_worker(std::string &worker_name);
     std::map<std::string,Worker> get_all_workers();
     std::vector<std::string> get_all_worker_names();

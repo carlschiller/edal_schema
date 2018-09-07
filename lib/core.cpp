@@ -132,7 +132,8 @@ namespace Converters{
  * Methods for Genders class
  * -------------
  * constructor: loads genders from file
- * .get_gender(): returns int from text.
+ * .get_gender(): returns int from text. O(log(n))
+ * .get_string(): returns string from int. O(n)
  * .load_genders(): loads from file.
  * .save_genders(): saves from file.
  */
@@ -206,7 +207,8 @@ void Genders::save_genders() {
  * Methods for Positions class
  * -------------
  * constructor: loads genders from file
- * .get_position(): returns int from text.
+ * .get_position(): returns int from text. O(log(n))
+ * .get_string(): returns string from int. O(n)
  * .load_positions(): loads from file.
  * .save_positions(): saves from file.
  */
@@ -220,6 +222,13 @@ int Positions::get_position(std::string &position) {
         throw std::invalid_argument(error_msg);
     }
     else{ return m_positions_map[position]; }
+}
+
+std::string Positions::get_string(int id){
+    for(auto it : m_positions_map){
+        if(it.second == id){ return it.first; }
+    }
+    throw std::invalid_argument("Can't find positions from id.");
 }
 
 void Positions::load_positions() {
@@ -610,6 +619,12 @@ void Work_day::add_worker(Worker new_worker) {
         std::string error_msg = "Worker " + worker_name + "already exits for this day.";
         throw std::invalid_argument(error_msg);
     }
+}
+
+bool Work_day::is_worker_in_day(Worker worker) {
+    auto it = m_worker_map.find(worker.get_name());
+    if(it == m_worker_map.end()){ return false; }
+    else{ return true; }
 }
 
 void Work_day::remove_worker(std::string &name) {

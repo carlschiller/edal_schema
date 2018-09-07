@@ -12,7 +12,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e9642f34-6737-42ce-b1a8-d0654935f454" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/core.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lib/core.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/core.h" beforeDir="false" afterPath="$PROJECT_DIR$/lib/core.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/menu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lib/menu.cpp" afterDir="false" />
@@ -46,11 +45,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="core.h" pinned="false" current-in-tab="false">
+      <file leaf-file-name="core.h" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/core.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="680">
-              <caret line="155" column="41" selection-start-line="155" selection-start-column="41" selection-end-line="155" selection-end-column="41" />
+            <state relative-caret-position="2190">
+              <caret line="146" column="41" selection-start-line="146" selection-start-column="41" selection-end-line="146" selection-end-column="41" />
               <folding>
                 <element signature="e#105#122#0" expanded="true" />
               </folding>
@@ -61,8 +60,8 @@
       <file leaf-file-name="core.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/core.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="574">
-              <caret line="662" column="71" selection-start-line="662" selection-start-column="71" selection-end-line="662" selection-end-column="71" />
+            <state relative-caret-position="9390">
+              <caret line="626" column="23" selection-start-line="626" selection-start-column="23" selection-end-line="626" selection-end-column="23" />
               <folding>
                 <element signature="e#50#67#0" expanded="true" />
               </folding>
@@ -70,11 +69,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="menu.cpp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="menu.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/menu.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4681">
-              <caret line="513" column="50" selection-start-line="513" selection-start-column="50" selection-end-line="513" selection-end-column="50" />
+            <state relative-caret-position="-2245">
+              <caret line="454" column="64" selection-start-line="454" selection-start-column="64" selection-end-line="454" selection-end-column="64" />
               <folding>
                 <element signature="e#50#69#0" expanded="true" />
               </folding>
@@ -87,6 +86,15 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="435">
               <caret line="29" column="35" selection-start-line="29" selection-start-column="35" selection-end-line="29" selection-end-column="35" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="workers.cfg" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/config/workers.cfg">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
             </state>
           </provider>
         </entry>
@@ -184,6 +192,12 @@
               <item name="edal_schema" type="462c0819:PsiDirectoryNode" />
               <item name="lib" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="edal_schema" type="b2602c69:ProjectViewProjectNode" />
+              <item name="edal_schema" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -259,7 +273,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="147597000" />
+    <option name="totallyTimeSpent" value="152449000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
@@ -540,13 +554,6 @@
     <entry file="file://$PROJECT_DIR$/lib/saves/2018-09-06n2.cfg" />
     <entry file="file://$PROJECT_DIR$/lib/saves/2018-09-06n3.cfg" />
     <entry file="file://$PROJECT_DIR$/lib/saves/2018-09-06n4.cfg" />
-    <entry file="file://$PROJECT_DIR$/lib/config/workers.cfg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/config/positions.cfg">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -595,13 +602,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/config/tasks.cfg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="35" selection-start-line="29" selection-start-column="35" selection-end-line="29" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -616,32 +616,46 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/core.h">
+    <entry file="file://$PROJECT_DIR$/lib/config/workers.cfg">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="680">
-          <caret line="155" column="41" selection-start-line="155" selection-start-column="41" selection-end-line="155" selection-end-column="41" />
+        <state relative-caret-position="15">
+          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/config/tasks.cfg">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="29" column="35" selection-start-line="29" selection-start-column="35" selection-end-line="29" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/menu.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2245">
+          <caret line="454" column="64" selection-start-line="454" selection-start-column="64" selection-end-line="454" selection-end-column="64" />
           <folding>
-            <element signature="e#105#122#0" expanded="true" />
+            <element signature="e#50#69#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/core.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="574">
-          <caret line="662" column="71" selection-start-line="662" selection-start-column="71" selection-end-line="662" selection-end-column="71" />
+        <state relative-caret-position="9390">
+          <caret line="626" column="23" selection-start-line="626" selection-start-column="23" selection-end-line="626" selection-end-column="23" />
           <folding>
             <element signature="e#50#67#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/menu.cpp">
+    <entry file="file://$PROJECT_DIR$/lib/core.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4681">
-          <caret line="513" column="50" selection-start-line="513" selection-start-column="50" selection-end-line="513" selection-end-column="50" />
+        <state relative-caret-position="2190">
+          <caret line="146" column="41" selection-start-line="146" selection-start-column="41" selection-end-line="146" selection-end-column="41" />
           <folding>
-            <element signature="e#50#69#0" expanded="true" />
+            <element signature="e#105#122#0" expanded="true" />
           </folding>
         </state>
       </provider>
