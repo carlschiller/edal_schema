@@ -6,5 +6,5 @@ CXX_FLAGS = -fexceptions -g   -std=gnu++11
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -isystem /Users/carlschiller/Documents/Github/edal_schema/lib/googletest/googletest/include -I/Users/carlschiller/Documents/Github/edal_schema/lib/googletest/googlemock/include 
+CXX_INCLUDES = 
 

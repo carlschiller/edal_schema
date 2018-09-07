@@ -7,6 +7,23 @@
 #include "core.h"
 #include <cmath>
 
+#include <unistd.h>
+#include <term.h>
+#include <curses.h>
+
+
+void clear_terminal()
+{
+    if (!cur_term)
+    {
+        int result;
+        setupterm( NULL, STDOUT_FILENO, &result );
+        if (result <= 0) return;
+    }
+
+    putp( tigetstr(const_cast<char *>("clear")) );
+}
+
 enum Outer_selections{
     WORKER_MANAGEMENT = 0,
     TASK_MANAGEMENT,
@@ -60,15 +77,19 @@ namespace w_management{
             switch(user_choice){
                 default:{break;}
                 case Worker_selections::DISPLAY_WORK_FORCE:{
+                    clear_terminal();
                     break;
                 }
                 case Worker_selections::ADD_NEW_WORKER_TO_WORK_FORCE:{
+                    clear_terminal();
                     break;
                 }
                 case Worker_selections::REMOVE_WORKER_FROM_WORK_FORCE:{
+                    clear_terminal();
                     break;
                 }
                 case Worker_selections::GO_BACK:{
+                    clear_terminal();
                     user_exit = true;
                     break;
                 }
@@ -114,15 +135,19 @@ namespace t_management{
             switch(user_choice){
                 default:{break;}
                 case Task_selections::DISPLAY_TASKS :{
+                    clear_terminal();
                     break;
                 }
                 case Task_selections::ADD_NEW_TASK :{
+                    clear_terminal();
                     break;
                 }
                 case Task_selections::REMOVE_TASK :{
+                    clear_terminal();
                     break;
                 }
                 case Task_selections::GO_BACK:{
+                    clear_terminal();
                     user_exit = true;
                     break;
                 }
@@ -171,18 +196,23 @@ namespace wd_management{
             switch(user_choice){
                 default:{break;}
                 case Work_day_selections::DISPLAY_DAY_STATISTICS :{
+                    clear_terminal();
                     break;
                 }
                 case Work_day_selections ::ADD_WORKER_TO_THIS_DAY :{
+                    clear_terminal();
                     break;
                 }
                 case Work_day_selections ::REMOVE_WORKER_FROM_THIS_DAY :{
+                    clear_terminal();
                     break;
                 }
                 case Work_day_selections ::CHANGE_RESOLUTION :{
+                    clear_terminal();
                     break;
                 }
                 case Work_day_selections ::GO_BACK:{
+                    clear_terminal();
                     user_exit = true;
                     break;
                 }
@@ -251,6 +281,7 @@ namespace rf_management{
             }
         }
         current_day.add_reference_column(user_task,time_in_int[0],time_in_int[1]);
+        clear_terminal();
     }
 
     void display_matrix(Work_day& current_day){
@@ -289,17 +320,21 @@ namespace rf_management{
             switch(user_choice){
                 default:{break;}
                 case Reference_selections::DISPLAY_REFERENCE_MATRIX :{
+                    clear_terminal();
                     display_matrix(current_day);
                     break;
                 }
                 case Reference_selections ::ADD_COLUMN :{
+                    clear_terminal();
                     add_column(current_day,available_tasks);
                     break;
                 }
                 case Reference_selections ::REMOVE_COLUMN :{
+                    clear_terminal();
                     break;
                 }
                 case Reference_selections ::GO_BACK:{
+                    clear_terminal();
                     user_exit = true;
                     break;
                 }
@@ -340,22 +375,27 @@ void menu(){
         switch(user_choice){
             default:{break;}
             case Outer_selections::WORKER_MANAGEMENT :{
+                clear_terminal();
                 w_management::work_menu();
                 break;
             }
             case Outer_selections::TASK_MANAGEMENT :{
+                clear_terminal();
                 t_management::task_menu();
                 break;
             }
             case Outer_selections::WORK_DAY_MANAGEMENT :{
+                clear_terminal();
                 wd_management::wd_menu();
                 break;
             }
             case Outer_selections::REFERENCE_MANAGEMENT :{
+                clear_terminal();
                 rf_management::rf_menu(current_day,available_tasks);
                 break;
             }
             case Outer_selections::EXIT :{
+                clear_terminal();
                 user_exit = true;
                 break;
             }

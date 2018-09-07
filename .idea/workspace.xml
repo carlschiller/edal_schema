@@ -2,11 +2,7 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true" buildAllGenerated="true">
     <generated>
-      <config projectName="edal_schema" targetName="gtest" />
-      <config projectName="edal_schema" targetName="gmock_main" />
-      <config projectName="edal_schema" targetName="gmock" />
       <config projectName="edal_schema" targetName="edal_schema" />
-      <config projectName="edal_schema" targetName="gtest_main" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -16,10 +12,350 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e9642f34-6737-42ce-b1a8-d0654935f454" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/terminal.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/core.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lib/core.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/core.h" beforeDir="false" afterPath="$PROJECT_DIR$/lib/core.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/edal_schema.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/edal_schema.dir/CXX.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/edal_schema.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/edal_schema.dir/DependInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/edal_schema.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/edal_schema.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/edal_schema.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/edal_schema.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/edal_schema.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/edal_schema.dir/depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/edal_schema.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/edal_schema.dir/depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/edal_schema.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/edal_schema.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/edal_schema.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/edal_schema.dir/link.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/edal_schema.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/edal_schema.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/edal_schema.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/edal_schema.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/lib/googletest/googlemock/CMakeFiles/gmock.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/lib/googletest/googlemock/CMakeFiles/gmock.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/lib/googletest/googlemock/CMakeFiles/gmock_main.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/lib/googletest/googlemock/CMakeFiles/gmock_main.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/lib/googletest/googlemock/gtest/CMakeFiles/gtest.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/lib/googletest/googlemock/gtest/CMakeFiles/gtest.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/lib/googletest/googlemock/gtest/CMakeFiles/gtest_main.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/lib/googletest/googlemock/gtest/CMakeFiles/gtest_main.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/BUILD.bazel" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/CONTRIBUTING.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/Makefile.am" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/WORKSPACE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/appveyor.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/ci/build-linux-autotools.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/ci/build-linux-bazel.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/ci/env-linux.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/ci/env-osx.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/ci/get-nprocessors.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/ci/install-linux.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/ci/install-osx.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/ci/log-config.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/ci/travis.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/configure.ac" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/CHANGES" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/CONTRIBUTORS" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/Makefile.am" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/build-aux/.keep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/cmake/gmock.pc.in" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/cmake/gmock_main.pc.in" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/configure.ac" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/docs/CheatSheet.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/docs/CookBook.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/docs/DesignDoc.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/docs/Documentation.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/docs/ForDummies.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/docs/FrequentlyAskedQuestions.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/docs/KnownIssues.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/include/gmock/gmock-actions.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/include/gmock/gmock-cardinalities.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/include/gmock/gmock-generated-actions.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/include/gmock/gmock-generated-actions.h.pump" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/include/gmock/gmock-generated-function-mockers.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/include/gmock/gmock-generated-function-mockers.h.pump" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/include/gmock/gmock-generated-matchers.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/include/gmock/gmock-generated-matchers.h.pump" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/include/gmock/gmock-generated-nice-strict.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/include/gmock/gmock-generated-nice-strict.h.pump" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/include/gmock/gmock-matchers.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/include/gmock/gmock-more-actions.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/include/gmock/gmock-more-matchers.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/include/gmock/gmock-spec-builders.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/include/gmock/gmock.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/include/gmock/internal/custom/gmock-generated-actions.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/include/gmock/internal/custom/gmock-generated-actions.h.pump" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/include/gmock/internal/custom/gmock-matchers.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/include/gmock/internal/custom/gmock-port.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/include/gmock/internal/gmock-generated-internal-utils.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/include/gmock/internal/gmock-generated-internal-utils.h.pump" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/include/gmock/internal/gmock-internal-utils.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/include/gmock/internal/gmock-port.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/make/Makefile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/msvc/2005/gmock.sln" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/msvc/2005/gmock.vcproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/msvc/2005/gmock_config.vsprops" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/msvc/2005/gmock_main.vcproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/msvc/2005/gmock_test.vcproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/msvc/2010/gmock.sln" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/msvc/2010/gmock.vcxproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/msvc/2010/gmock_config.props" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/msvc/2010/gmock_main.vcxproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/msvc/2010/gmock_test.vcxproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/msvc/2015/gmock.sln" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/msvc/2015/gmock.vcxproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/msvc/2015/gmock_config.props" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/msvc/2015/gmock_main.vcxproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/msvc/2015/gmock_test.vcxproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/scripts/fuse_gmock_files.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/scripts/generator/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/scripts/generator/README" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/scripts/generator/README.cppclean" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/scripts/generator/cpp/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/scripts/generator/cpp/ast.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/scripts/generator/cpp/gmock_class.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/scripts/generator/cpp/gmock_class_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/scripts/generator/cpp/keywords.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/scripts/generator/cpp/tokenize.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/scripts/generator/cpp/utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/scripts/generator/gmock_gen.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/scripts/gmock-config.in" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/scripts/gmock_doctor.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/scripts/upload.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/scripts/upload_gmock.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/src/gmock-all.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/src/gmock-cardinalities.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/src/gmock-internal-utils.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/src/gmock-matchers.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/src/gmock-spec-builders.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/src/gmock.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/src/gmock_main.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/test/BUILD.bazel" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/test/gmock-actions_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/test/gmock-cardinalities_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/test/gmock-generated-actions_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/test/gmock-generated-function-mockers_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/test/gmock-generated-internal-utils_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/test/gmock-generated-matchers_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/test/gmock-internal-utils_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/test/gmock-matchers_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/test/gmock-more-actions_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/test/gmock-nice-strict_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/test/gmock-port_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/test/gmock-spec-builders_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/test/gmock_all_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/test/gmock_ex_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/test/gmock_leak_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/test/gmock_leak_test_.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/test/gmock_link2_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/test/gmock_link_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/test/gmock_link_test.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/test/gmock_output_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/test/gmock_output_test_.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/test/gmock_output_test_golden.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/test/gmock_stress_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/test/gmock_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googlemock/test/gmock_test_utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/CHANGES" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/CONTRIBUTORS" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/Makefile.am" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/cmake/gtest.pc.in" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/cmake/gtest_main.pc.in" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/cmake/internal_utils.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/codegear/gtest.cbproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/codegear/gtest.groupproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/codegear/gtest_all.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/codegear/gtest_link.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/codegear/gtest_main.cbproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/codegear/gtest_unittest.cbproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/configure.ac" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/docs/AdvancedGuide.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/docs/Documentation.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/docs/FAQ.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/docs/Pkgconfig.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/docs/Primer.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/docs/PumpManual.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/docs/Samples.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/docs/XcodeGuide.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/include/gtest/gtest-death-test.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/include/gtest/gtest-message.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/include/gtest/gtest-param-test.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/include/gtest/gtest-param-test.h.pump" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/include/gtest/gtest-printers.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/include/gtest/gtest-spi.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/include/gtest/gtest-test-part.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/include/gtest/gtest-typed-test.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/include/gtest/gtest.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/include/gtest/gtest_pred_impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/include/gtest/gtest_prod.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/include/gtest/internal/custom/gtest-port.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/include/gtest/internal/custom/gtest-printers.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/include/gtest/internal/custom/gtest.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/include/gtest/internal/gtest-death-test-internal.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/include/gtest/internal/gtest-filepath.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/include/gtest/internal/gtest-internal.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/include/gtest/internal/gtest-linked_ptr.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/include/gtest/internal/gtest-param-util-generated.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/include/gtest/internal/gtest-param-util-generated.h.pump" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/include/gtest/internal/gtest-param-util.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/include/gtest/internal/gtest-port-arch.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/include/gtest/internal/gtest-port.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/include/gtest/internal/gtest-string.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/include/gtest/internal/gtest-tuple.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/include/gtest/internal/gtest-tuple.h.pump" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/include/gtest/internal/gtest-type-util.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/include/gtest/internal/gtest-type-util.h.pump" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/m4/acx_pthread.m4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/m4/gtest.m4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/make/Makefile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/msvc/2010/gtest-md.sln" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/msvc/2010/gtest-md.vcxproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/msvc/2010/gtest-md.vcxproj.filters" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/msvc/2010/gtest.sln" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/msvc/2010/gtest.vcxproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/msvc/2010/gtest.vcxproj.filters" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/msvc/2010/gtest_main-md.vcxproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/msvc/2010/gtest_main-md.vcxproj.filters" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/msvc/2010/gtest_main.vcxproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/msvc/2010/gtest_main.vcxproj.filters" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/msvc/2010/gtest_prod_test-md.vcxproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/msvc/2010/gtest_prod_test-md.vcxproj.filters" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/msvc/2010/gtest_prod_test.vcxproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/msvc/2010/gtest_prod_test.vcxproj.filters" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/msvc/2010/gtest_unittest-md.vcxproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/msvc/2010/gtest_unittest-md.vcxproj.filters" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/msvc/2010/gtest_unittest.vcxproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/msvc/2010/gtest_unittest.vcxproj.filters" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/samples/prime_tables.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/samples/sample1.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/samples/sample1.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/samples/sample10_unittest.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/samples/sample1_unittest.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/samples/sample2.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/samples/sample2.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/samples/sample2_unittest.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/samples/sample3-inl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/samples/sample3_unittest.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/samples/sample4.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/samples/sample4.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/samples/sample4_unittest.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/samples/sample5_unittest.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/samples/sample6_unittest.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/samples/sample7_unittest.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/samples/sample8_unittest.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/samples/sample9_unittest.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/scripts/common.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/scripts/fuse_gtest_files.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/scripts/gen_gtest_pred_impl.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/scripts/gtest-config.in" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/scripts/pump.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/scripts/release_docs.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/scripts/test/Makefile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/scripts/upload.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/scripts/upload_gtest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/src/gtest-all.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/src/gtest-death-test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/src/gtest-filepath.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/src/gtest-internal-inl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/src/gtest-port.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/src/gtest-printers.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/src/gtest-test-part.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/src/gtest-typed-test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/src/gtest.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/src/gtest_main.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/BUILD.bazel" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest-death-test_ex_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest-death-test_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest-filepath_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest-linked_ptr_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest-listener_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest-message_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest-options_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest-param-test2_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest-param-test_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest-param-test_test.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest-port_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest-printers_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest-test-part_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest-tuple_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest-typed-test2_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest-typed-test_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest-typed-test_test.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest-unittest-api_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_all_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_assert_by_exception_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_break_on_failure_unittest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_break_on_failure_unittest_.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_catch_exceptions_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_catch_exceptions_test_.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_color_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_color_test_.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_env_var_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_env_var_test_.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_environment_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_filter_unittest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_filter_unittest_.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_help_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_help_test_.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_json_outfiles_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_json_output_unittest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_json_test_utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_list_tests_unittest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_list_tests_unittest_.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_main_unittest.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_no_test_unittest.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_output_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_output_test_.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_output_test_golden_lin.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_pred_impl_unittest.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_premature_exit_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_prod_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_repeat_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_shuffle_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_shuffle_test_.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_sole_header_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_stress_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_test_utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_throw_on_failure_ex_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_throw_on_failure_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_throw_on_failure_test_.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_uninitialized_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_uninitialized_test_.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_unittest.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_xml_outfile1_test_.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_xml_outfile2_test_.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_xml_outfiles_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_xml_output_unittest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_xml_output_unittest_.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/gtest_xml_test_utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/production.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/test/production.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/xcode/Config/DebugProject.xcconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/xcode/Config/FrameworkTarget.xcconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/xcode/Config/General.xcconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/xcode/Config/ReleaseProject.xcconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/xcode/Config/StaticLibraryTarget.xcconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/xcode/Config/TestTarget.xcconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/xcode/Resources/Info.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/xcode/Samples/FrameworkSample/Info.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/xcode/Samples/FrameworkSample/WidgetFramework.xcodeproj/project.pbxproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/xcode/Samples/FrameworkSample/runtests.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/xcode/Samples/FrameworkSample/widget.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/xcode/Samples/FrameworkSample/widget.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/xcode/Samples/FrameworkSample/widget_test.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/xcode/Scripts/runtests.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/xcode/Scripts/versiongenerate.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/googletest/googletest/xcode/gtest.xcodeproj/project.pbxproj" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/menu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lib/menu.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/ClassName.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test.cpp" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,14 +368,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="test.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/test.cpp">
+      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="20" column="2" selection-start-line="20" selection-start-column="2" selection-end-line="20" selection-end-column="2" />
-              <folding>
-                <element signature="e#50#74#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="180">
+              <caret line="12" column="33" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -47,11 +380,8 @@
       <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-              <folding>
-                <element signature="e#0#19#0" expanded="true" />
-              </folding>
+            <state>
+              <caret column="19" selection-start-column="19" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -59,7 +389,7 @@
       <file leaf-file-name="core.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/core.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="481">
+            <state relative-caret-position="1125">
               <caret line="75" column="29" selection-start-line="75" selection-start-column="29" selection-end-line="75" selection-end-column="29" />
               <folding>
                 <element signature="e#105#122#0" expanded="true" />
@@ -71,7 +401,7 @@
       <file leaf-file-name="core.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/core.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="413">
+            <state relative-caret-position="4920">
               <caret line="328" column="35" selection-start-line="328" selection-start-column="35" selection-end-line="328" selection-end-column="35" />
               <folding>
                 <element signature="e#50#67#0" expanded="true" />
@@ -83,8 +413,8 @@
       <file leaf-file-name="menu.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/menu.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="517">
-              <caret line="251" column="9" selection-start-line="251" selection-start-column="9" selection-end-line="251" selection-end-column="9" />
+            <state relative-caret-position="-285">
+              <caret line="283" column="25" selection-start-line="283" selection-start-column="25" selection-end-line="283" selection-end-column="25" />
               <folding>
                 <element signature="e#50#69#0" expanded="true" />
               </folding>
@@ -131,11 +461,9 @@
         <option value="$PROJECT_DIR$/core.h" />
         <option value="$PROJECT_DIR$/lib/menu.h" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/lib/tasks.txt" />
         <option value="$PROJECT_DIR$/lib/workers.txt" />
         <option value="$PROJECT_DIR$/lib/tasks.cfg" />
-        <option value="$PROJECT_DIR$/main.cpp" />
         <option value="$PROJECT_DIR$/tests/test.cpp" />
         <option value="$PROJECT_DIR$/lib/config/genders.cfg" />
         <option value="$PROJECT_DIR$/lib/config/positions.cfg" />
@@ -143,6 +471,10 @@
         <option value="$PROJECT_DIR$/lib/core.h" />
         <option value="$PROJECT_DIR$/lib/core.cpp" />
         <option value="$PROJECT_DIR$/lib/config/tasks.cfg" />
+        <option value="$PROJECT_DIR$/lib/clearscreen.h" />
+        <option value="$PROJECT_DIR$/lib/clearscreen.cpp" />
+        <option value="$PROJECT_DIR$/main.cpp" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/lib/menu.cpp" />
       </list>
     </option>
@@ -157,8 +489,9 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
+    <option name="y" value="23" />
     <option name="width" value="1680" />
-    <option name="height" value="1050" />
+    <option name="height" value="952" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -186,12 +519,6 @@
               <item name="edal_schema" type="462c0819:PsiDirectoryNode" />
               <item name="lib" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="edal_schema" type="b2602c69:ProjectViewProjectNode" />
-              <item name="edal_schema" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -200,7 +527,8 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
+    <property name="nodejs.protractor.protractor_package" value="" />
+    <property name="settings.editor.selected.configurable" value="terminal" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -223,7 +551,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.edal_schema">
+  <component name="RunManager" selected="Application.terminal">
     <configuration name="Unit Tests" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" PASS_PARENT_ENVS_2="true" PROJECT_NAME="edal_schema" TARGET_NAME="edal_schema" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="edal_schema" RUN_TARGET_NAME="edal_schema" TEST_MODE="SUITE_TEST">
       <method>
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="false" />
@@ -231,17 +559,11 @@
     </configuration>
     <configuration name="Build All" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" EXPLICIT_BUILD_TARGET_NAME="all" />
     <configuration name="edal_schema" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="edal_schema" TARGET_NAME="edal_schema" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="edal_schema" RUN_TARGET_NAME="edal_schema" />
-    <configuration name="gmock" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="edal_schema" TARGET_NAME="gmock" CONFIG_NAME="Debug" />
-    <configuration name="gmock_main" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="edal_schema" TARGET_NAME="gmock_main" CONFIG_NAME="Debug" />
-    <configuration name="gtest" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="edal_schema" TARGET_NAME="gtest" CONFIG_NAME="Debug" />
-    <configuration name="gtest_main" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="edal_schema" TARGET_NAME="gtest_main" CONFIG_NAME="Debug" />
+    <configuration name="terminal" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="-e ./edal_schema" WORKING_DIR="file://$PROJECT_DIR$/cmake-build-debug" PASS_PARENT_ENVS_2="true" PROJECT_NAME="edal_schema" TARGET_NAME="edal_schema" CONFIG_NAME="Debug" RUN_PATH="/Applications/Utilities/Terminal.app" />
     <list>
       <item itemvalue="Application.Build All" />
       <item itemvalue="Application.edal_schema" />
-      <item itemvalue="Application.gmock" />
-      <item itemvalue="Application.gmock_main" />
-      <item itemvalue="Application.gtest" />
-      <item itemvalue="Application.gtest_main" />
+      <item itemvalue="Application.terminal" />
       <item itemvalue="Google Test.Unit Tests" />
     </list>
   </component>
@@ -274,7 +596,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="134131000" />
+    <option name="totallyTimeSpent" value="141299000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
@@ -282,13 +604,13 @@
     <layout>
       <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.21428572" />
       <window_info anchor="bottom" id="TODO" order="10" />
-      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.65178573" weight="0.31462926" />
-      <window_info anchor="bottom" id="CMake" order="0" />
+      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.65178573" weight="0.31362724" />
+      <window_info anchor="bottom" id="CMake" order="0" weight="0.3296593" />
       <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.39166668" side_tool="true" weight="0.25150302" />
-      <window_info active="true" anchor="bottom" id="Run" order="6" sideWeight="0.60833335" visible="true" weight="0.25150302" />
+      <window_info anchor="bottom" id="Run" order="6" sideWeight="0.60833335" weight="0.24943052" />
       <window_info anchor="bottom" id="Version Control" order="2" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="3" />
+      <window_info anchor="bottom" id="Terminal" order="3" weight="0.6492986" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.4" />
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
@@ -316,30 +638,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/lib/config/tasks.cfg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="28" selection-start-line="28" selection-end-line="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/menu.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="795">
-          <caret line="53" column="34" selection-start-line="53" selection-start-column="34" selection-end-line="53" selection-end-column="34" />
-          <folding>
-            <element signature="e#50#69#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/menu.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/core.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1080">
@@ -566,13 +864,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="3" selection-start-line="4" selection-start-column="3" selection-end-line="4" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/menu.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -617,32 +908,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.cpp">
+    <entry file="file://$PROJECT_DIR$/lib/clearscreen.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/clearscreen.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#148#167#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="19" selection-start-column="19" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/core.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="481">
+        <state relative-caret-position="1125">
           <caret line="75" column="29" selection-start-line="75" selection-start-column="29" selection-end-line="75" selection-end-column="29" />
           <folding>
             <element signature="e#105#122#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/core.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="413">
-          <caret line="328" column="35" selection-start-line="328" selection-start-column="35" selection-end-line="328" selection-end-column="35" />
-          <folding>
-            <element signature="e#50#67#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -654,10 +949,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/lib/core.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4920">
+          <caret line="328" column="35" selection-start-line="328" selection-start-column="35" selection-end-line="328" selection-end-column="35" />
+          <folding>
+            <element signature="e#50#67#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="33" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/term.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="728" column="38" selection-start-line="728" selection-start-column="38" selection-end-line="728" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/lib/menu.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="517">
-          <caret line="251" column="9" selection-start-line="251" selection-start-column="9" selection-end-line="251" selection-end-column="9" />
+        <state relative-caret-position="-285">
+          <caret line="283" column="25" selection-start-line="283" selection-start-column="25" selection-end-line="283" selection-end-column="25" />
           <folding>
             <element signature="e#50#69#0" expanded="true" />
           </folding>

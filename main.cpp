@@ -1,6 +1,4 @@
 #include <iostream>
-#include <gtest/gtest.h>
-#include <gmock/gmock.h>
 #include "lib/menu.h"
 
 int main(int argc, char* argv[]) {
