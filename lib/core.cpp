@@ -576,6 +576,7 @@ void Workers::save_workers_to_file() {
  *   .remove_reference_column: removes a reference column by id. O(n)
  *   .reference_matrix_size: returns column size of work_day matrix. O(fast)
  *   .get_reference_matrix: returns reference_matrix. O(1)
+ *   .clear_reference_matrix: clears matrix. O(1)
  *
  *  Work day schedule matrix related functions:
  *  =====================
@@ -634,7 +635,7 @@ int Work_day::get_resolution() { return m_resolution; }
 
 void Work_day::add_reference_column(Task task, int start_time, int end_time) {
     // first check if start or end time has allowed values.
-    if(start_time < end_time && start_time < m_resolution && end_time < m_resolution){
+    if(start_time < end_time && start_time < m_resolution + 1 && end_time < m_resolution + 1 && start_time >= 0){
         std::vector<Task> reference_column;
         Task empty_task = Task();
         for(int i = 0; i < m_resolution; ++i){
@@ -658,6 +659,8 @@ void Work_day::remove_reference_column(int id) {
 int Work_day::reference_size(){ return static_cast<int>(m_reference_matrix.size()); }
 
 std::vector<std::vector<Task>> Work_day::get_reference_matrix() { return m_reference_matrix; }
+
+void Work_day::clear_reference_matrix() { m_reference_matrix.clear(); }
 
 void Work_day::build_work_day() {
     // shit complex thing.

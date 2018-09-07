@@ -156,6 +156,7 @@ public:
     void remove_reference_column(int id);
     int reference_size();
     std::vector<std::vector<Task>> get_reference_matrix();
+    void clear_reference_matrix();
 
     // functions for building work day
     void build_work_day(); // creates m_worker_task_list
