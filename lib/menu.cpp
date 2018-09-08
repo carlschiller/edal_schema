@@ -68,6 +68,7 @@ namespace w_management{
             }
             std::cout << "Enter selection:" << std::endl;
             std::string selection;
+            std::cin.clear();
             std::cin >> selection;
             Worker_selections user_choice;
             try {
@@ -131,6 +132,7 @@ namespace t_management{
             }
             std::cout << "Enter selection:" << std::endl;
             std::string selection;
+            std::cin.clear();
             std::cin >> selection;
             Task_selections user_choice;
             try {
@@ -214,9 +216,10 @@ namespace wd_management{
             }
             std::cout << "=========================\n";
 
-            std::cout << "Please give index number to select worker, enter any other number to cancel.\n";
+            std::cout << "Please give index number to select worker, enter any non number to cancel.\n";
             std::string user_selection;
 
+            std::cin.clear();
             std::cin >> user_selection;
             try{
                 user_id = std::stoi(user_selection);
@@ -224,12 +227,15 @@ namespace wd_management{
                     clear_terminal();
                     std::cout << "Try again, enter index corresponding to a worker.\n";
                 }
-                else{ correct = true; }
+                else{
+                    Worker * worker_returner = &worker_list[user_id];
+                    return worker_returner;
+                }
+
             }
             catch(std::exception& e){ correct = true; }
         }
-        if(user_id != -1){ return &(worker_list[user_id]); }
-        else{ return nullptr ;}
+        return nullptr;
     }
 
     void display_day(Work_day & current_day, Genders & available_genders, Positions & available_positions){
@@ -293,6 +299,7 @@ namespace wd_management{
 
         std::cout << "Changing resolution will clear all reference columns because of compatibility issues, wish to continue? [Y/N]\n";
         std::string yes_no;
+        std::cin.clear();
         std::cin >> yes_no;
 
         if(yes_no == "Y"){ current_day.clear_reference_matrix(); }
@@ -301,6 +308,7 @@ namespace wd_management{
         while(!correct){
             std::cout << "Enter new resolution, enter any other non digit to exit" << std::endl;
             std::string res_string;
+            std::cin.clear();
             std::cin >> res_string;
             int res;
 
@@ -330,6 +338,7 @@ namespace wd_management{
             }
             std::cout << "Enter selection:" << std::endl;
             std::string selection;
+            std::cin.clear();
             std::cin >> selection;
             Work_day_selections user_choice;
             try {
@@ -399,6 +408,7 @@ namespace rf_management{
             std::string time_slot[2];
 
             std::cout << "Enter start time\n";
+            std::cin.clear();
             std::cin >> time_slot[0];
             try { time_in_int[0] = std::stoi(time_slot[0]); }
             catch(std::exception& e){
@@ -407,6 +417,7 @@ namespace rf_management{
 
             clear_terminal();
             std::cout << "Enter end time\n";
+            std::cin.clear();
             std::cin >> time_slot[1];
             try { time_in_int[1] = std::stoi(time_slot[1]); }
             catch(std::exception& e){
@@ -423,6 +434,7 @@ namespace rf_management{
                 index++;
             }
             std::cout << "Enter desired task\n";
+            std::cin.clear();
             std::cin >> user_selection_name;
             try {
                 user_selection_int = std::stoi(user_selection_name);
@@ -527,6 +539,7 @@ namespace rf_management{
         display_matrix(current_day);
         std::cout << "Please choose column number to remove, enter any other key to abort.\n";
         std::string selection;
+        std::cin.clear();
         std::cin >> selection;
         int column_index;
         try {
@@ -551,6 +564,7 @@ namespace rf_management{
             }
             std::cout << "Enter selection:" << std::endl;
             std::string selection;
+            std::cin.clear();
             std::cin >> selection;
             Reference_selections user_choice;
             try {
@@ -618,6 +632,7 @@ void menu(){
         }
         std::cout << "Enter selection:" << std::endl;
         std::string selection;
+        std::cin.clear();
         std::cin >> selection;
         Outer_selections user_choice;
         try {

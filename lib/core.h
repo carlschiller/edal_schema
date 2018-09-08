@@ -16,6 +16,16 @@ namespace Utilities {
     void create_directory(const std::string &path);
     bool file_exists(const std::string& file_name);
     std::string stream_name(std::string file_name);
+
+    // functions for genders and positions.
+    int get_int(std::map<int,std::string> &map, std::string &string);
+    std::string get_string(std::map<int,std::string> &map, int number);
+    void rename_by_int(std::map<int,std::string> &map, int number, std::string new_name);
+    void remove_by_int(std::map<int,std::string> &map, int number);
+    bool is_in_map(std::map<int,std::string> &map, std::string &name);
+    void add_by_string(std::map<int,std::string> &map, std::string name);
+    void load_map(std::map<int,std::string> &map, const std::string & file_path, const std::string & path);
+    void save_map(std::map<int,std::string> &map, const std::string & file_path, const std::string & path);
 }
 
 // Functions for saving and loading.
@@ -28,27 +38,45 @@ namespace Converters {
     std::vector<std::string> split_by_delimiter(const std::string &line, char delim);
 }
 
+
+
 // custom "enum class", loads genders from file.
 class Genders{
+private:
+    const std::string m_path = "../lib/config/";
+    const std::string m_file_name = "genders.cfg";
+    std::map<int,std::string> m_gender_map;
+    void load_genders();
 public:
     Genders();
-    std::map<std::string,int> m_gender_map;
+
+    void rename_gender(int id,std::string new_name);
+    void remove_gender(int id);
+    void add_gender(std::string name);
 
     int get_gender(std::string &sex);
     std::string get_string(int number);
-    void load_genders();
+
     void save_genders();
 };
 
 // custom "positions class", loads positions from file.
 class Positions{
 private:
-    std::map<std::string,int> m_positions_map;
+    const std::string m_path = "../lib/config/";
+    const std::string m_file_name = "positions.cfg";
+    std::map<int,std::string> m_positions_map;
     void load_positions();
 public:
     Positions();
+
+    void rename_position(int id,std::string new_name);
+    void remove_position(int id);
+    void add_position(std::string name);
+
     int get_position(std::string &position);
     std::string get_string(int id);
+
     void save_positions();
 };
 

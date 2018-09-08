@@ -86,6 +86,103 @@ namespace Utilities{
 
         file_stream.close();
     }
+
+    /**
+     * Functions for Genders and Positions.
+     * ======================
+     * get_int: O(n)
+     * get_string: O(log(n))
+     * rename_by_int: O(log(n))
+     * remove_by_int: O(log(n))
+     * is_in_map: O(n)
+     * add_by_string: O(n)
+     * load: O(n)
+     * save: O(n)
+     */
+
+    int get_int(std::map<int,std::string> &map, std::string &string){
+        for(auto & it : map){ if(it.second == string) { return it.first; } }
+        std::string error_msg = "Can't find " + string;
+        throw std::invalid_argument(error_msg);
+    }
+
+    std::string get_string(std::map<int,std::string> &map, int number){
+        auto it = map.find(number);
+        if(it == map.end()){
+            std::string error_msg = "Can't find " + std::to_string(number);
+            throw std::invalid_argument(error_msg);
+        }
+        else{ return map[number]; }
+    }
+
+    void rename_by_int(std::map<int,std::string> &map, int number, std::string new_name){
+        if(map.find(number) != map.end()){ map[number] = new_name; }
+        else{ throw std::invalid_argument("Number is not in map, cant rename by int."); }
+    }
+
+    void remove_by_int(std::map<int,std::string> &map, int number){
+        if(map.find(number) != map.end()){ map.erase(number); }
+        else{ throw std::invalid_argument("Number is not in map, cant remove by int."); }
+    }
+
+    bool is_in_map(std::map<int,std::string> &map, std::string &name){
+        for(auto & it : map){ if(it.second == name){ return true ;} }
+        return false;
+    }
+
+    void add_by_string(std::map<int,std::string> &map, std::string name){
+        if(is_in_map(map,name)){ throw std::invalid_argument("Name already in map"); }
+
+        unsigned long size = map.size();
+        int lowest_number;
+        for(lowest_number = 0; lowest_number <= size; lowest_number++){
+            if(map.find(lowest_number) == map.end()){ break; }
+        }
+        map[lowest_number] = name;
+    }
+
+    void load_map(std::map<int,std::string> &map, const std::string &file_path, const std::string &path){
+        Utilities::create_directory(path); // check if we have the directory;
+        std::string full_path = path + file_path;
+
+        std::ifstream stream(full_path);
+        if(!stream.is_open()){
+            std::exit(6);
+            // TODO: fix error execution;
+        }
+        else{
+            std::string line;
+            int index = 0;
+            while(std::getline(stream,line)){
+                std::vector<std::string> tokens;
+                if(line.length() != 0){
+                    tokens = Converters::split_by_delimiter(line,',');
+                    map[std::stoi(tokens[1])] = tokens[0];
+                }
+                index++;
+            }
+        }
+        stream.close();
+    }
+
+    void save_map(std::map<int,std::string> &map, const std::string &file_path, const std::string &path){
+        Utilities::create_directory(path); // check if we have the directory;
+        std::string full_path = path + file_path;
+
+        std::ofstream stream(full_path,std::ios_base::out);
+        if(!stream.is_open()){
+            std::exit(6);
+            // TODO: fix error execution;
+        }
+        else{
+            for(auto & it : map){
+                std::string name = it.second;
+                std::string number = std::to_string(it.first);
+                std::string output = name += "," + number;
+                stream <<  output << std::endl;
+            }
+        }
+    }
 }
 
 namespace Converters{
@@ -132,152 +229,59 @@ namespace Converters{
  * Methods for Genders class
  * -------------
  * constructor: loads genders from file
- * .get_gender(): returns int from text. O(log(n))
- * .get_string(): returns string from int. O(n)
+ * .get_gender(): returns int from text. O(n)
+ * .get_string(): returns string from int. O(log(n))
  * .load_genders(): loads from file.
  * .save_genders(): saves from file.
+ * .rename_gender: renames a gender. O(log(n))
+ * .remove_gender: removes a gender. O(log(n))
+ * .add_gender: adds a new gender. O(n)
  */
 
 Genders::Genders() { load_genders(); }
 
-int Genders::get_gender(std::string &sex) {
-    auto it = m_gender_map.find(sex);
-    if(it == m_gender_map.end()){
-        std::string error_msg = "Can't find " + sex + " gender.";
-        throw std::invalid_argument(error_msg);
-    }
-    else{ return m_gender_map[sex];}
-}
+int Genders::get_gender(std::string &sex) { return Utilities::get_int(m_gender_map,sex); }
 
-std::string Genders::get_string(int number) {
-    for(auto it : m_gender_map){
-        if(it.second == number){ return it.first; }
-    }
-    throw std::invalid_argument("Not found in map.");
-}
+std::string Genders::get_string(int number) { return Utilities::get_string(m_gender_map,number); }
 
-void Genders::load_genders() {
-    const std::string path = "../lib/config/";
-    Utilities::create_directory(path); // check if we have the directory;
+void Genders::load_genders() { Utilities::load_map(m_gender_map,m_file_name,m_path); }
 
-    const std::string filename = "genders.cfg";
-    std::string file_path = path + filename;
-    std::ifstream stream(file_path);
-    if(!stream.is_open()){
-        std::exit(6);
-        // TODO: fix error execution;
-    }
-    else{
-        std::string line;
-        int index = 0;
-        while(std::getline(stream,line)){
-            std::vector<std::string> tokens;
-            if(line.length() != 0){
-                tokens = Converters::split_by_delimiter(line,',');
-                m_gender_map[tokens[0]] = std::stoi(tokens[1]);
-            }
-            index++;
-        }
-    }
-    stream.close();
-}
+void Genders::save_genders() { Utilities::save_map(m_gender_map,m_file_name,m_path); }
 
-void Genders::save_genders() {
-    const std::string path = "../lib/config/";
-    Utilities::create_directory(path); // check if we have the directory;
+void Genders::rename_gender(int id, std::string new_name) { Utilities::rename_by_int(m_gender_map,id,new_name); }
 
-    const std::string filename = "genders.cfg";
-    std::string file_path = path + filename;
-    std::ofstream stream(file_path,std::ios_base::out);
-    if(!stream.is_open()){
-        std::exit(6);
-        // TODO: fix error execution;
-    }
-    else{
-        for(auto & it : m_gender_map){
-            std::string name = it.first;
-            std::string number = std::to_string(it.second);
-            std::string output = name += "," + number;
-            stream <<  output << std::endl;
-        }
-    }
-}
+void Genders::remove_gender(int id) { Utilities::remove_by_int(m_gender_map,id);}
+
+void Genders::add_gender(std::string name) { Utilities::add_by_string(m_gender_map,name); }
 
 /**
  * Methods for Positions class
  * -------------
  * constructor: loads genders from file
- * .get_position(): returns int from text. O(log(n))
- * .get_string(): returns string from int. O(n)
+ * .get_position(): returns int from text. O(n)
+ * .get_string(): returns string from int. O(log(n))
  * .load_positions(): loads from file.
  * .save_positions(): saves from file.
+ * .rename_position: renames a position. O(log(n))
+ * .remove_position: removes a position. O(log(n))
+ * .add_position: adds a new position. O(n)
  */
 
 Positions::Positions() { load_positions(); }
 
-int Positions::get_position(std::string &position) {
-    auto it = m_positions_map.find(position);
-    if(it == m_positions_map.end()){
-        std::string error_msg = "Can't find " + position + " position.";
-        throw std::invalid_argument(error_msg);
-    }
-    else{ return m_positions_map[position]; }
-}
+int Positions::get_position(std::string &position) { return Utilities::get_int(m_positions_map,position); }
 
-std::string Positions::get_string(int id){
-    for(auto it : m_positions_map){
-        if(it.second == id){ return it.first; }
-    }
-    throw std::invalid_argument("Can't find positions from id.");
-}
+std::string Positions::get_string(int id){ return Utilities::get_string(m_positions_map,id); }
 
-void Positions::load_positions() {
-    const std::string path = "../lib/config/";
-    Utilities::create_directory(path); // check if we have the directory;
+void Positions::load_positions() { Utilities::load_map(m_positions_map,m_file_name,m_path); }
 
-    const std::string filename = "positions.cfg";
-    std::string file_path = path + filename;
-    std::ifstream stream(file_path);
-    if(!stream.is_open()){
-        std::exit(6);
-        // TODO: fix error execution;
-    }
-    else{
-        std::string line;
-        int index = 0;
-        while(std::getline(stream,line)){
-            std::vector<std::string> tokens;
-            if(line.length() != 0){
-                tokens = Converters::split_by_delimiter(line,',');
-                m_positions_map[tokens[0]] = std::stoi(tokens[1]);
-            }
-            index++;
-        }
-    }
-    stream.close();
-}
+void Positions::save_positions() { Utilities::save_map(m_positions_map,m_file_name,m_path); }
 
-void Positions::save_positions() {
-    const std::string path = "../lib/config/";
-    Utilities::create_directory(path); // check if we have the directory;
+void Positions::rename_position(int id, std::string new_name) { Utilities::rename_by_int(m_positions_map,id,new_name); }
 
-    const std::string filename = "positions.cfg";
-    std::string file_path = path + filename;
-    std::ofstream stream(file_path,std::ios_base::out);
-    if(!stream.is_open()){
-        std::exit(6);
-        // TODO: fix error execution;
-    }
-    else{
-        for(auto & it : m_positions_map){
-            std::string name = it.first;
-            std::string number = std::to_string(it.second);
-            std::string output = name += "," + number;
-            stream <<  output << std::endl;
-        }
-    }
-}
+void Positions::remove_position(int id) { Utilities::remove_by_int(m_positions_map,id); }
 
+void Positions::add_position(std::string name) { Utilities::add_by_string(m_positions_map,name); }
 
 /**
  * Methods for Task class
